@@ -14,7 +14,7 @@
         <button class="appoint" @click="goAppointment">在线预约</button>
       </div>
     </header>
-    </div>
+    
 
     <!-- 轮播图 - 活动风采 -->
     <section class="banner">
@@ -29,6 +29,7 @@
       <!-- 心理百科 -->
       <section class="card">
         <div class="card-title">心理百科</div>
+        
         <div v-for="item in wiki" :key="item.id" class="item">
           {{ item.title }}
         </div>
@@ -37,6 +38,7 @@
       <!-- 心理美文 -->
       <section class="card">
         <div class="card-title">心理美文</div>
+        
         <div v-for="item in articles" :key="item.id" class="item">
           {{ item.title }}
         </div>
@@ -55,46 +57,45 @@
   <div class="row">
   <section class="card notice">
     <div class="card-title">通知公告</div>
+    
     <div v-for="item in notices" :key="item.id" class="item">
       {{ item.title }}
     </div>
   </section>
 </div>
 
+</div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-// ===== 这些之后换成真实接口 =====
-const notices = ref([
-  { id: 1, title: '关于开放本学期心理咨询预约的通知' },
-  { id: 2, title: '心理健康月活动安排' }
-])
-
-const wiki = ref([
-  { id: 1, title: '认识焦虑情绪' },
-  { id: 2, title: '如何进行压力管理' }
-])
-
-const articles = ref([
-  { id: 1, title: '给自己一段温柔时光' },
-  { id: 2, title: '与情绪和解' }
-])
-
+import { ref, onMounted} from 'vue'
 import { useRouter } from 'vue-router'
+
+// 统一从 api 层取
+import { getNotices, getWiki, getArticles } from '../../api/portal'
+
 const router = useRouter()
 
+// 声明空数据
+const notices = ref([])
+const wiki = ref([])
+const articles = ref([])
+
+// 页面加载 → 接口
+onMounted(async () => {
+  notices.value = await getNotices()
+  wiki.value = await getWiki()
+  articles.value = await getArticles()
+
+})
+
+// 跳转
 const goLogin = (type) => {
-  if (type === 'admin') {
-    router.push('/login/admin')
-  } else {
-    router.push('/login/user')
-  }
+  router.push(type === 'admin' ? '/login/admin' : '/login/user')
 }
 
 const goAppointment = () => {
-  alert('进入预约页面')
+  router.push('/admin/schedule')
 }
 </script>
 

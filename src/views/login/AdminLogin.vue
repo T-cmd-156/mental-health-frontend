@@ -12,6 +12,7 @@
         <option value="leader">校领导</option>
         <option value="counselor">咨询师</option>
         <option value="instructor">辅导员</option>
+        <option value="admin">管理员</option>
       </select>
 
       <button @click="login">登录</button>
@@ -22,6 +23,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { adminLogin } from '../../api/mock'
 
 const router = useRouter()
 
@@ -31,15 +33,22 @@ const form = ref({
   role: 'center'
 })
 
-const login = () => {
-  // 之后换成真实接口
-  console.log('登录信息', form.value)
+const login = async () => {
+  try {
+    const res = await adminLogin(form.value)
 
-  // 模拟登录成功
-  localStorage.setItem('role', form.value.role)
+    // 保存登录信息
+    localStorage.setItem('user', JSON.stringify(res.data))
+    localStorage.setItem('role', form.value.role)
+    localStorage.setItem('userId', form.value.username)
 
-  // 跳转不同门户
-  router.push('/dashboard')
+    alert('登录成功')
+
+    router.push('/admin')
+
+  } catch (err) {
+    alert(err.msg || '登录失败')
+  }
 }
 </script>
 
