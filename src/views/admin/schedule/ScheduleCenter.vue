@@ -38,369 +38,216 @@
       当前周：{{ weekRange() }}
     </div>
 
-<!-- 可视化排班表 -->
-<table class="grid">
+    <!-- 可视化排班表 -->
+    <table class="grid">
 
-  <!-- ===== 表头 ===== -->
-  <thead>
+      <!-- ===== 表头 ===== -->
+      <thead>
+        <tr>
+          <th>时间</th>
 
-    <!-- 第一行：周几 -->
-    <tr>
-      <th>时间</th>
+          <template v-if="viewMode==='week'">
+            <th v-for="d in week" :key="d">
+              {{ d }}
+            </th>
+          </template>
 
-      <template v-if="viewMode==='week'">
-        <th v-for="d in week" :key="d">
-          {{ d }}
-        </th>
-      </template>
+          <th v-else>
+            {{ viewDate }}
+          </th>
+        </tr>
 
-      <th v-else>
-        {{ viewDate }}
-      </th>
-    </tr>
+        <tr v-if="viewMode==='week'">
+          <th>日期</th>
 
-    <!-- 第二行：具体日期 -->
-    <tr v-if="viewMode==='week'">
-      <th>日期</th>
+          <th v-for="item in getWeekDates()" :key="item.date">
+            {{ item.date }}
+          </th>
+        </tr>
 
-      <th v-for="item in getWeekDates()" :key="item.date">
-        {{ item.date }}
-      </th>
-    </tr>
+      </thead>
 
-  </thead>
+      <!-- ===== 表格主体 ===== -->
+      <tbody>
+        <tr v-for="t in periods" :key="t">
+          <td>{{ t }}</td>
 
+          <td
+            v-for="col in (viewMode==='week'
+              ? getWeekDates()
+              : [{ date: viewDate }])"
+            :key="col.date"
+            @click="changeCounselor(col, t)"
+            :class="getCell(col, t)"
+          >
+            {{ show(col, t) }}
+          </td>
 
-  <!-- ===== 表格主体 ===== -->
-  <tbody>
+        </tr>
 
-    <tr v-for="t in periods" :key="t">
-      <td>{{ t }}</td>
+      </tbody>
 
-      <td
-        v-for="col in (viewMode==='week'
-          ? getWeekDates()
-          : [{ date: viewDate }])"
-
-        :key="col.date"
-        @click="edit(col, t)"
-        :class="getCell(col, t)"
-      >
-        {{ show(col, t) }}
-      </td>
-
-    </tr>
-
-  </tbody>
-
-</table>
-
+    </table>
 
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { 
+  getCounselors, 
+  getHolidays, 
+  generateSchedule, 
+  getPeriods, 
+  getWeek, 
+  getSemester,
+  saveWeekTemplate,
+  generateFromTemplate
+} from '../../../api/mock'; // 从 mock.js 导入数据
 
 // ===== 学期信息 =====
-const semester = ref({
-  start: '2026-03-01',
-  end: '2026-07-10'
-})
+const semester = getSemester();
 
-const viewDate = ref(
-  (semester.value.start)
-)
+// 当前日期
+const viewDate = ref(semester.start);
 
+// 查看模式
+const viewMode = ref('week'); // week | day
 
-const viewMode = ref('week')   // week | day
+// 获取节假日（模拟接口）
+const holidays = getHolidays();
 
-// 节假日（以后从后端读）
-const holidays = ref([
-  '2026-04-05',
-  '2026-05-01',
-  '2026-06-10'
-])
+// 获取咨询师数据（模拟接口）
+const counselors = ref(getCounselors());
 
+const selectedCounselor = ref('');
 
-// ===== 假数据，之后从后端调 =====
-const campus = ref('莲湖校区')
-const counselor = ref('')
+// 获取时间段（模拟接口）
+const periods = ref(getPeriods());
 
-// 一周
-const week = [
-  '周一','周二','周三','周四','周五'
-]
+// 获取一周的日期（模拟接口）
+const week = getWeek();
 
-// 时间段
-const periods = [
-  '09:00-09:50',
-  '09:50-10:40',
-  '10:40-11:30',
-  '11:30-12:20',
-  '15:00-15:50',
-  '15:50-16:40',
-  '16:40-17:30'
-]
+// 排班数据
+const schedule = ref(generateSchedule());
 
-// 咨询师
-const counselors = ref([
-  { id:'C1', name:'张老师' },
-  { id:'C2', name:'李老师' },
-  { id:'C3', name:'王老师' },
-  { id:'C4', name:'赵老师' },
-  { id:'C5', name:'钱老师' },
-  { id:'C6', name:'罗老师' },
-  { id:'C7', name:'穆老师' },
-  { id:'C8', name:'何老师' },
-  { id:'C9', name:'周老师' },
-  { id:'C10', name:'冯老师' }
-])
+// 按日期显示排班
+const show = (col, t) => {
+  const dateKey = viewMode.value === 'week' ? col.date : col.date;
+  const s = schedule.value.find(i => i.date === dateKey && i.time === t);
+  return s ? s.counselor : '';
+}
 
-// 排班数据（以后换接口）
-const schedule = ref([])
+const useTemplate = () => {
+  const weekDates = getWeekDates().map(i => i.date);
+  const weekData = schedule.value.filter(i => weekDates.includes(i.date));
+  saveWeekTemplate(weekData);
+  alert('已保存本周为模板');
+}
 
-// 点击编辑
-const edit = (col, t) => {
-
-  console.log('点击:', col, t)
-
-  // ===== 1. 统一成真实日期 =====
-  const dateKey = col.date
-
-  // ===== 2. 按 date + time 找 =====
-  const index = schedule.value.findIndex(
-    i =>
-      i.date === dateKey &&
-      i.time === t
-  )
-
-  const now =
-    index !== -1
-      ? schedule.value[index].counselor
-      : '空闲'
-
-  // ===== 3. 选择弹窗 =====
-  let msg = `当前：${now}\n请选择：\n0. 设为空闲\n`
-
-  counselors.value.forEach((c, i) => {
-    msg += `${i + 1}. ${c.name}\n`
-  })
-
-  const r = prompt(msg)
-  if (r === null) return
-
-  // ===== 4. 设为空闲 =====
-  if (r === '0') {
-    if (index !== -1)
-      schedule.value.splice(index, 1)
-    return
+//生成学期排班
+const openBatch = () => {
+  const data = generateFromTemplate();
+  if (!data.length) {
+    alert('请先保存一周模板');
+    return;
   }
 
-  const c = counselors.value[Number(r) - 1]
-  if (!c) return
-
-  // ===== 5. 已存在就改 =====
-  if (index !== -1) {
-    schedule.value[index].counselor = c.name
-  } 
-  // ===== 6. 不存在就新增（必须带 date！）=====
-  else {
-    schedule.value.push({
-      date: dateKey,
-      //day: d,        // 显示用
-      time: t,
-      counselor: c.name
-    })
-  }
+  schedule.value = data;
+  viewDate.value = semester.start;
+  alert('已按周模板生成整个学期');
 }
 
-// 根据选择的某天，算出本周一~周五真实日期
-const getWeekDates = () => {
-  const base = viewDate.value
-    ? new Date(viewDate.value)
-    : new Date()
-
-  const day = base.getDay()
-  const monday = new Date(base)
-
-  // 把日期调到周一
-  const diff = day === 0 ? -6 : 1 - day
-  monday.setDate(base.getDate() + diff)
-
-  const arr = []
-
-  for (let i = 0; i < 5; i++) {
-    const d = new Date(monday)
-    d.setDate(monday.getDate() + i)
-
-    arr.push({
-      label: ['周一','周二','周三','周四','周五'][i],
-      date: d.toISOString().slice(0,10)
-    })
-  }
-
-  return arr
+const prevWeek = () => {    //上一周
+  const d = new Date(viewDate.value);
+  d.setDate(d.getDate() - 7);
+  viewDate.value = d.toISOString().slice(0, 10);
 }
 
-const changeWeek = (n) => {
-  const d = viewDate.value
-    ? new Date(viewDate.value)
-    : new Date()
-
-  d.setDate(d.getDate() + 7 * n)
-
-  viewDate.value = d.toISOString().slice(0,10)
+const nextWeek = () => {    // 下一周
+  const d = new Date(viewDate.value);
+  d.setDate(d.getDate() + 7);
+  viewDate.value = d.toISOString().slice(0, 10);
 }
 
-
-// 显示
-const show = (col,t) => {
-
-  const dateKey =
-    viewMode.value === 'week'
-      ? col.date
-      : col.date
-
-  const s = schedule.value.find(
-    i => i.date === dateKey && i.time === t
-  )
-
-  return s ? s.counselor : ''
-}
-
-// ===== 周控制核心 =====
-
-// 取某日期所在周一
-const getMonday = (dateStr) => {
-  const d = new Date(dateStr)
-  const day = d.getDay()
-
-  const diff = day === 0 ? -6 : 1 - day
-  d.setDate(d.getDate() + diff)
-
-  return d.toISOString().slice(0,10)
-}
-
-// 上一周
-const prevWeek = () => {
-  const d = new Date(viewDate.value)
-  d.setDate(d.getDate() - 7)
-  viewDate.value = d.toISOString().slice(0,10)
-}
-
-// 下一周
-const nextWeek = () => {
-  const d = new Date(viewDate.value)
-  d.setDate(d.getDate() + 7)
-  viewDate.value = d.toISOString().slice(0,10)
-}
-
-// 回到今天
-const toToday = () => {
-  viewDate.value = new Date().toISOString().slice(0,10)
+const toToday = () => {   // 当天
+  viewDate.value = new Date().toISOString().slice(0, 10);
 }
 
 // 当前周范围显示
 const weekRange = () => {
-  const arr = getWeekDates()
-  if (!arr.length) return ''
-
-  return `${arr[0].date}  ~  ${arr[4].date}`
+  const arr = getWeekDates();
+  if (!arr.length) return '';
+  return `${arr[0].date} ~ ${arr[4].date}`;
 }
 
+const getWeekDates = () => {
+  const base = viewDate.value ? new Date(viewDate.value) : new Date();
+  const day = base.getDay();
+  const monday = new Date(base);
+  const diff = day === 0 ? -6 : 1 - day;
+  monday.setDate(base.getDate() + diff);
 
+  const arr = [];
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    arr.push({
+      label: ['周一', '周二', '周三', '周四', '周五'][i],
+      date: d.toISOString().slice(0, 10),
+    });
+  }
+  return arr;
+}
+
+// 获取当前单元格的状态
 const getCell = (col, t) => {
+  const dateKey = col.date;
+  const s = schedule.value.find(i => i.date === dateKey && i.time === t);
+  if (!s) return 'free';
 
-   const dateKey = col.date
+  if (selectedCounselor.value) {
+    return s.counselor === selectedCounselor.value ? 'mine' : 'other';
+  }
 
-  const s = schedule.value.find(
+  return 'busy';
+}
+
+const changeCounselor = (col, t) => {
+  const dateKey = col.date;
+  const index = schedule.value.findIndex(
     i => i.date === dateKey && i.time === t
-  )
+  );
 
-  if (!s) return 'free'
+  let msg = '请选择咨询师：\n0. 清空\n';
+  counselors.value.forEach((c, i) => {
+    msg += `${i + 1}. ${c.name}\n`;
+  });
 
-  // 选择老师时高亮
-  if (counselor.value) {
-    return s.counselor === counselor.value
-      ? 'mine'
-      : 'other'
+  const r = prompt(msg);
+  if (r === null) return;
+
+  if (r === '0') {
+    if (index !== -1) schedule.value.splice(index, 1);
+    return;
   }
 
-  return 'busy'
-}
+  const c = counselors.value[Number(r) - 1];
+  if (!c) return;
 
-
-const openBatch = () => {
-
-  schedule.value = []
-
-  const start = new Date(semester.value.start)
-  const end = new Date(semester.value.end)
-
-  let day = new Date(start)
-
-  while (day <= end) {
-
-    const weekDay = day.getDay()
-
-    // 跳过周末
-    if (weekDay === 0 || weekDay === 6) {
-      day.setDate(day.getDate() + 1)
-      continue
-    }
-
-    const ds = day.toISOString().slice(0,10)
-
-    // 跳过节假日
-    if (holidays.value.includes(ds)) {
-      day.setDate(day.getDate() + 1)
-      continue
-    }
-
-    // 按老师轮流分配
-    periods.forEach(t => {
-
-      const teacher =
-        counselors.value[
-          Math.floor(Math.random() * counselors.value.length)
-        ].name
-
-      schedule.value.push({
-        date: ds,
-        time: t,
-        counselor: teacher
-      })
-    })
-
-    day.setDate(day.getDate() + 1)
+  if (index !== -1) {
+    schedule.value[index].counselor = c.name;
+  } else {
+    schedule.value.push({
+      date: dateKey,
+      time: t,
+      counselor: c.name
+    });
   }
+};
 
-// 自动跳到第一个排班日期所在周
-const first = schedule.value[0]?.date
-if (first) {
-  viewDate.value = first
-}
-
-
-  // 自动把视图跳到学期第一周
-  //viewDate.value = semester.value.start
-
-
-  alert('已按学期生成排班')
-
-
-    console.log('===== 生成的排班 =====')
-  console.log(schedule.value)
-}
-
-
-
-
-const useTemplate = () => {
-  alert('选择周模板')
-}
 </script>
+
 
 <style scoped>
 .grid {
