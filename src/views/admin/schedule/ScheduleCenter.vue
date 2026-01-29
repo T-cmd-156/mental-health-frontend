@@ -10,12 +10,6 @@
         <option>南坝校区</option>
       </select>
 
-      <select v-model="counselor">
-        <option v-for="c in counselors" :key="c.id">
-          {{ c.name }}
-        </option>
-      </select>
-
       <input type="date" v-model="viewDate" />
 
       <button @click="prevWeek">⬅ 上一周</button>
@@ -93,20 +87,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { 
-  getCounselors, 
-  getHolidays, 
-  generateSchedule, 
-  getPeriods, 
-  getWeek, 
+import { ref, onMounted } from 'vue';
+import {
+  getCounselors,
+  getHolidays,
+  getPeriods,
+  getWeek,
   getSemester,
+  initSchedule,
   saveWeekTemplate,
+  fetchSchedule,
+  updateSchedule,
+  clearSchedule,
   generateFromTemplate
-} from '../../../api/mock'; // 从 mock.js 导入数据
+} from '../../../api/schedule'
+
 
 // ===== 学期信息 =====
 const semester = getSemester();
+
+const campus = ref('莲湖校区'); //默认值
 
 // 当前日期
 const viewDate = ref(semester.start);
@@ -114,22 +114,29 @@ const viewDate = ref(semester.start);
 // 查看模式
 const viewMode = ref('week'); // week | day
 
-// 获取节假日（模拟接口）
+// 获取节假日
 const holidays = getHolidays();
 
-// 获取咨询师数据（模拟接口）
+// 获取咨询师数据
 const counselors = ref(getCounselors());
 
 const selectedCounselor = ref('');
 
-// 获取时间段（模拟接口）
+// 获取时间段
 const periods = ref(getPeriods());
 
-// 获取一周的日期（模拟接口）
+// 获取一周的日期
 const week = getWeek();
 
-// 排班数据
-const schedule = ref(generateSchedule());
+// 初始化排班数据
+const schedule = ref([])
+
+onMounted(async () => {
+  initSchedule()
+  schedule.value = await fetchSchedule()
+  console.log('schedule 数据：', schedule.value.slice(0, 5))
+})
+
 
 // 按日期显示排班
 const show = (col, t) => {
@@ -213,7 +220,7 @@ const getCell = (col, t) => {
   return 'busy';
 }
 
-const changeCounselor = (col, t) => {
+const changeCounselor = async(col, t) => {
   const dateKey = col.date;
   const index = schedule.value.findIndex(
     i => i.date === dateKey && i.time === t
@@ -228,22 +235,16 @@ const changeCounselor = (col, t) => {
   if (r === null) return;
 
   if (r === '0') {
-    if (index !== -1) schedule.value.splice(index, 1);
-    return;
-  }
+    await clearSchedule(dateKey, t)
+  } else {
 
   const c = counselors.value[Number(r) - 1];
   if (!c) return;
 
-  if (index !== -1) {
-    schedule.value[index].counselor = c.name;
-  } else {
-    schedule.value.push({
-      date: dateKey,
-      time: t,
-      counselor: c.name
-    });
+  await updateSchedule({date: dateKey, time: t, counselor: c.name })
   }
+
+  schedule.value = await fetchSchedule()
 };
 
 </script>
