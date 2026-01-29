@@ -21,6 +21,57 @@ const routes = [
 },
 
 {
+    path: '/wiki',
+    name: 'WikiList',
+    component: () => import('../views/wiki/WikiList.vue')
+  },
+  {
+    path: '/wiki/:id',
+    name: 'WikiDetail',
+    component: () => import('../views/wiki/WikiDetail.vue')
+  },
+  {
+    path: '/articles',
+    name: 'ArticleList',
+    component: () => import('../views/articles/ArticleList.vue')
+  },
+  {
+    path: '/articles/:id',
+    name: 'ArticleDetail',
+    component: () => import('../views/articles/ArticleDetail.vue')
+  },
+  {
+    path: '/peer-support',
+    name: 'PeerSupport',
+    component: () => import('../views/peer/PeerSupport.vue')
+  },
+  {
+    path: '/peer-support/:id',
+    name: 'PeerSupportDetail',
+    component: () => import('../views/peer/PeerSupportDetail.vue')
+  },
+  {
+    path: '/notices',
+    name: 'NoticeList',
+    component: () => import('../views/notices/NoticeList.vue')
+  },
+  {
+    path: '/notices/:id',
+    name: 'NoticeDetail',
+    component: () => import('../views/notices/NoticeDetail.vue')
+  },
+  {
+    path: '/appointment',
+    name: 'Appointment',
+    component: () => import('../views/appointment/Appointment.vue')
+  },
+
+  {
+  path: '/appointment',
+  component: () => import('../views/appointment/Appointment.vue'),
+},
+
+{
   path: '/admin',
   component: AdminLayout,
   children: [
@@ -33,17 +84,7 @@ const routes = [
       {
         path: 'counselor',
         component: () => import('../views/admin/Counselor.vue')
-      },
-
-      {
-        path: 'appoint',
-        component: () => import('../views/admin/Appointment.vue')
-      },
-
-      {
-      path: 'schedule',
-      component: () => import('../views/admin/schedule/ScheduleCenter.vue')
-    }
+      }
 
       /*...*/
     ]

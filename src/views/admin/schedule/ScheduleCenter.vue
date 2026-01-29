@@ -10,12 +10,6 @@
         <option>南坝校区</option>
       </select>
 
-      <select v-model="counselor">
-        <option v-for="c in counselors" :key="c.id">
-          {{ c.name }}
-        </option>
-      </select>
-
       <input type="date" v-model="viewDate" />
 
       <button @click="prevWeek">⬅ 上一周</button>
@@ -114,18 +108,18 @@ const viewDate = ref(semester.start);
 // 查看模式
 const viewMode = ref('week'); // week | day
 
-// 获取节假日（模拟接口）
+// 获取节假日
 const holidays = getHolidays();
 
-// 获取咨询师数据（模拟接口）
+// 获取咨询师数据
 const counselors = ref(getCounselors());
 
 const selectedCounselor = ref('');
 
-// 获取时间段（模拟接口）
+// 获取时间段
 const periods = ref(getPeriods());
 
-// 获取一周的日期（模拟接口）
+// 获取一周的日期
 const week = getWeek();
 
 // 排班数据

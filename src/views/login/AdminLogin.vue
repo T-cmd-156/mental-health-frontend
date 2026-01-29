@@ -38,7 +38,7 @@ const login = async () => {
     const res = await adminLogin(form.value)
 
     // 保存登录信息
-    localStorage.setItem('user', JSON.stringify(res.data))
+    .setItem('user', JSON.stringify(res.data))
     localStorage.setItem('role', form.value.role)
     localStorage.setItem('userId', form.value.username)
 

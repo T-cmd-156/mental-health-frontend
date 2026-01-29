@@ -100,7 +100,7 @@ export function getWeek() {
   return ['周一', '周二', '周三', '周四', '周五'];
 }
 
-// 根据学期生成排班
+// 根据周排班生成学期每周排版模板
 export function generateSchedule() {
   const schedule = [];
   const start = new Date('2026-03-01');
@@ -134,6 +134,7 @@ export function saveWeekTemplate(weekSchedule) {
   weekTemplate = JSON.parse(JSON.stringify(weekSchedule));
 }
 
+// 随机生成一学期每周的排班情况
 export function generateFromTemplate() {
   if (!weekTemplate) return [];
 
@@ -176,6 +177,3 @@ export function generateFromTemplate() {
 
   return result;
 }
-
-
-
