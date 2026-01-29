@@ -99,3 +99,6 @@ export function getPeriods() {
 export function getWeek() {
   return ['周一', '周二', '周三', '周四', '周五'];
 }
+
+
+
