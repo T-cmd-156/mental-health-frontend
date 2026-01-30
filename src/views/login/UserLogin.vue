@@ -421,11 +421,14 @@ const login = () => {
   })
 
   // 保存登录信息到本地存储
-  localStorage.setItem('role', identity.value === 'student' ? 'student' : 'parent')
-  localStorage.setItem('username', form.username)
-  
-  // 跳转到仪表盘
-  router.push('/dashboard')
+localStorage.setItem('token', 'student_token_' + Date.now())
+localStorage.setItem('role', 'student')
+
+// 登录成功后跳转
+  // 先获取重定向路径，如果没有就默认跳到仪表盘
+  const redirectPath = router.currentRoute.value.query.redirect || '/appointment/select'
+  console.log("Redirect Path:", redirectPath); // 打印重定向路径
+  router.push(redirectPath)
 }
 </script>
 

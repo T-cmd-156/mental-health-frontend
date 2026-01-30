@@ -12,6 +12,10 @@ export type AppointmentStatus =
   | 'submitted'        // 已提交
   | 'confirmed'        // 已确认
   | 'cancelled'        // 已取消
+  | 'checked_in'      // 已签到
+  | 'report_done'    // 咨询报告完成
+  | 'closed'         // 结案
+
 
 // 单条预约数据结构
 export interface Appointment {
@@ -36,6 +40,11 @@ export interface Appointment {
     stressLevel: number
   }
 
+  timeline: {
+    status: AppointmentStatus
+    time: string
+  }[]
+  
   signAt?: string
 }
 

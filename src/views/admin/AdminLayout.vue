@@ -42,18 +42,18 @@
     咨询师档案
   </div>
 
-  <!-- 智能排班：心理中心 + 管理员 -->
+  <!-- 智能排班：咨询师 -->
   <div class="item" 
-       v-if="role === 'center' || role === 'admin'"
-       @click="go('schedule')">
+       v-if="role === 'counselor'"
+       @click="go('schedule')"> <!--这里后面要改-->
     智能排班
   </div>
 
   <!-- 咨询师 -->
   <div class="item" 
        v-if="role === 'counselor'"
-       @click="go('mySchedule')">
-    我的排班
+       @click="go('schedule')">
+    智能排班
   </div>
 
 </aside>
@@ -85,7 +85,6 @@ const go = (page) => {
 }
 </script>
 
-const role = ref(localStorage.getItem('role'))
 
 
 

@@ -1,4 +1,4 @@
-import { getSemester, getCounselors, getHolidays, getPeriods,getWeek } from './mock'
+import { getSemester, getCounselors, getHolidays, getPeriods,getWeek } from '../api/mock'
 
 export {
   getCounselors,
@@ -11,8 +11,12 @@ export {
 // 内存排班数据（模拟数据库）
 let schedule = []
 
+const STORAGE_KEY = 'WEEK_TEMPLATE'
+
 // 根据周排班生成学期每周排版模板
 export function initSchedule() {
+  console.log('initSchedule 被调用')
+
   schedule = [];
   const start = new Date('2026-03-01');
   const end = new Date('2026-07-10');
@@ -36,11 +40,16 @@ export function initSchedule() {
     day.setDate(day.getDate() + 1);
   }
 
+  console.log('schedule size =', schedule.length)
   return schedule;
 }
 
 // 查询排班
 export function fetchSchedule() {
+    if (schedule.length === 0) {
+      console.warn('⚠ schedule 为空，自动 init')
+    initSchedule()
+  }
   return Promise.resolve([...schedule])
 }
 
@@ -59,10 +68,11 @@ export function clearSchedule(date, time) {
   return Promise.resolve({ code: 200 })
 }
 
-let weekTemplate = null;
+let weekTemplate = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
 
 export function saveWeekTemplate(weekSchedule) {
-  weekTemplate = JSON.parse(JSON.stringify(weekSchedule));
+  weekTemplate = JSON.parse(JSON.stringify(weekSchedule))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(weekTemplate))
 }
 
 // 随机生成一学期每周的排班情况
@@ -108,3 +118,12 @@ export function generateFromTemplate() {
 
   return result;
 }
+
+export function getWeekTemplate() {
+  if (!weekTemplate) {
+    const cache = localStorage.getItem(STORAGE_KEY)
+    weekTemplate = cache ? JSON.parse(cache) : null
+  }
+  return weekTemplate || []
+}
+

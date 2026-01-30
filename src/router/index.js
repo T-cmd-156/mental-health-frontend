@@ -11,7 +11,7 @@ const routes = [
     component: Home
   },
 
-  {
+{
   path: '/login/admin',
   component: AdminLogin
 },
@@ -60,35 +60,53 @@ const routes = [
     name: 'NoticeDetail',
     component: () => import('../views/notices/NoticeDetail.vue')
   },
-  {
-    path: '/appointment',
-    name: 'Appointment',
-    component: () => import('../views/appointment/Appointment.vue')
-  },
+{
+  path: '/my-appointment',
+  name: 'MyAppointment',
+  component: () => import('../views/appointment/MyAppointments.vue'),
+  meta: { needAuth: true }
+},
 
-  {
-  path: '/appointment',
+{
+  path: '/appointment/select',
+  component: () => import('../views/appointment/SelectSlot.vue'),
+   meta: { needAuth: true } 
+},
+
+{
+  path: '/appointment/:id',
   component: () => import('../views/appointment/Appointment.vue'),
+  meta: { needAuth: true }
+},
+
+{
+  path: '/appointment/:id/detail',
+  component: () => import('../views/appointment/AppointmentDetail.vue'),
+  meta: { needAuth: true }
 },
 
 {
   path: '/admin',
   component: AdminLayout,
+  meta: { needAuth: true },
   children: [
 
       {
         path: 'time',
-        component: () => import('../views/admin/TimeRule.vue')
+        component: () => import('../views/admin/TimeRule.vue'),
+        meta: { needAuth: true }
       },
 
       {
         path: 'counselor',
-        component: () => import('../views/admin/Counselor.vue')
+        component: () => import('../views/admin/Counselor.vue'),
+        meta: { needAuth: true }
       },
 
       {
         path: 'schedule',
-        component: () => import('../views/admin/schedule/ScheduleCenter.vue')
+        component: () => import('../views/admin/schedule/ScheduleCenter.vue'),
+        meta: { needAuth: true }
     }
 
       /*...*/
@@ -105,12 +123,22 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const role = localStorage.getItem('role')
+  const token = localStorage.getItem('token')
 
-  // 没登录 → 回登录页
-  if (to.path.startsWith('/admin') && !role) {
-    return next('/login/admin')
+  const needAuth = to.meta?.needAuth === true
+
+  
+  
+  // 如果该路由需要认证且用户未登录
+  if (needAuth && (!token || !role)) {
+    if (to.path.startsWith('/admin')) {
+      return next('/login/admin') // 跳转到管理员登录页面
+    } else {
+      return next({ path: '/login/user', query: { redirect: to.fullPath } }) // 跳转到用户登录页面
+    }
   }
 
+  console.log('允许访问', to.path)
   next()
 })
 

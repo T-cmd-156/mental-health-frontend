@@ -100,7 +100,7 @@ import {
   updateSchedule,
   clearSchedule,
   generateFromTemplate
-} from '../../../api/schedule'
+} from '../../../mock/schedule'
 
 
 // ===== 学期信息 =====

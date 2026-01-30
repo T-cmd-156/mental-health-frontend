@@ -1,3 +1,7 @@
+import { updateAppointmentStatus } from "../mock/appointment"
+import { AppointmentStatus } from "../types/appointment"
+import { fetchSchedule } from "../mock/schedule";
+
 // ===== 模拟管理员账号 =====
 export const adminUsers = [
   {
@@ -23,7 +27,7 @@ export const adminUsers = [
 ]
 
 // ===== 模拟登录接口 =====
-export function adminLogin(data) {
+export function adminLogin(data: { username: string; password: string; role: string }) {
   const user = adminUsers.find(
     u =>
       u.username === data.username &&
@@ -98,6 +102,16 @@ export function getPeriods() {
 // 一周的日期数据
 export function getWeek() {
   return ['周一', '周二', '周三', '周四', '周五'];
+}
+
+export function mockFlow(id: string) {
+  const steps = ['confirmed', 'checked_in', 'report_done', 'closed']
+  let i = 0
+  const timer = setInterval(() => {
+    if (i >= steps.length) return clearInterval(timer)
+    updateAppointmentStatus(id, steps[i] as AppointmentStatus)
+    i++
+  }, 2000)
 }
 
 

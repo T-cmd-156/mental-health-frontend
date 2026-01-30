@@ -134,9 +134,19 @@ const goLogin = (type) => {
 }
 
 const goAppointment = () => {
-  router.push('/appointment')
-}
 
+  const token = localStorage.getItem('token')
+  const role = localStorage.getItem('role')
+
+  // 检查是否有 token 和 role
+  if (!token || !role) {
+    // 如果没有登录，跳转到登录页面
+    router.push('/login/user')  // 根据需要跳转到用户登录页面
+  } else {
+    // 已登录，跳转到预约页面
+  router.push('/appointment/select')
+}
+}
 // 详情页面
 </script>
 
