@@ -60,15 +60,16 @@ const routes = [
     name: 'NoticeDetail',
     component: () => import('../views/notices/NoticeDetail.vue')
   },
-  {
-    path: '/appointment',
-    name: 'Appointment',
-    component: () => import('../views/appointment/Appointment.vue')
-  },
+{
+  path: '/appointment/list',
+  name: 'MyAppointment',
+  component: () => import('../views/appointment/MyAppointments.vue')
+},
 
-  {
-  path: '/appointment',
-  component: () => import('../views/appointment/Appointment.vue'),
+{
+  path: '/appointment/:id',
+  name: 'AppointmentDetail',
+  component: () => import('../views/appointment/Appointment.vue')
 },
 
 {

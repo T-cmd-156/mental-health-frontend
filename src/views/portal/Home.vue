@@ -134,7 +134,7 @@ const goLogin = (type) => {
 }
 
 const goAppointment = () => {
-  router.push('/appointment')
+  router.push('/appointment/list')
 }
 
 // 详情页面

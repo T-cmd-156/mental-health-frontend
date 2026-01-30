@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted ,computed } from 'vue'
+import { ref, onMounted ,computed, watch } from 'vue'
 import {
   createAppointmentAsync,
   updateAppointmentStatusAsync,
 } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
+import { getVisitFormConfig, getScaleConfig, getConsentConfig } from '../../api/config'
+import { useRoute } from 'vue-router'
+import { getMyAppointmentsAsync } from '../../api/appointment'
+
+const route = useRoute()
 
 const currentStep = computed<'info' | 'scale' | 'sign' | 'done'>(()  => {
   if (!appointment.value) return 'info'
@@ -29,18 +34,20 @@ const currentStep = computed<'info' | 'scale' | 'sign' | 'done'>(()  => {
 // 当前预约
 const appointment = ref<Appointment | null>(null)
 
-const visitForm = ref({
-  reason: '',
-  emergencyContact: '',
-})
+const scaleForm = ref<Record<string, any>>({})
 
-const scaleForm = ref({
-  mood: '',
-  stressLevel: 0,
-})
+const doneScales = ref<string[]>([]) // 已完成的量表 id
+const activeScale = ref<string | null>(null) // 当前填写哪个
 
 const signFile = ref<File | null>(null)
 const signError = ref('')
+
+const visitForm = ref<Record<string, any>>({})
+const visitConfig = ref<any>(null)
+
+
+const scaleConfig = ref<any[]>([])
+const consentConfig = ref<any>(null)
 
 function handleFileChange(file: any) {
   signFile.value = file.raw
@@ -58,7 +65,11 @@ async function submitVisitInfo() {
     'info_done',
 
     {
-      visitInfo: { ...visitForm.value },
+      visitInfo: {
+        ...visitForm.value,
+        reason: '',
+        emergencyContact: ''
+      },
     }
   )
 
@@ -70,20 +81,34 @@ async function submitVisitInfo() {
 
 //前测量表提交
 async function submitScale() {
-  if (!appointment.value) return
+  if (!appointment.value || !activeScale.value ) return
   console.log('🔥 重新计算 currentStep，status =', appointment.value?.status)
 
-  const res = await updateAppointmentStatusAsync(
-    appointment.value.id,
-    'scale_done',
-  {
-    scaleResult: { ...scaleForm.value },
+    if (!doneScales.value.includes(activeScale.value)) {
+    doneScales.value.push(activeScale.value)
   }
-)
 
-  if (res.code === 200) {
-    appointment.value ={ ...res.data }
-    console.log('前测完成', res.data )
+  activeScale.value = null
+
+  // 如果全部量表都完成，才进入下一步
+  const allDone = scaleConfig.value.every(
+    s => !s.enabled || doneScales.value.includes(s.id)
+  )
+
+  if (allDone) {
+    const res = await updateAppointmentStatusAsync(
+      appointment.value.id,
+      'scale_done',
+      { scaleResult: {
+        ...doneScales.value,
+        mood: '',
+        stressLevel: 0
+      } }
+    )
+
+    if (res.code === 200) {
+      appointment.value = { ...res.data }
+    }
   }
 }
 
@@ -110,38 +135,60 @@ async function submitSign() {
 }
 
 onMounted(async () => {
-  // 这里先写死，后面再接真实用户 / 排班
-  const studentId = 'student_001'
-  const counselorId = 'C1'
+  const id = route.params.id as string
+  const studentId = 'student_001' // 先写死，后面接登录态
 
-  const res = await createAppointmentAsync({
-    studentId,
-    counselorId,
-    appointmentDate: '2026-04-10',
-    appointmentTime: '09:00-09:50',
-  })
+  const res = await getMyAppointmentsAsync(studentId)
+  const found = res.data.find(a => a.id === id)
 
-  if (res.code === 200) {
-    appointment.value = { ...res.data }
-    console.log('预约已创建（draft）', { ...res.data })
+  if (!found) {
+    console.error('找不到预约', id)
+    return
   }
+
+  appointment.value = { ...found }
+})
+
+
+onMounted(async () => {
+  visitConfig.value = (await getVisitFormConfig()).data
+  scaleConfig.value = (await getScaleConfig()).data.filter(i => i.enabled)
+  consentConfig.value = (await getConsentConfig()).data
+})
+
+watch(visitConfig, (cfg) => {
+  if (!cfg) return
+  cfg.fields.forEach((f: { key: string | number }) => {
+    visitForm.value[f.key] = ''
+  })
+})
+
+watch(scaleConfig, (list) => {
+  list.forEach(s => {
+    scaleForm.value[s.key] = s.type === 'rate' ? 0 : ''
+  })
 })
 
 </script>
 
 <template>
+  <div v-if="!appointment">
+    <el-empty description="暂无预约，请从预约列表进入" />
+  </div>
+  
   <!-- 来访登记 -->
   <div v-if="appointment && currentStep === 'info'" class="step-info">
     <h3>来访登记</h3>
 
     <el-form :model="visitForm" label-width="120px">
-      <el-form-item label="来访原因">
-        <el-input v-model="visitForm.reason" placeholder="请填写来访原因" />
-      </el-form-item>
-
-      <el-form-item label="紧急联系人">
-        <el-input v-model="visitForm.emergencyContact" />
-      </el-form-item>
+  <el-form-item
+    v-for="f in visitConfig.fields"
+    :key="f.key"
+    :label="f.label"
+    :required="f.required"
+  >
+    <el-input v-model="visitForm[f.key]" />
+  </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitVisitInfo">
@@ -152,28 +199,52 @@ onMounted(async () => {
   </div>
 
   <!-- 前测量表 -->
-  <div v-if="appointment && currentStep === 'scale'" class="step-scale">
-    <h3>前测量表</h3>
+<!-- 前测量表 -->
+<div v-if="appointment && currentStep === 'scale'" class="step-scale">
+  <h3>前测量表</h3>
 
-    <el-form :model="scaleForm" label-width="120px">
-      <el-form-item label="当前情绪">
-        <el-input
-          v-model="scaleForm.mood"
-          placeholder="例如：焦虑 / 低落 / 平稳"
-        />
-      </el-form-item>
+  <!-- 量表列表 -->
+<div v-if="!activeScale">
+  <template v-for="s in scaleConfig" :key="s.id">
+    <el-card
+      v-if="s.enabled"
+      style="margin-bottom:12px"
+    >
+      <div style="display:flex;justify-content:space-between">
+        <span>{{ s.title }}</span>
 
-      <el-form-item label="压力程度">
-        <el-rate v-model="scaleForm.stressLevel" :max="5" />
-      </el-form-item>
+        <el-tag v-if="doneScales.includes(s.id)" type="success">
+          已完成
+        </el-tag>
 
-      <el-form-item>
-        <el-button type="primary" @click="submitScale">
-          下一步
+        <el-button
+          v-else
+          size="small"
+          type="primary"
+          @click="activeScale = s.id"
+        >
+          开始填写
         </el-button>
-      </el-form-item>
-    </el-form>
+      </div>
+    </el-card>
+  </template>
+</div>
+
+  <!-- 量表填写页（占位） -->
+  <div v-else>
+    <h4>正在填写：{{ activeScale }}</h4>
+
+    <el-input
+      v-model="scaleForm[activeScale]"
+      placeholder="这里后续可以替换成真实题目"
+    />
+
+    <el-button type="primary" @click="submitScale">
+      提交该量表
+    </el-button>
   </div>
+</div>
+
 
     <!-- ③ 电子签名 -->
     <div v-if="appointment && currentStep === 'sign'" class="step-sign">
