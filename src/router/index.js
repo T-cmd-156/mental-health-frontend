@@ -121,25 +121,34 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
-  const role = localStorage.getItem('role')
-  const token = localStorage.getItem('token')
-
   const needAuth = to.meta?.needAuth === true
 
-  
-  
-  // 如果该路由需要认证且用户未登录
-  if (needAuth && (!token || !role)) {
-    if (to.path.startsWith('/admin')) {
-      return next('/login/admin') // 跳转到管理员登录页面
-    } else {
-      return next({ path: '/login/user', query: { redirect: to.fullPath } }) // 跳转到用户登录页面
+  // 1. 管理端
+  if (to.path.startsWith('/admin')) {
+    const token = localStorage.getItem('admin_token')
+    const role = localStorage.getItem('admin_role')
+
+    if (needAuth && (!token || role !== 'admin')) {
+      return next('/login/admin')
     }
+    return next()
   }
 
-  console.log('允许访问', to.path)
-  next()
+  // 2. 学生/家长端（凡是需要登录的非 admin 页面）
+  if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment')) {
+
+  const token = localStorage.getItem('user_token');
+  const role = localStorage.getItem('user_role');
+
+  if (needAuth && (!token || !role)) {
+    return next({
+      path: '/login/user',
+      query: { redirect: to.fullPath }
+    });
+  }
+}
+
+  next();
 })
 
 

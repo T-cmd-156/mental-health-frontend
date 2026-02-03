@@ -43,7 +43,10 @@ const login = async () => {
     localStorage.setItem('userId', form.value.username)
 
     // 补一个 token
-    localStorage.setItem('token', 'admin_token_' + Date.now())
+    localStorage.setItem('admin_token', 'admin_' + Date.now())
+    localStorage.setItem('admin_role', 'admin')
+
+
     alert('登录成功')
 
     router.push('/admin')

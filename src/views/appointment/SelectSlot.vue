@@ -46,16 +46,6 @@ import { getSemester } from '../../api/mock'
 const router = useRouter()
 
 
-// 从 localStorage 获取登录状态
-const token = localStorage.getItem('token')
-
-// 如果没有 token，跳转到登录页面
-onMounted(() => {
-  if (!token) {
-    router.push('/login/user') // 跳转到登录页面
-  }
-})
-
 // 从父组件或路由传日期
 // const selectedDate = ref(new Date().toISOString().slice(0, 10))
 
