@@ -86,6 +86,12 @@ const routes = [
 },
 
 {
+  path: '/appointment/:id',
+  name: 'AppointmentDetail',
+  component: () => import('../views/appointment/Appointment.vue')
+},
+
+{
   path: '/admin',
   component: AdminLayout,
   meta: { needAuth: true },

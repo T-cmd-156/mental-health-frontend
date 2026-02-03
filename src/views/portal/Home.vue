@@ -134,6 +134,8 @@ const goLogin = (type) => {
 }
 
 const goAppointment = () => {
+  router.push('/appointment/select')
+}
 
   const token = localStorage.getItem('token')
   const role = localStorage.getItem('role')
@@ -145,7 +147,6 @@ const goAppointment = () => {
   } else {
     // 已登录，跳转到预约页面
   router.push('/appointment/select')
-}
 }
 // 详情页面
 </script>
