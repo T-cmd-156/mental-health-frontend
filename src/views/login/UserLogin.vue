@@ -394,6 +394,11 @@ const submitRegister = () => {
 
   console.log('注册信息：', registerData)
 
+  // 将注册信息存储到localStorage
+  let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
+  users.push(registerData)
+  localStorage.setItem('registeredUsers', JSON.stringify(users))
+
   alert('注册成功！请登录')
   showRegisterModal.value = false
   
@@ -414,6 +419,21 @@ const login = () => {
     return
   }
 
+  // 检查用户是否已注册
+  const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
+  const user = users.find(u => u.username === form.username && u.role === (identity.value === 'student' ? 'student' : 'parent'))
+
+  if (!user) {
+    alert('账号未注册，请先注册')
+    return
+  }
+
+  // 检查密码是否正确
+  if (user.password !== form.password) {
+    alert('密码错误')
+    return
+  }
+
   // 模拟登录逻辑
   console.log('登录信息：', {
     identity: identity.value,
@@ -421,12 +441,12 @@ const login = () => {
   })
 
   // 保存登录信息到本地存储
-localStorage.setItem('user_token', 'student_' + Date.now())
-localStorage.setItem('user_role', 'student')
+  localStorage.setItem('user_token', 'student_' + Date.now())
+  localStorage.setItem('user_role', identity.value === 'student' ? 'student' : 'parent')
 
-// 登录成功后跳转
+  // 登录成功后跳转
   // 先获取重定向路径，如果没有就默认跳到仪表盘
-  const redirectPath = router.currentRoute.value.query.redirect ;
+  const redirectPath = router.currentRoute.value.query.redirect || '/dashboard'
   console.log("Redirect Path:", redirectPath); // 打印重定向路径
   router.push(redirectPath)
 }
