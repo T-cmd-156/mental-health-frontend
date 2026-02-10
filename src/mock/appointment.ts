@@ -1,8 +1,7 @@
-import { clearSchedule, fetchSchedule, generateFromTemplate, getWeekTemplate } from './schedule'
+import { clearSchedule, fetchSchedule, generateFromTemplate, getWeekTemplate  } from './schedule'
 import type { Appointment, AppointmentStatus } from '../types/appointment'
+import { db } from './db'
 
-// ===== 假数据库 =====
-const appointmentDB: Appointment[] = []
 
 const schedule = getWeekTemplate()
 // ===== 工具函数 =====
@@ -15,16 +14,20 @@ function generateId() {
 }
 
 // 创建预约（学生点“开始预约”）
-export function createAppointment(data: {
+export function createAppointmentForStudent(data: {
   studentId: string
   counselorId: string
+  counselorName: string
   appointmentDate: string
   appointmentTime: string
 }) {
+
+
   const appointment: Appointment = {
     id: generateId(),
     studentId: data.studentId,
     counselorId: data.counselorId,
+    counselorName: data.counselorName,  // 张老师
     appointmentDate: data.appointmentDate,
     appointmentTime: data.appointmentTime,
 
@@ -37,7 +40,8 @@ export function createAppointment(data: {
 
   }
 
-  appointmentDB.push(appointment)
+db.pushAppointment(appointment)
+console.log('已写入db:', db.appointments.map(a => a.id))//调试
 
   return Promise.resolve({
     code: 200,
@@ -51,28 +55,32 @@ export async function updateAppointmentStatus(
   status: AppointmentStatus,
   payload?: Partial<Appointment>,
 ) {
-  const appointment = appointmentDB.find(a => a.id === id)
+  const ok = db.updateAppointment(id, a => {
+    a.status = status
+    a.update_time = now()
 
-  if (!appointment) {
-      return Promise.reject({
+    a.timeline.push({
+      status,
+      time: now(),
+    })
+
+    if (payload) {
+      Object.assign(a, payload)
+    }
+  })
+
+  if (!ok) {
+    console.error('db里有:', db.appointments.map(a => a.id))
+    console.error('要找的:', id)
+    return Promise.reject({
       code: 404,
       msg: '预约不存在',
     })
   }
 
-  appointment.status = status
-  appointment.update_time = now()
+  const appointment = db.appointments.find(a => a.id === id)!
 
-  appointment.timeline.push({
-  status,
-  time: now()
-})
-
-    if (payload) {
-    Object.assign(appointment, payload)
-  }
-
-    if (status === 'confirmed') {
+  if (status === 'confirmed') {
     await clearSchedule(
       appointment.appointmentDate,
       appointment.appointmentTime
@@ -85,9 +93,19 @@ export async function updateAppointmentStatus(
   })
 }
 
+
+// ===== 咨询师端：查询自己的预约 =====
+export function getAppointmentsByCounselor(counselorId: string) {
+   const list = db.appointments.filter(a => a.counselorId === counselorId)
+  return Promise.resolve({
+    code: 200,
+    data: db.appointments  // 过滤
+  })
+}
+
 // 查询学生的预约列表
 export function getAppointmentsByStudent(studentId: string) {
-  const list = appointmentDB.filter(a => a.studentId === studentId)
+  const list = db.appointments.filter(a => a.studentId === studentId)
 
   return Promise.resolve({
     code: 200,
@@ -108,14 +126,14 @@ export async function getAvailableSlots(date: string) {
    console.log('所有排班条数:', schedule.length)
   // 已被预约的时间
   const target = toDay(date)
-  const used = appointmentDB
+  const used = db.appointments
     .filter((a: Appointment) => toDay(a.appointmentDate) === target)
     .map(a => a.appointmentTime)
 
   console.log('示例排班日期:', schedule[0]?.date, typeof schedule[0]?.date)
   console.log('转化后:', toDay(schedule[0]?.date))
 
-  const result = schedule.filter((s: { date: string | Date; time: string }) => {
+  const result = schedule.filter((s: { date: string | Date; time: string, counselorId: string, counselorName: string }) => {
     return toDay(s.date) === target && !used.includes(s.time)
   })
 
@@ -142,4 +160,7 @@ export async function getAvailableDates(start: string, days = 10) {
 
   return Array.from(set).sort()
 }
+
+
+
 

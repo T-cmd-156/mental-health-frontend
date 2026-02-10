@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted ,computed, watch } from 'vue'
 import {
-  createAppointmentAsync,
   updateAppointmentStatusAsync,
 } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
 import { getVisitFormConfig, getScaleConfig, getConsentConfig } from '../../api/config'
 import { useRoute } from 'vue-router'
 import { getMyAppointmentsAsync } from '../../api/appointment'
+import { generateFromTemplate } from '../../mock/schedule'
+
+// 咨询师只是维护排班，不是创建预约
+generateFromTemplate()
+
 
 const route = useRoute()
 
@@ -48,6 +52,8 @@ const visitConfig = ref<any>(null)
 
 const scaleConfig = ref<any[]>([])
 const consentConfig = ref<any>(null)
+
+const studentId = localStorage.getItem('student_id')
 
 function handleFileChange(file: any) {
   signFile.value = file.raw
@@ -136,7 +142,6 @@ async function submitSign() {
 
 onMounted(async () => {
   const id = route.params.id as string
-  const studentId = 'student_001' // 先写死，后面接登录态
 
   const res = await getMyAppointmentsAsync(studentId)
   const found = res.data.find(a => a.id === id)

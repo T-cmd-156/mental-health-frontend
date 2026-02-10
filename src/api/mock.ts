@@ -4,34 +4,60 @@ import { fetchSchedule } from "../mock/schedule";
 
 // ===== 模拟管理员账号 =====
 export const adminUsers = [
+{
+  id: 'center_1',
+  username: 'center',
+  password: '123456',
+  role: 'center',
+  name: '心理中心'
+},
+  // {
+  //   username: 'counselor',
+  //   password: '123456',
+  //   role: '咨询师'
+  // },
   {
-    username: 'center',
+    id: 'tutor_1',
+    username: 'tutor',
     password: '123456',
-    role: '心理中心'
+    role: 'tutor',
+    name: '辅导员'
   },
+    
   {
-    username: 'counselor',
-    password: '123456',
-    role: '咨询师'
-  },
-  {
-    username: 'instructor',
-    password: '123456',
-    role: '辅导员'
-  },
-    {
+    id: 'admin_1',  
     username: 'admin',
     password: '123',
-    role: '管理员'
+    role: 'admin',
+    name: '管理员'
+  },
+
+  {
+    id: 'c_zhang',
+    username: 'zhang',
+    password: '123456',
+    role: 'counselor',
+    name: '张老师'
+  },
+  
+  {
+    id: 'c_feng',
+    username: 'feng',
+    password: '123456',
+    role: 'counselor',
+    name: '冯老师'
   }
 ]
+
+
 
 // ===== 模拟登录接口 =====
 export function adminLogin(data: { username: string; password: string; role: string }) {
   const user = adminUsers.find(
     u =>
       u.username === data.username &&
-      u.password === data.password
+      u.password === data.password &&
+      u.role === data.role   // 角色匹配
   )
 
   return new Promise((resolve, reject) => {

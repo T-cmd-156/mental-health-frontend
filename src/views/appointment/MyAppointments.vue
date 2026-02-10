@@ -38,26 +38,27 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getMyAppointmentsAsync } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
-import { createAppointmentAsync } from '../../api/appointment'
 
 const list = ref<Appointment[]>([])
 
 
 const router = useRouter()
 
+const studentId = localStorage.getItem('student_id')!
+
+onMounted(async () => {
+  const res = await getMyAppointmentsAsync(studentId)
+  list.value = res.data
+})
+
 function createNew() {
   router.push('/appointment/select') // 预约时间
 }
 
-onMounted(async () => {
-  const res = await getMyAppointmentsAsync('student_001')
-  list.value = res.data
-})
 
 function go(id: string) {
   router.push(`/appointment/${id}`) //进入已有
 }
-
 
 
 </script>

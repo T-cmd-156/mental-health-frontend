@@ -133,10 +133,11 @@ const goLogin = (type) => {
   router.push(type === 'admin' ? '/login/admin' : '/login/user')
 }
 
+// 学生预约前先登录
 const goAppointment = () => {
 
-  const token = localStorage.getItem('user_token')
-  const role = localStorage.getItem('user_role')
+  const token = localStorage.getItem('User_token')
+  const role = localStorage.getItem('User_role')
 
   // 检查是否有 token 和 role
   if (!token || !role) {

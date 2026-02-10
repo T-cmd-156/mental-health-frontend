@@ -142,7 +142,7 @@ onMounted(async () => {
 const show = (col, t) => {
   const dateKey = viewMode.value === 'week' ? col.date : col.date;
   const s = schedule.value.find(i => i.date === dateKey && i.time === t);
-  return s ? s.counselor : '';
+  return s ? s.counselorName : '';
 }
 
 const useTemplate = () => {
@@ -214,7 +214,7 @@ const getCell = (col, t) => {
   if (!s) return 'free';
 
   if (selectedCounselor.value) {
-    return s.counselor === selectedCounselor.value ? 'mine' : 'other';
+    return s.counselorId === selectedCounselor.value ? 'mine' : 'other';
   }
 
   return 'busy';
@@ -241,7 +241,12 @@ const changeCounselor = async(col, t) => {
   const c = counselors.value[Number(r) - 1];
   if (!c) return;
 
-  await updateSchedule({date: dateKey, time: t, counselor: c.name })
+  await updateSchedule({
+  date: dateKey,
+  time: t,
+  counselorId: c.id,
+  counselorName: c.name,
+})
   }
 
   schedule.value = await fetchSchedule()

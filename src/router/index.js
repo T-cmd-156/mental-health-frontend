@@ -21,6 +21,11 @@ const routes = [
 },
 
 {
+  path: '/login/counselor',
+  component: () => import('../views/login/CounselorLogin.vue')
+},
+
+{
     path: '/wiki',
     name: 'WikiList',
     component: () => import('../views/wiki/WikiList.vue')
@@ -94,24 +99,35 @@ const routes = [
       {
         path: 'time',
         component: () => import('../views/admin/TimeRule.vue'),
-        meta: { needAuth: true }
+          meta: { 
+          needAuth: true,
+          roles: ['admin', 'center', 'counselor', 'tutor']
+  }
       },
 
       {
         path: 'counselor',
         component: () => import('../views/admin/Counselor.vue'),
-        meta: { needAuth: true }
+        meta: { needAuth: true,roles:['admin']  }
       },
 
       {
         path: 'schedule',
         component: () => import('../views/admin/schedule/ScheduleCenter.vue'),
-        meta: { needAuth: true }
+        meta: { needAuth: true,roles: ['center'] }
+    },
+
+      {
+      path: 'counselor-work',
+      component: () => import('../views/counselor/Dashboard.vue'),
+      meta: { needAuth: true, roles: ['counselor'] }
     }
+
 
       /*...*/
     ]
 }
+
 
 ]
 
@@ -124,21 +140,35 @@ router.beforeEach((to, from, next) => {
   const needAuth = to.meta?.needAuth === true
 
   // 1. 管理端
-  if (to.path.startsWith('/admin')) {
-    const token = localStorage.getItem('admin_token')
-    const role = localStorage.getItem('admin_role')
+if (to.path.startsWith('/admin')) {
+  const token = localStorage.getItem('admin_token')
+  const role = localStorage.getItem('admin_role')
 
-    if (needAuth && (!token || role !== 'admin')) {
-      return next('/login/admin')
-    }
-    return next()
+  const allowRoles = ['admin', 'counselor', 'center', 'tutor', 'college', 'leader']
+
+
+  // 第一层：判断是否后台用户
+  if (needAuth && (!token || !allowRoles.includes(role))) {
+    return next('/login/admin')
   }
 
+  
+  // 第二层：是否有该页面权限
+  const routeRoles = to.meta?.roles
+  if (routeRoles && !routeRoles.includes(role)) {
+    return next('/login/admin') // 或 /login/admin
+  }
+  return next()
+}
+
+  
   // 2. 学生/家长端（凡是需要登录的非 admin 页面）
   if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment')) {
 
-  const token = localStorage.getItem('user_token');
-  const role = localStorage.getItem('user_role');
+  localStorage.getItem('student_id')
+
+  const token = localStorage.getItem('User_token');
+  const role = localStorage.getItem('User_role');
 
   if (needAuth && (!token || !role)) {
     return next({
@@ -147,6 +177,17 @@ router.beforeEach((to, from, next) => {
     });
   }
 }
+
+  // 3. 咨询师端
+  if (to.path.startsWith('/counselor')) {
+    const token = localStorage.getItem('user_token')
+    const role = localStorage.getItem('user_role')
+
+    if (to.meta?.needAuth && (!token || role !== 'counselor')) {
+      return next('/login/admin')
+    }
+    return next()
+  }
 
   next();
 })

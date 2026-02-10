@@ -22,6 +22,7 @@ export interface Appointment {
   id: string                 // 预约id
   studentId: string          // 学生id
   counselorId: string        // 咨询师id
+  counselorName: string      // 咨询师名字
   appointmentDate: string    // 预约日期
   appointmentTime: string    // 时间段
 
@@ -48,4 +49,13 @@ export interface Appointment {
   signAt?: string
 }
 
+// 新增排班结构
+export interface Schedule {
+  id: string
+  counselorId: string
+  counselorName: string
+  date: string          // yyyy-mm-dd
+  time: string          // e.g., '10:00-11:00'
+  status: 'free' | 'booked' | 'done'
+}
 

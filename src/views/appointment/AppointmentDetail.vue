@@ -4,7 +4,7 @@
 
     <el-timeline>
       <el-timeline-item
-        v-for="(item, index) in appointment?.timeline"
+        v-for="(item, index) in timeline"
         :key="index"
         :timestamp="item.time"
         :type="item.status === appointment?.status ? 'primary' : 'info'"
@@ -16,13 +16,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { getMyAppointmentsAsync } from '../../api/appointment'
 import type { Appointment, AppointmentStatus } from '../../types/appointment'
 
 const route = useRoute()
 const appointment = ref<Appointment | null>(null)
+
+const statusFlow: AppointmentStatus[] = [
+  'draft',
+  'info_done',
+  'scale_done',
+  'sign_done',
+  'completed',
+  'confirmed',
+  'checked_in',
+  'report_done',
+  'closed'
+]
+
+
+const timeline = computed(() => {
+  if (!appointment.value) return []
+
+  const currentIndex = statusFlow.indexOf(appointment.value.status)
+
+  return statusFlow.slice(0, currentIndex + 1).map((s, idx) => ({
+    status: s,
+    time: idx === currentIndex ? '当前' : ''
+  }))
+})
+
+console.log('route.params.id =', route.params.id)
+console.log('当前预约状态 =', appointment.value?.status)//调试
 
 const statusText: Partial<Record<AppointmentStatus, string>> = {
   draft: '已创建预约',
@@ -37,8 +64,15 @@ const statusText: Partial<Record<AppointmentStatus, string>> = {
 }
 
 onMounted(async () => {
-  const res = await getMyAppointmentsAsync('student_001')
-  appointment.value = res.data.find(i => i.id === route.params.id)?? null
+  const sid = localStorage.getItem('student_id')!
+  if (!sid) return
   
+  const res = await getMyAppointmentsAsync(sid)
+  console.log('接口返回的全部 id：', res.data.map(i => i.id))
+    appointment.value = res.data.find(
+    i => i.id === route.params.id
+  ) ?? null
+
+  console.log('当前预约状态 =', appointment.value?.status)
 })
 </script>

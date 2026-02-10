@@ -23,7 +23,7 @@
     <el-table :data="slots">
       <el-table-column prop="date" label="日期" />
       <el-table-column prop="time" label="时间" />
-      <el-table-column prop="counselor" label="咨询师" />
+      <el-table-column prop="counselorName" label="咨询师" />
 
       <el-table-column label="操作">
         <template #default="{ row }">
@@ -40,8 +40,9 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { getAvailableSlots, getAvailableDates } from '../../mock/appointment'
-import { createAppointmentAsync } from '../../api/appointment'
+import { createAppointmentForStudent } from '../../mock/appointment'
 import { getSemester } from '../../api/mock'
+import { valueEquals } from 'element-plus'
 
 const router = useRouter()
 
@@ -54,6 +55,7 @@ const selectedDate = ref('') // 测试用，保证在排班范围内
 
 const slots = ref<any[]>([])
 
+const studentId = localStorage.getItem('student_id')
 onMounted(async () => {
   const semester = getSemester()
   const start = semester.start   // 学期开学日
@@ -63,16 +65,27 @@ onMounted(async () => {
 
 watch(selectedDate, async (d) => {
   if (!d) return
-  slots.value = await getAvailableSlots(d)
+  const res = await getAvailableSlots(d)
+  slots.value = res
+  console.log('slots原始数据:', res)
 })
 
 const choose = async (slot: any) => {
-  const res = await createAppointmentAsync({
-    studentId: 'student_001',
-    counselorId: slot.counselor,
+  const res = await createAppointmentForStudent({
+    studentId,
+    counselorId: slot.counselorId,
+    counselorName: slot.counselorName,
     appointmentDate: slot.date,
     appointmentTime: slot.time,
   })
+
+  console.log('已写入db的预约：', res.data)
+
+console.log('选择的 slot:', slot)
+console.log('studentId:', studentId)
+
+
+  console.log('所有 localStorage key:', Object.keys(localStorage))
 
   if (res.code === 200) {
     router.push(`/appointment/${res.data.id}`)
@@ -81,7 +94,7 @@ const choose = async (slot: any) => {
 
 // 点击按钮时跳转到我的预约页面
 function goToAppointments() {
-  router.push('/my-appointment')  // 假设你的预约列表页面路径是 /appointment/my
+  router.push('/my-appointment')  // 预约列表页面路径
 }
 
 </script>

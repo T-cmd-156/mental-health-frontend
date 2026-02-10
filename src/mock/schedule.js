@@ -11,7 +11,7 @@ export {
 // 内存排班数据（模拟数据库）
 let schedule = []
 
-const STORAGE_KEY = 'WEEK_TEMPLATE'
+const STORAGE_KEY = 'MOCK_WEEK_TEMPLATE'
 
 // 根据周排班生成学期每周排版模板
 export function initSchedule() {
@@ -30,11 +30,14 @@ export function initSchedule() {
     }
 
     const ds = day.toISOString().slice(0, 10);
+    
     getPeriods().forEach((time) => {
+      const c = getCounselors()[Math.floor(Math.random() * getCounselors().length)]
       schedule.push({
         date: ds,
         time,
-        counselor: getCounselors()[Math.floor(Math.random() * getCounselors().length)].name,
+        counselorId: c.id,
+        counselorName: c.name,
       });
     });
     day.setDate(day.getDate() + 1);
@@ -54,10 +57,13 @@ export function fetchSchedule() {
 }
 
 // 修改排班
-export function updateSchedule({ date, time, counselor }) {
+export function updateSchedule({ date, time, counselorId, counselorName }) {
   const idx = schedule.findIndex(i => i.date === date && i.time === time)
-  if (idx !== -1) schedule[idx].counselor = counselor
-  else schedule.push({ date, time, counselor })
+  if (idx !== -1)  {
+    schedule[idx].counselorId = counselorId
+    schedule[idx].counselorName = counselorName
+  }
+  else schedule.push({ date, time, counselorId, counselorName })
 
   return Promise.resolve({ code: 200 })
 }
@@ -94,7 +100,7 @@ export function generateFromTemplate() {
     }
 
     const ds = day.toISOString().slice(0, 10);
-    const templateDay = weekTemplate.find(
+    const templateDay = weekTemplate.filter(
       i => new Date(i.date).getDay() === wd
     );
 
@@ -107,7 +113,8 @@ export function generateFromTemplate() {
           result.push({
             date: ds,
             time,
-            counselor: t.counselor,
+            counselorId: t.counselorId,
+            counselorName: t.counselorName,
           });
         }
       });
@@ -122,8 +129,34 @@ export function generateFromTemplate() {
 export function getWeekTemplate() {
   if (!weekTemplate) {
     const cache = localStorage.getItem(STORAGE_KEY)
-    weekTemplate = cache ? JSON.parse(cache) : null
+    weekTemplate = cache ? JSON.parse(cache) : []
   }
-  return weekTemplate || []
+  return weekTemplate 
 }
 
+export function initWeekTemplate() {
+  const cache = localStorage.getItem(STORAGE_KEY)
+  if (cache) return   // 已经有就不覆盖
+  const demo = [
+    {
+      date: '2026-03-02',
+      time: '09:00-09:50',
+      counselorId: 'c_zhang',
+      counselorName: '张老师'
+    },
+    {
+      date: '2026-03-02',
+      time: '10:00-10:50',
+      counselorId: 'c_li',
+      counselorName: '李老师'
+    },
+    {
+      date: '2026-03-03',
+      time: '09:00-09:50',
+      counselorId: 'c_zhang',
+      counselorName: '张老师'
+    }
+  ]
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(demo))
+}

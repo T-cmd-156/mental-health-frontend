@@ -18,9 +18,6 @@
         <span class="nav">心理健康管理</span>
         <span class="nav">资助管理</span>
 
-        <span class="user">
-          登录用户：{{ userId }}
-        </span>
       </div>
     </header>
 
@@ -42,26 +39,26 @@
     咨询师档案
   </div>
 
-  <!-- 智能排班：咨询师 -->
+  <!-- 智能排班：心理中心 -->
   <div class="item" 
-       v-if="role === 'counselor'"
+       v-if="role === 'center'"
        @click="go('schedule')"> <!--这里后面要改-->
     智能排班
   </div>
 
-  <!-- 咨询师 -->
-  <div class="item" 
-       v-if="role === 'counselor'"
-       @click="go('schedule')">
-    智能排班
-  </div>
+<!-- 咨询师 -->
+<div class="item"
+     v-if="role === 'counselor'"
+     @click="go('counselor-work')">
+  我的咨询
+</div>
 
 </aside>
 
 
       <!-- 右侧工作区 -->
       <section class="content">
-        <h3>欢迎进入管理员工作台</h3>
+        <h3>欢迎进入 {{ roleName }} 工作台</h3>
         <router-view />
       </section>
 
@@ -72,12 +69,31 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 
 const router = useRouter()
 
 /// ===== 从登录信息读取 =====
-const userId = ref(localStorage.getItem('userId'))
-const role = ref(localStorage.getItem('role'))
+const userId = ref(localStorage.getItem('user_id'))
+const role = ref(localStorage.getItem('user_role'))
+
+// 从 localStorage 里读当前角色
+const admin_role = localStorage.getItem('admin_role')
+const admin_token = localStorage.getItem('admin_token')
+// 角色 → 中文名映射
+const roleMap = {
+  admin: '管理员',
+  counselor: '咨询师',
+  center: '心理中心',
+  college: '二级学院',
+  leader: '校领导',
+  tutor: '辅导员'
+}
+
+// 计算显示名称
+const roleName = computed(() => {
+  return roleMap[admin_role] || '用户'
+})
 
 // 跳转
 const go = (page) => {
