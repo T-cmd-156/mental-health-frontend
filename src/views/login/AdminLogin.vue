@@ -49,9 +49,10 @@ const ROLE_MAP = {
 const login = async () => {
   try {
     const res = await adminLogin(form.value)
+    console.log('接口原始返回 res = ', res)
 
     const user = res.data
-
+    console.log('res.data = ', user)
     if (!user) {
       alert('账号或密码错误')
       return
@@ -63,6 +64,8 @@ const login = async () => {
     localStorage.setItem('user_role', user.role)
     localStorage.setItem('user_name', user.name)
 
+    console.log('存进去后的 user_id =', localStorage.getItem('user_id'))
+console.log('存进去后的 user_name =', localStorage.getItem('user_name'))
     // 补一个 token
     localStorage.setItem('admin_token', user.role + Date.now())
     localStorage.setItem('admin_role', user.role)

@@ -29,7 +29,7 @@
       <h3>今日日程</h3>
       <ul>
         <li v-for="s in todaySchedules" :key="s.id">
-          {{ s.time }} - {{ s.title }}
+          {{ s.date }} {{ s.time }} - {{ s.title }}
         </li>
         <li v-if="todaySchedules.length === 0">今天没有安排</li>
       </ul>
@@ -45,6 +45,35 @@
         <li>爽约次数：{{ noShowCount }}</li>
       </ul>
     </section>
+
+    <section class="card">
+      <h3>未完事项</h3>
+      <p>未完成预约：{{ unfinishedCount }}</p>
+      <p>未写咨询报告：{{ unReportCount }}</p>
+    </section>
+
+    <section class="card">
+  <h3>我的预约</h3>
+  <table width="100%">
+    <thead>
+      <tr>
+        <th>日期</th>
+        <th>时间</th>
+        <th>学生</th>
+        <th>状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="a in appointmentList" :key="a.id">
+        <td>{{ a.date }}</td>
+        <td>{{ a.time }}</td>
+        <td>{{ a.student }}</td>
+        <td>{{ a.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
   </div>
 </template>
 
@@ -82,7 +111,11 @@ onMounted(async () => {
     try {
       const res = await getCounselorAppointmentsAsync(counselorId)
       console.log('咨询师预约:', res.data)
-      appointments.value = res.data.filter(a => a.counselorId === counselorId)
+      appointments.value = res.data.filter(
+  a => String(a.counselorId).toLowerCase() === String(counselorId).toLowerCase()
+)
+
+    console.log('过滤后 appointments:', appointments.value)
     } catch (e) {
       console.error('获取预约失败', e)
     }
@@ -92,25 +125,27 @@ onMounted(async () => {
 
 // --- 今日待办（状态未完成） ---
 const todayTodos = computed(() =>
-  appointments.value
-    .filter(a => a) // 确保非 null
-    // .filter(a => a.status !== 'closed' && a.appointmentDate === today)
+  appointmentList.value
+    .filter(a =>
+      ['sign_done','submitted','confirmed'].includes(a.status)
+    )
     .map(a => ({
       id: a.id,
-      type: '预约',
-      title: `学生 ${a.studentId} ${a.appointmentTime}`
+      type: '预约待办',
+      title: `${a.date} ${a.time} 学生${a.student}`
     }))
 )
 
 // --- 今日日程（状态已确认） ---
 const todaySchedules = computed(() =>
-  appointments.value
+  appointmentList.value
   .filter(a => a) // 确保非 null
     // .filter(a => a.status === 'confirmed' && a.appointmentDate === today)
     .map(a => ({
       id: a.id,
-      time: a.appointmentTime,
-      title: `学生 ${a.studentId}`
+      date: a.date,
+      time: a.time,
+      title: `学生 ${a.student}`
     }))
 )
 
@@ -135,6 +170,26 @@ const crisisCases = computed(() =>
 const noShowCount = computed(() =>
   appointments.value.filter(a => a.status === 'cancelled').length
 )
+
+const unfinishedCount = computed(() =>
+  appointments.value.filter(a => a.status !== 'closed').length
+)
+
+const unReportCount = computed(() =>
+  appointments.value.filter(a => a.status === 'checked_in').length
+)
+
+const appointmentList = computed(() =>
+  appointments.value.map(a => ({
+    id: a.id,
+    date: a.appointmentDate,
+    time: a.appointmentTime,
+    student: a.studentId,
+    counselor: a.counselorName,
+    status: a.status
+  }))
+)
+
 </script>
 
 <style scoped>
@@ -159,5 +214,17 @@ const noShowCount = computed(() =>
   padding: 10px;
   border-radius: 6px;
   cursor: pointer;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.stat-box {
+  background: #eef3ff;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
 }
 </style>

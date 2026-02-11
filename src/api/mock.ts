@@ -33,7 +33,7 @@ export const adminUsers = [
   },
 
   {
-    id: 'c_zhang',
+    id: 'C1',
     username: 'zhang',
     password: '123456',
     role: 'counselor',
@@ -41,7 +41,7 @@ export const adminUsers = [
   },
   
   {
-    id: 'c_feng',
+    id: 'C10',
     username: 'feng',
     password: '123456',
     role: 'counselor',
@@ -66,7 +66,9 @@ export function adminLogin(data: { username: string; password: string; role: str
         resolve({
           code: 200,
           data: {
-            id: user.username,
+            id: user.id, 
+            username: user.username,
+            name: user.name,
             role: user.role,
             token: 'mock-token-123'
           }
@@ -79,6 +81,7 @@ export function adminLogin(data: { username: string; password: string; role: str
       }
     }, 500)
   })
+  
 }
 
 // ===== 模拟数据 =====
