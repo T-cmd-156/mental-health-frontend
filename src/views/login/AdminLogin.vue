@@ -76,7 +76,7 @@ console.log('存进去后的 user_name =', localStorage.getItem('user_name'))
     router.push('/admin')
 
   } catch (err) {
-    alert(err.msg || '登录失败')
+    alert(err.message || '登录失败')
   }
 }
 </script>

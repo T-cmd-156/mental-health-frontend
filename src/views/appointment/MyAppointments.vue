@@ -10,8 +10,16 @@
       + 新建预约
     </el-button>
     <el-table :data="list" style="width:100%">
-      <el-table-column prop="appointmentDate" label="日期" />
-      <el-table-column prop="appointmentTime" label="时间" />
+      <el-table-column prop="date" label="日期">
+        <template #default="{ row }">
+          {{ row.date || row.appointmentDate || '' }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="start_time" label="时间">
+        <template #default="{ row }">
+          {{ row.start_time || row.appointmentTime || '' }}
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态" />
 
       <el-table-column label="操作">

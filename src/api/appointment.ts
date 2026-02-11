@@ -3,6 +3,7 @@ import {
   updateAppointmentStatus,
   getAppointmentsByStudent,
   getAppointmentsByCounselor,
+  getAppointmentById,
 } from '../mock/appointment'
 
 import type { Appointment, AppointmentStatus } from '../types/appointment'
@@ -10,18 +11,31 @@ import type { Appointment, AppointmentStatus } from '../types/appointment'
 
 // 学生创建预约
 export function createAppointmentAsync(data: {
-  studentId: string
-  counselorId: string
-  counselorName: string
-  appointmentDate: string
-  appointmentTime: string
+  student_id: string
+  counselor_id: string
+  consultant_name: string
+  date: string
+  start_time: string
+  end_time: string
+}) {
+  return createAppointmentForStudent(data)
+}
+
+// 重新导出 createAppointmentForStudentAsync 以支持一键续约
+export function createAppointmentForStudentAsync(data: {
+  student_id: string
+  counselor_id: string
+  consultant_name: string
+  date: string
+  start_time: string
+  end_time: string
 }) {
   return createAppointmentForStudent(data)
 }
 
 // 咨询师创建预约
-export function counselorSetSlot(data: {
-  counselorId: string
+export function consultantSetSlot(data: {
+  counselor_id: string
   date: string
   time: string
 }) {
@@ -38,15 +52,20 @@ export function updateAppointmentStatusAsync(
 }
 
 // 查询学生预约列表
-export function getMyAppointmentsAsync(studentId: string) {
-  return getAppointmentsByStudent(studentId)
+export function getMyAppointmentsAsync(student_id: string) {
+  return getAppointmentsByStudent(student_id)
 }
 
 // 咨询师：查询全部预约
-export function getCounselorAppointmentsAsync(counselorId: string) {
-  return getAppointmentsByCounselor(counselorId)
+export function getConsultantAppointmentsAsync(counselor_id: string) {
+  return getAppointmentsByCounselor(counselor_id)
 }
 
-function addScheduleSlot(data: { counselorId: string; date: string; time: string }) {
+// 通用：通过id获取单条预约
+export function getAppointmentByIdAsync(id: string) {
+  return getAppointmentById(id)
+}
+
+function addScheduleSlot(data: { counselor_id: string; date: string; time: string }) {
   throw new Error('Function not implemented.')
 }

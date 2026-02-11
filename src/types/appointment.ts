@@ -17,45 +17,44 @@ export type AppointmentStatus =
   | 'closed'         // 结案
 
 
-// 单条预约数据结构
+// 预约表类型定义，严格对齐数据库说明文档
 export interface Appointment {
-  id: string                 // 预约id
-  studentId: string          // 学生id
-  counselorId: string        // 咨询师id
-  counselorName: string      // 咨询师名字
-  appointmentDate: string    // 预约日期
-  appointmentTime: string    // 时间段
-
-  status: AppointmentStatus  // 当前状态
-
-  create_time: string        // 创建时间
-  update_time: string        // 最近更新时间
-
-    visitInfo?: {
-    reason: string
-    emergencyContact: string
-  }
-
-  scaleResult?: {
-    mood: string
-    stressLevel: number
-  }
-
-  timeline: {
-    status: AppointmentStatus
-    time: string
-  }[]
-  
-  signAt?: string
-}
-
-// 新增排班结构
-export interface Schedule {
-  id: string
-  counselorId: string
-  counselorName: string
-  date: string          // yyyy-mm-dd
-  time: string          // e.g., '10:00-11:00'
-  status: 'free' | 'booked' | 'done'
+  timeline: any;
+  id: string; // 主键
+  student_id: string; // 学生ID
+  counselor_id: string; // 咨询师ID
+  date: string; // 预约日期
+  start_time: string; // 开始时间
+  end_time: string; // 结束时间
+  type: string; // student / teacher（学生自约 / 辅导员代约）
+  status: string; // pending / confirmed / completed / cancelled / no_show
+  student_name?: string; // 学生姓名（冗余）
+  consultant_name?: string; // 咨询师姓名（冗余）
+  location?: string; // 地点
+  campus?: string; // 校区
+  form_data?: any; // 来访登记：reason, urgency, previousConsultation 等
+  teacher_appointment?: {
+    teacher_id: string;
+    teacher_name: string;
+    reason: string;
+    created_at: string;
+  };
+  cancelled_by?: string; // 取消人
+  cancel_reason?: string; // 取消原因
+  cancelled_at?: string; // 取消时间
+  completed_at?: string; // 完成时间
+  consultation_record_id?: string; // 关联咨询记录ID
+  evaluation?: {
+    rating: number;
+    content: string;
+    anonymous: boolean;
+  };
+  check_in?: {
+    checked: boolean;
+    checked_at: string;
+    method: string;
+  };
+  created_at?: string; // 创建时间
+  updated_at?: string; // 更新时间
 }
 

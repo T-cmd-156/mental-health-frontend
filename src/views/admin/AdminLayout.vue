@@ -31,6 +31,27 @@
   <div class="item" @click="go('time')">
     心理咨询时间规则
   </div>
+  <div class="item" v-if="role === 'counselor'" @click="router.push('/case')">
+    个案管理
+  </div>
+  <div class="item" v-if="role === 'counselor'" @click="router.push('/crisis')">
+    危机管理
+  </div>
+
+    <!-- 请假管理：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/leave/list')">
+      请假管理
+    </div>
+
+    <!-- 测评查看：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/assessment/list')">
+      测评查看
+    </div>
+
+    <!-- 团体活动管理：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/activity/manage')">
+      团体活动管理
+    </div>
 
   <!-- 只有管理员 -->
   <div class="item" 

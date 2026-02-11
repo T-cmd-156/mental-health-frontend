@@ -132,9 +132,9 @@ const week = getWeek();
 const schedule = ref([])
 
 onMounted(async () => {
-  initSchedule()
+  // 直接从存储获取排班，如果为空则初始化
   schedule.value = await fetchSchedule()
-  console.log('schedule 数据：', schedule.value.slice(0, 5))
+  console.log('📊 加载排班数据：', schedule.value.length, '条')
 })
 
 
@@ -142,7 +142,7 @@ onMounted(async () => {
 const show = (col, t) => {
   const dateKey = viewMode.value === 'week' ? col.date : col.date;
   const s = schedule.value.find(i => i.date === dateKey && i.time === t);
-  return s ? s.counselorName : '';
+  return s ? s.consultant_name : '';
 }
 
 const useTemplate = () => {
@@ -153,7 +153,7 @@ const useTemplate = () => {
 }
 
 //生成学期排班
-const openBatch = () => {
+const openBatch = async () => {
   const data = generateFromTemplate();
   if (!data.length) {
     alert('请先保存一周模板');
@@ -162,7 +162,15 @@ const openBatch = () => {
 
   schedule.value = data;
   viewDate.value = semester.start;
-  alert('已按周模板生成整个学期');
+  
+  // 批量保存所有排班到localStorage
+  console.log('保存批量排班到localStorage，共', data.length, '条')
+  localStorage.setItem('MOCK_SCHEDULE', JSON.stringify(data))
+  
+  // 派发事件通知学生端刷新
+  window.dispatchEvent(new Event('schedule-updated'))
+  
+  alert('已按周模板生成整个学期，共' + data.length + '条排班');
 }
 
 const prevWeek = () => {    //上一周
@@ -212,11 +220,9 @@ const getCell = (col, t) => {
   const dateKey = col.date;
   const s = schedule.value.find(i => i.date === dateKey && i.time === t);
   if (!s) return 'free';
-
   if (selectedCounselor.value) {
-    return s.counselorId === selectedCounselor.value ? 'mine' : 'other';
+    return s.counselor_id === selectedCounselor.value ? 'mine' : 'other';
   }
-
   return 'busy';
 }
 
@@ -226,12 +232,12 @@ const changeCounselor = async(col, t) => {
     i => i.date === dateKey && i.time === t
   );
 
-  let msg = '请选择咨询师：\n0. 清空\n';
+  let message = '请选择咨询师：\n0. 清空\n';
   counselors.value.forEach((c, i) => {
-    msg += `${i + 1}. ${c.name}\n`;
+    message += `${i + 1}. ${c.name}\n`;
   });
 
-  const r = prompt(msg);
+  const r = prompt(message);
   if (r === null) return;
 
   if (r === '0') {
@@ -242,14 +248,17 @@ const changeCounselor = async(col, t) => {
   if (!c) return;
 
   await updateSchedule({
-  date: dateKey,
-  time: t,
-  counselorId: c.id,
-  counselorName: c.name,
-})
+    date: dateKey,
+    time: t,
+    counselor_id: c.id,
+    consultant_name: c.name,
+  })
   }
 
   schedule.value = await fetchSchedule()
+  
+  // 派发 schedule-updated 事件，通知学生预约页面刷新
+  window.dispatchEvent(new Event('schedule-updated'))
 };
 
 </script>

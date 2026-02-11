@@ -413,46 +413,69 @@ const submitRegister = () => {
   showRegisterPassword.value = false
 }
 
-const login = () => {
+import { adminLogin } from '../../api/mock'
+
+const login = async () => {
   if (!form.username || !form.password) {
     alert('请输入账号和密码')
     return
   }
 
-  // 检查用户是否已注册
-  const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
-  const user = users.find(u => u.username === form.username && u.role === (identity.value === 'student' ? 'student' : 'parent'))
-
-  if (!user) {
-    alert('账号未注册，请先注册')
+  // 先尝试mock用户和adminUsers登录
+  try {
+    const res = await adminLogin({
+      username: form.username,
+      password: form.password,
+      role: identity.value === 'student' ? 'student' : 'parent'
+    })
+    // 登录成功
+    const user = res.data
+    // 保存登录信息到本地存储
+    console.log('[登录成功] user.account:', user.account, 'user:', user)
+    localStorage.setItem('student_id', user.account) // 给预约系统用
+    // 自动写入 student_college_id，便于回避判断
+    if (user.college_id) {
+      localStorage.setItem('student_college_id', user.college_id)
+    } else {
+      // 兼容注册用户等情况
+      const allUsers = JSON.parse(localStorage.getItem('MOCK_USERS') || '[]')
+      const found = allUsers.find(u => u.account === user.account)
+      if (found && found.college_id) {
+        localStorage.setItem('student_college_id', found.college_id)
+      }
+    }
+    console.log('[登录成功] localStorage.student_id:', localStorage.getItem('student_id'), 'student_college_id:', localStorage.getItem('student_college_id'))
+    localStorage.setItem('User_token', user.role + '_' + Date.now())
+    localStorage.setItem('User_role', user.role)
+    localStorage.setItem('User_name', user.name || user.username)
+    // 登录成功后跳转
+    const redirectPath = router.currentRoute.value.query.redirect || '/dashboard'
+    router.push(redirectPath)
     return
+  } catch (e) {
+    // mock用户/管理员登录失败，尝试注册用户登录
+    const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
+    const user = users.find(u => u.username === form.username && u.role === (identity.value === 'student' ? 'student' : 'parent'))
+    if (!user) {
+      alert('账号未注册，请先注册')
+      return
+    }
+    if (user.password !== form.password) {
+      alert('密码错误')
+      return
+    }
+    // 保存登录信息到本地存储
+    localStorage.setItem('student_id', user.username)
+    // 注册用户也写入 student_college_id
+    if (user.college_id) {
+      localStorage.setItem('student_college_id', user.college_id)
+    }
+    localStorage.setItem('User_token', user.role + '_' + Date.now())
+    localStorage.setItem('User_role', user.role)
+    localStorage.setItem('User_name', user.real_name || user.username)
+    const redirectPath = router.currentRoute.value.query.redirect || '/dashboard'
+    router.push(redirectPath)
   }
-
-  // 检查密码是否正确
-  if (user.password !== form.password) {
-    alert('密码错误')
-    return
-  }
-
-  // 模拟登录逻辑
-  console.log('登录信息：', {
-    identity: identity.value,
-    ...form
-  })
-
-  // 保存登录信息到本地存储
-const sid = user.username
-
-localStorage.setItem('student_id', sid)              // 给预约系统用
-
-localStorage.setItem('User_token', 'student_' + Date.now())
-localStorage.setItem('User_role', identity.value)
-
-  // 登录成功后跳转
-  // 先获取重定向路径，如果没有就默认跳到仪表盘
-  const redirectPath = router.currentRoute.value.query.redirect || '/dashboard'
-  console.log("Redirect Path:", redirectPath); // 打印重定向路径
-  router.push(redirectPath)
 }
 </script>
 

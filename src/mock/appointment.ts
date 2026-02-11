@@ -1,9 +1,9 @@
-import { clearSchedule, fetchSchedule, generateFromTemplate, getWeekTemplate  } from './schedule'
-import type { Appointment, AppointmentStatus } from '../types/appointment'
+import { clearSchedule, generateFromTemplate, getWeekTemplate } from './schedule'
+import type { Appointment } from '../types/appointment'
 import { db } from './db'
 
-
 const schedule = getWeekTemplate()
+
 // ===== 工具函数 =====
 function now() {
   return new Date().toISOString()
@@ -13,35 +13,59 @@ function generateId() {
   return 'apt_' + Date.now() + '_' + Math.floor(Math.random() * 1000)
 }
 
-// 创建预约（学生点“开始预约”）
-export function createAppointmentForStudent(data: {
-  studentId: string
-  counselorId: string
-  counselorName: string
-  appointmentDate: string
-  appointmentTime: string
-}) {
+function toDay(d: string | Date) {
+  if (!d) return ''
+  const dt = d instanceof Date ? d : new Date(d)
+  if (isNaN(dt.getTime())) return ''
+  const year = dt.getFullYear()
+  const month = String(dt.getMonth() + 1).padStart(2, '0')
+  const day = String(dt.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
 
+// ===== 创建预约 =====
 
+interface CreateAppointmentInput {
+  student_id: string
+  counselor_id: string
+  consultant_name: string
+  date: string
+  start_time: string
+  end_time: string
+  type?: string
+  status?: string
+  location?: string
+  campus?: string
+  form_data?: any
+}
+
+export function createAppointmentForStudent(
+  data: CreateAppointmentInput
+) {
   const appointment: Appointment = {
     id: generateId(),
-    studentId: data.studentId,
-    counselorId: data.counselorId,
-    counselorName: data.counselorName,  // 张老师
-    appointmentDate: data.appointmentDate,
-    appointmentTime: data.appointmentTime,
-
-    status: 'draft',          // 刚创建为 draft
-    create_time: now(),
-    update_time: now(),
+    student_id: data.student_id,
+    counselor_id: data.counselor_id,
+    consultant_name: data.consultant_name,
+    date: data.date,
+    start_time: data.start_time,
+    end_time: data.end_time,
+    type: data.type || 'student',
+    status: data.status || 'draft',
+    location: data.location || '',
+    campus: data.campus || '',
+    form_data: data.form_data || {},
+    created_at: now(),
+    updated_at: now(),
     timeline: [
-    { status: 'draft', time: now() }
-  ]
-
+      {
+        status: data.status || 'draft',
+        time: now(),
+      },
+    ],
   }
 
-db.pushAppointment(appointment)
-console.log('已写入db:', db.appointments.map(a => a.id))//调试
+  db.pushAppointment(appointment)
 
   return Promise.resolve({
     code: 200,
@@ -49,15 +73,20 @@ console.log('已写入db:', db.appointments.map(a => a.id))//调试
   })
 }
 
-// 更新预约状态（填表 / 签字 / 提交）
+// ===== 更新预约状态 =====
+
 export async function updateAppointmentStatus(
   id: string,
-  status: AppointmentStatus,
+  status: string,
   payload?: Partial<Appointment>,
 ) {
   const ok = db.updateAppointment(id, a => {
     a.status = status
-    a.update_time = now()
+    a.updated_at = now()
+
+    if (!a.timeline) {
+      a.timeline = []
+    }
 
     a.timeline.push({
       status,
@@ -70,21 +99,16 @@ export async function updateAppointmentStatus(
   })
 
   if (!ok) {
-    console.error('db里有:', db.appointments.map(a => a.id))
-    console.error('要找的:', id)
     return Promise.reject({
       code: 404,
-      msg: '预约不存在',
+      message: '预约不存在',
     })
   }
 
   const appointment = db.appointments.find(a => a.id === id)!
 
   if (status === 'confirmed') {
-    await clearSchedule(
-      appointment.appointmentDate,
-      appointment.appointmentTime
-    )
+    await clearSchedule(appointment.date, appointment.start_time)
   }
 
   return Promise.resolve({
@@ -93,74 +117,109 @@ export async function updateAppointmentStatus(
   })
 }
 
-
 // ===== 咨询师端：查询自己的预约 =====
-export function getAppointmentsByCounselor(counselorId: string) {
-   const list = db.appointments.filter(a => a.counselorId === counselorId)
-  return Promise.resolve({
-    code: 200,
-    data: db.appointments  // 过滤
-  })
+
+export function getAppointmentsByCounselor(consultantId: string) {
+  const list = db.appointments.filter(
+    a => String(a.counselor_id) === String(consultantId)
+  )
+
+  return Promise.resolve({ code: 200, data: list })
 }
 
-// 查询学生的预约列表
+// ===== 学生端：查询自己的预约 =====
+
 export function getAppointmentsByStudent(studentId: string) {
-  const list = db.appointments.filter(a => a.studentId === studentId)
+  const list = db.appointments.filter(
+    a => a.student_id === studentId
+  )
 
-  return Promise.resolve({
-    code: 200,
-    data: list,
-  })
+  return Promise.resolve({ code: 200, data: list })
 }
 
-function toDay(d: string | Date) {
-  const dt = new Date(d)
-  if (isNaN(dt.getTime())) return ''
-  return dt.toISOString().slice(0, 10)
+// ===== 获取指定预约 =====
+
+export function getAppointmentById(id: string) {
+  const apt = db.appointments.find(a => a.id === id)
+
+  if (!apt) {
+    return Promise.reject({ code: 404, message: '预约不存在' })
+  }
+
+  return Promise.resolve({ code: 200, data: { ...apt } })
 }
 
-// 学生端：获取某天可预约时间
+// ===== development seed data =====
+
+(function seedAppointments() {
+  if (db.appointments.length === 0) {
+    const today = new Date().toISOString().slice(0, 10)
+
+    db.pushAppointment({
+      id: generateId(),
+      student_id: 'stu001',
+      counselor_id: 'c1',
+      consultant_name: '张老师',
+      date: today,
+      start_time: '09:00',
+      end_time: '10:00',
+      status: 'confirmed',
+      created_at: today,
+      updated_at: today,
+      timeline: [{ status: 'confirmed', time: today }],
+      type: 'student'
+    })
+
+    db.pushAppointment({
+      id: generateId(),
+      student_id: 'stu002',
+      counselor_id: 'c1',
+      consultant_name: '张老师',
+      date: today,
+      start_time: '10:00',
+      end_time: '11:00',
+      status: 'draft',
+      created_at: today,
+      updated_at: today,
+      timeline: [{ status: 'draft', time: today }],
+      type: 'student'
+    })
+  }
+})()
+
+// ===== 学生端：获取某天可预约时间 =====
+
 export async function getAvailableSlots(date: string) {
   const schedule = generateFromTemplate()
-
-   console.log('所有排班条数:', schedule.length)
-  // 已被预约的时间
   const target = toDay(date)
+
   const used = db.appointments
-    .filter((a: Appointment) => toDay(a.appointmentDate) === target)
-    .map(a => a.appointmentTime)
+    .filter((a: Appointment) => toDay(a.date) === target)
+    .map(a => a.start_time)
 
-  console.log('示例排班日期:', schedule[0]?.date, typeof schedule[0]?.date)
-  console.log('转化后:', toDay(schedule[0]?.date))
-
-  const result = schedule.filter((s: { date: string | Date; time: string, counselorId: string, counselorName: string }) => {
+  const result = schedule.filter((s: any) => {
     return toDay(s.date) === target && !used.includes(s.time)
   })
 
-  console.log('匹配日期:', target, '命中条数:', result.length)
   return result
 }
 
-// 返回未来 N 天内，有排班的日期
-export async function getAvailableDates(start: string, days = 10) {
-  const schedule = generateFromTemplate() // 全学期排班
+// ===== 返回未来 N 天内有排班的日期 =====
 
-  const startDay = new Date(start)
-  const endDay = new Date(start)
+export async function getAvailableDates(start: string, days = 10) {
+  const schedule = generateFromTemplate()
+  const startDay = new Date(toDay(start))
+  const endDay = new Date(toDay(start))
   endDay.setDate(endDay.getDate() + days)
 
   const set = new Set<string>()
 
   schedule.forEach(s => {
-    const d = new Date(s.date)
+    const d = new Date(toDay(s.date))
     if (d >= startDay && d <= endDay) {
-      set.add(s.date)
+      set.add(toDay(s.date))
     }
   })
 
   return Array.from(set).sort()
 }
-
-
-
-
