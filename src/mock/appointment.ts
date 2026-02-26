@@ -74,7 +74,7 @@ export async function updateAppointmentStatus(
     console.error('要找的:', id)
     return Promise.reject({
       code: 404,
-      msg: '预约不存在',
+      message: '预约不存在',
     })
   }
 
@@ -96,10 +96,10 @@ export async function updateAppointmentStatus(
 
 // ===== 咨询师端：查询自己的预约 =====
 export function getAppointmentsByCounselor(counselorId: string) {
-   const list = db.appointments.filter(a => a.counselorId === counselorId)
+  const list = db.appointments.filter(a => a.counselorId === counselorId)
   return Promise.resolve({
     code: 200,
-    data: db.appointments  // 过滤
+    data: list
   })
 }
 

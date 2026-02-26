@@ -3,8 +3,25 @@ import { AppointmentStatus } from "../types/appointment"
 import { fetchSchedule } from "../mock/schedule";
 
 // ===== 模拟管理员账号 =====
+// 开发者账号（便于本地查看功能，上线前可移除或改密）
+// 管理端：dev / dev123，角色选「管理员」
+// 咨询师端：dev_counselor / dev123
 export const adminUsers = [
-{
+  {
+    id: 'dev_admin',
+    username: 'dev',
+    password: 'dev123',
+    role: 'admin',
+    name: '开发者(管理员)'
+  },
+  {
+    id: 'dev_counselor',
+    username: 'dev_counselor',
+    password: 'dev123',
+    role: 'counselor',
+    name: '开发者(咨询师)'
+  },
+  {
   id: 'center_1',
   username: 'center',
   password: '123456',
@@ -76,7 +93,7 @@ export function adminLogin(data: { username: string; password: string; role: str
       } else {
         reject({
           code: 401,
-          msg: '账号或密码错误'
+          message: '账号或密码错误'
         })
       }
     }, 500)

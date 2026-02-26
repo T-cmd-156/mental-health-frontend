@@ -100,6 +100,9 @@
             立即注册
           </button>
         </div>
+        <div class="dev-entry">
+          <button type="button" class="dev-link" @click="devLogin">开发者入口（dev / dev123）</button>
+        </div>
       </div>
     </div>
 
@@ -413,9 +416,23 @@ const submitRegister = () => {
   showRegisterPassword.value = false
 }
 
+// 开发者账号（便于本地查看学生端功能，上线前可移除）
+const DEV_STUDENT = { username: 'dev', password: 'dev123' }
+
 const login = () => {
   if (!form.username || !form.password) {
     alert('请输入账号和密码')
+    return
+  }
+
+  // 开发者账号直接通过，无需注册
+  if (form.username === DEV_STUDENT.username && form.password === DEV_STUDENT.password) {
+    identity.value = 'student'
+    localStorage.setItem('student_id', DEV_STUDENT.username)
+    localStorage.setItem('User_token', 'student_' + Date.now())
+    localStorage.setItem('User_role', 'student')
+    const redirectPath = router.currentRoute.value.query.redirect || '/student/dashboard'
+    router.push(redirectPath)
     return
   }
 
@@ -441,18 +458,20 @@ const login = () => {
   })
 
   // 保存登录信息到本地存储
-const sid = user.username
+  const sid = user.username
+  localStorage.setItem('student_id', sid)
+  localStorage.setItem('User_token', 'student_' + Date.now())
+  localStorage.setItem('User_role', identity.value)
 
-localStorage.setItem('student_id', sid)              // 给预约系统用
-
-localStorage.setItem('User_token', 'student_' + Date.now())
-localStorage.setItem('User_role', identity.value)
-
-  // 登录成功后跳转
-  // 先获取重定向路径，如果没有就默认跳到仪表盘
-  const redirectPath = router.currentRoute.value.query.redirect || '/dashboard'
-  console.log("Redirect Path:", redirectPath); // 打印重定向路径
+  const redirectPath = router.currentRoute.value.query.redirect || '/student/dashboard'
   router.push(redirectPath)
+}
+
+const devLogin = () => {
+  form.username = DEV_STUDENT.username
+  form.password = DEV_STUDENT.password
+  identity.value = 'student'
+  login()
 }
 </script>
 
@@ -886,6 +905,27 @@ localStorage.setItem('User_role', identity.value)
 
 .register-submit-btn {
   margin-top: 20px;
+}
+
+.dev-entry {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+  text-align: center;
+}
+
+.dev-link {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.dev-link:hover {
+  color: #667eea;
+  text-decoration: underline;
 }
 
 /* 响应式设计 */

@@ -60,11 +60,22 @@ const routes = [
     name: 'NoticeList',
     component: () => import('../views/notices/NoticeList.vue')
   },
-  {
-    path: '/notices/:id',
-    name: 'NoticeDetail',
-    component: () => import('../views/notices/NoticeDetail.vue')
-  },
+{
+  path: '/notices/:id',
+  name: 'NoticeDetail',
+  component: () => import('../views/notices/NoticeDetail.vue')
+},
+{
+  path: '/message',
+  name: 'MessageCenter',
+  component: () => import('../views/message/MessageCenter.vue')
+},
+{
+  path: '/student/dashboard',
+  name: 'StudentDashboard',
+  component: () => import('../views/student/StudentDashboard.vue'),
+  meta: { needAuth: true }
+},
 {
   path: '/my-appointment',
   name: 'MyAppointment',
@@ -94,10 +105,15 @@ const routes = [
   path: '/admin',
   component: AdminLayout,
   meta: { needAuth: true },
+  redirect: '/admin/workbench',
   children: [
-
-      {
-        path: 'time',
+    {
+      path: 'workbench',
+      component: () => import('../views/admin/AdminWorkbench.vue'),
+      meta: { needAuth: true }
+    },
+    {
+      path: 'time',
         component: () => import('../views/admin/TimeRule.vue'),
           meta: { 
           needAuth: true,
@@ -117,10 +133,35 @@ const routes = [
         meta: { needAuth: true,roles: ['center'] }
     },
 
-      {
-      path: 'counselor-work',
+{
+  path: 'counselor-work',
       component: () => import('../views/counselor/Dashboard.vue'),
       meta: { needAuth: true, roles: ['counselor'] }
+    },
+    {
+      path: 'appointments',
+      component: () => import('../views/counselor/CounselorAppointments.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center'] }
+    },
+    {
+      path: 'consult-records',
+      component: () => import('../views/counselor/ConsultRecords.vue'),
+      meta: { needAuth: true, roles: ['counselor'] }
+    },
+    {
+      path: 'students',
+      component: () => import('../views/admin/AdminStudents.vue'),
+      meta: { needAuth: true, roles: ['admin', 'center'] }
+    },
+    {
+      path: 'leave',
+      component: () => import('../views/admin/AdminLeave.vue'),
+      meta: { needAuth: true, roles: ['admin', 'center'] }
+    },
+    {
+      path: 'crisis',
+      component: () => import('../views/admin/AdminCrisis.vue'),
+      meta: { needAuth: true }
     }
 
 
@@ -163,8 +204,7 @@ if (to.path.startsWith('/admin')) {
 
   
   // 2. 学生/家长端（凡是需要登录的非 admin 页面）
-  if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment')) {
-
+  if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment') || to.path.startsWith('/student')) {
   localStorage.getItem('student_id')
 
   const token = localStorage.getItem('User_token');

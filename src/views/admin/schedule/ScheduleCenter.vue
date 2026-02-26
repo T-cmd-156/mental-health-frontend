@@ -226,12 +226,12 @@ const changeCounselor = async(col, t) => {
     i => i.date === dateKey && i.time === t
   );
 
-  let msg = '请选择咨询师：\n0. 清空\n';
+  let message = '请选择咨询师：\n0. 清空\n';
   counselors.value.forEach((c, i) => {
-    msg += `${i + 1}. ${c.name}\n`;
+    message += `${i + 1}. ${c.name}\n`;
   });
 
-  const r = prompt(msg);
+  const r = prompt(message);
   if (r === null) return;
 
   if (r === '0') {

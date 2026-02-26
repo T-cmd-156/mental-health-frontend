@@ -10,6 +10,7 @@
 
       <nav class="nav-menu">
         <router-link to="/" class="nav-item">首页</router-link>
+        <router-link to="/#activities" class="nav-item">活动风采</router-link>
         <router-link to="/wiki" class="nav-item">心理百科</router-link>
         <router-link to="/articles" class="nav-item">心理美文</router-link>
         <router-link to="/peer-support" class="nav-item">朋辈互助</router-link>
@@ -17,9 +18,13 @@
       </nav>
 
       <div class="actions">
+        <router-link v-if="isLoggedIn" to="/message" class="message-link" title="消息中心">
+          消息 <span v-if="unreadCount > 0" class="unread-badge">{{ unreadCount }}</span>
+        </router-link>
         <button class="login" @click="goLogin('admin')">管理者登录</button>
         <button class="login" @click="goLogin('user')">学生/家长登录</button>
         <button class="appoint" @click="goAppointment">在线预约</button>
+        <router-link v-if="isStudent" to="/student/dashboard" class="login">学生工作台</router-link>
       </div>
     </header>
     
@@ -35,6 +40,21 @@
 
     <!-- 主体内容 -->
       <main class="main-content">
+      <!-- 活动风采 -->
+      <div class="content-row" id="activities">
+        <section class="card activity-card">
+          <div class="card-header">
+            <h3 class="card-title">活动风采</h3>
+            <span class="card-more">校/院级心理活动</span>
+          </div>
+          <div class="card-body">
+            <div v-for="item in activities" :key="item.id" class="item">
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-date">{{ item.date }}</span>
+            </div>
+          </div>
+        </section>
+      </div>
       <!-- 第一行：心理百科、心理美文、朋辈互助 -->
       <div class="content-row">
 
@@ -106,27 +126,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted} from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-
-// 统一从 api 层取
-import { getNotices, getWiki, getArticles } from '../../api/portal'
-// import { }
+import { getNotices, getWiki, getArticles, getActivities } from '../../api/portal'
+import { getUnreadCount } from '../../api/message'
 
 const router = useRouter()
-
+const unreadCount = ref(0)
+const isLoggedIn = computed(() => {
+  return !!(localStorage.getItem('User_token') || localStorage.getItem('admin_token'))
+})
+const isStudent = computed(() => {
+  return localStorage.getItem('User_role') === 'student' || localStorage.getItem('User_token')
+})
 // 声明空数据
 const notices = ref([])
 const wiki = ref([])
 const articles = ref([])
+const activities = ref([])
 
-// 页面加载 → 接口
 onMounted(async () => {
   notices.value = await getNotices()
   wiki.value = await getWiki()
   articles.value = await getArticles()
-
+  activities.value = await getActivities()
+  if (isLoggedIn.value) {
+    try {
+      const res = await getUnreadCount()
+      unreadCount.value = res.data || 0
+    } catch (_) {}
+  }
 })
+
 
 // 跳转
 const goLogin = (type) => {
@@ -148,9 +179,14 @@ const goAppointment = () => {
     })  // 根据需要跳转到用户登录页面
   } else {
     // 已登录，跳转到预约页面
-  router.push('/appointment/select')
+    router.push('/appointment/select')
+  }
 }
-// 详情页面
+// 详情页面跳转
+const goDetail = (type, id) => {
+  const pathMap = { wiki: '/wiki', article: '/articles', peer: '/peer-support', notice: '/notices' }
+  const base = pathMap[type]
+  if (base) router.push(id ? `${base}/${id}` : base)
 }
 </script>
 
@@ -248,6 +284,24 @@ const goAppointment = () => {
   background: #f57c00;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}
+.message-link {
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.message-link:hover { background: rgba(255,255,255,0.2); }
+.unread-badge {
+  background: #ff4d4f;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
 }
 
 /* ===== 轮播图 ===== */
@@ -407,6 +461,8 @@ const goAppointment = () => {
   font-size: 14px;
   color: #333;
 }
+.activity-card { flex: 1; }
+.item-date { font-size: 12px; color: #8c8c8c; }
 
 /* ===== 动画 ===== */
 @keyframes fadeInUp {

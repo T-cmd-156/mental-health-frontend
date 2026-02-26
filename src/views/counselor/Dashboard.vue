@@ -4,11 +4,11 @@
     <section class="card quick">
       <h3>快捷应用</h3>
       <div class="grid">
-        <div class="item">预约</div>
+        <div class="item" @click="go('appointments')">预约管理</div>
+        <div class="item" @click="go('consult-records')">咨询记录</div>
+        <div class="item" @click="go('schedule')">排班</div>
+        <div class="item" @click="go('crisis')">危机干预</div>
         <div class="item">测评</div>
-        <div class="item">排班</div>
-        <div class="item">咨询记录</div>
-        <div class="item">危机干预</div>
         <div class="item">团体活动</div>
       </div>
     </section>
@@ -24,14 +24,15 @@
       </ul>
     </section>
 
-    <!-- 3. 日历日程 -->
+    <!-- 3. 今日预约时间轴 -->
     <section class="card calendar">
-      <h3>今日日程</h3>
+      <h3>今日预约时间轴</h3>
       <ul>
         <li v-for="s in todaySchedules" :key="s.id">
-          {{ s.date }} {{ s.time }} - {{ s.title }}
+          <span class="time">{{ s.time }}</span> {{ s.title }}
+          <router-link :to="`/appointment/${s.id}/detail`" class="link">详情</router-link>
         </li>
-        <li v-if="todaySchedules.length === 0">今天没有安排</li>
+        <li v-if="todaySchedules.length === 0">今天没有预约安排</li>
       </ul>
     </section>
 
@@ -79,9 +80,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { getCounselorAppointmentsAsync } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
-import { getAppointmentsByCounselor } from '../../mock/appointment'
 
 // --- 获取登录信息里的 counselorId ---
 const userRole = localStorage.getItem('user_role')
@@ -107,20 +108,20 @@ const today = new Date().toISOString().slice(0, 10)
 // })
 
 onMounted(async () => {
- if (userRole === 'counselor'&& counselorId) {
+  if (userRole === 'counselor' && counselorId) {
     try {
       const res = await getCounselorAppointmentsAsync(counselorId)
-      console.log('咨询师预约:', res.data)
-      appointments.value = res.data.filter(
-  a => String(a.counselorId).toLowerCase() === String(counselorId).toLowerCase()
-)
-
-    console.log('过滤后 appointments:', appointments.value)
+      appointments.value = res.data || []
     } catch (e) {
       console.error('获取预约失败', e)
     }
   }
 })
+
+const router = useRouter()
+function go(path) {
+  router.push('/admin/' + path)
+}
 
 
 // --- 今日待办（状态未完成） ---
@@ -136,11 +137,11 @@ const todayTodos = computed(() =>
     }))
 )
 
-// --- 今日日程（状态已确认） ---
+// --- 今日预约时间轴（仅今日且未取消） ---
 const todaySchedules = computed(() =>
   appointmentList.value
-  .filter(a => a) // 确保非 null
-    // .filter(a => a.status === 'confirmed' && a.appointmentDate === today)
+    .filter(a => a.date === today && a.status !== 'cancelled')
+    .sort((a, b) => (a.time || '').localeCompare(b.time || ''))
     .map(a => ({
       id: a.id,
       date: a.date,
@@ -215,6 +216,9 @@ const appointmentList = computed(() =>
   border-radius: 6px;
   cursor: pointer;
 }
+.item:hover { background: #e6f0ff; }
+.calendar .time { display: inline-block; width: 80px; font-weight: 500; }
+.calendar .link { margin-left: 8px; font-size: 12px; }
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
