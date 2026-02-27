@@ -474,10 +474,14 @@ const login = () => {
   })
 
   // 保存登录信息到本地存储
-  const sid = user.username
-  localStorage.setItem('student_id', sid)
-  localStorage.setItem('User_token', 'student_' + Date.now())
-  localStorage.setItem('User_role', identity.value)
+  localStorage.setItem('student_id', user.username)
+  // 注册用户也写入 student_college_id
+  if (user.college_id) {
+    localStorage.setItem('student_college_id', user.college_id)
+  }
+  localStorage.setItem('User_token', user.role + '_' + Date.now())
+  localStorage.setItem('User_role', user.role)
+  localStorage.setItem('User_name', user.real_name || user.username)
 
   const redirectPath = router.currentRoute.value.query.redirect || (identity.value === 'parent' ? '/parent/dashboard' : '/student/dashboard')
   router.push(redirectPath)

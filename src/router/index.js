@@ -6,10 +6,122 @@ import AdminLayout from '../views/admin/AdminLayout.vue'
 
 
 const routes = [
+
+  // 个案管理
+{
+  path: '/case',
+  name: 'CaseList',
+  component: () => import('../views/case/CaseList.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/case/:id',
+  name: 'CaseDetail',
+  component: () => import('../views/case/CaseDetail.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/case/:id/operate',
+  name: 'CaseOperate',
+  component: () => import('../views/case/CaseOperate.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/case/stats',
+  name: 'CaseStats',
+  component: () => import('../views/case/CaseStats.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+
+// 危机管理
+{
+  path: '/crisis',
+  name: 'CrisisList',
+  component: () => import('../views/crisis/CrisisList.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/crisis/:id',
+  name: 'CrisisAssess',
+  component: () => import('../views/crisis/CrisisAssess.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/crisis/:id/intervene',
+  name: 'CrisisIntervene',
+  component: () => import('../views/crisis/CrisisIntervene.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/crisis/:id/level',
+  name: 'CrisisLevel',
+  component: () => import('../views/crisis/CrisisLevel.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/crisis/:id/close',
+  name: 'CrisisClose',
+  component: () => import('../views/crisis/CrisisClose.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+
+  {
+    path: '/counselor/schedule',
+    component: () => import('../views/counselor/ScheduleCenter.vue'),
+    meta: { needAuth: true, roles: ['counselor'] }
+  },
   {
     path: '/',
     component: Home
   },
+
+// 请假管理
+{
+  path: '/leave/apply',
+  name: 'LeaveApply',
+  component: () => import('../views/leave/LeaveApply.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/leave/list',
+  name: 'LeaveList',
+  component: () => import('../views/leave/LeaveList.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+
+// 测评查看
+{
+  path: '/assessment/list',
+  name: 'AssessmentList',
+  component: () => import('../views/assessment/AssessmentList.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+
+// 团体活动管理
+{
+  path: '/activity/create',
+  name: 'ActivityCreate',
+  component: () => import('../views/activity/ActivityCreate.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/activity/manage',
+  name: 'ActivityManage',
+  component: () => import('../views/activity/ActivityManage.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/activity/sign',
+  name: 'ActivitySign',
+  component: () => import('../views/activity/ActivitySign.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
+{
+  path: '/activity/summary',
+  name: 'ActivitySummary',
+  component: () => import('../views/activity/ActivitySummary.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
 
 {
   path: '/login/admin',
@@ -203,6 +315,26 @@ const routes = [
   meta: { needAuth: true }
 },
 
+// 咨询记录模块
+{
+  path: '/record/new',
+  name: 'RecordNew',
+  component: () => import('../views/record/RecordForm.vue'),
+  meta: { needAuth: true, roles: ['counselor'] }
+},
+{
+  path: '/record/:id',
+  name: 'RecordView',
+  component: () => import('../views/record/RecordForm.vue'),
+  meta: { needAuth: true, roles: ['counselor'] }
+},
+{
+  path: '/record/:id/edit',
+  name: 'RecordEdit',
+  component: () => import('../views/record/RecordForm.vue'),
+  meta: { needAuth: true, roles: ['counselor'] }
+},
+
 {
   path: '/appointment/select',
   component: () => import('../views/appointment/SelectSlot.vue'),
@@ -220,6 +352,15 @@ const routes = [
   component: () => import('../views/appointment/AppointmentDetail.vue'),
   meta: { needAuth: true }
 },
+
+// 记录列表页
+{
+  path: '/records',
+  name: 'RecordList',
+  component: () => import('../views/record/RecordList.vue'),
+  meta: { needAuth: true, roles: ['counselor'] }
+},
+
 
 {
   path: '/admin',
@@ -253,9 +394,9 @@ const routes = [
         meta: { needAuth: true,roles: ['center'] }
     },
 
-{
-  path: 'counselor-work',
-      component: () => import('../views/counselor/Dashboard.vue'),
+      {
+      path: 'counselor-work',
+      component: () => import('../views/counselor/CounselorDashboard.vue'),
       meta: { needAuth: true, roles: ['counselor'] }
     },
     {

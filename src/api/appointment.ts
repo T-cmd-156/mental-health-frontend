@@ -9,11 +9,24 @@ const isDev = process.env.NODE_ENV === 'development'
 
 // 学生创建预约
 export function createAppointmentAsync(data: {
-  studentId: string
-  counselorId: string
-  counselorName: string
-  appointmentDate: string
-  appointmentTime: string
+  student_id: string
+  counselor_id: string
+  consultant_name: string
+  date: string
+  start_time: string
+  end_time: string
+}) {
+  return createAppointmentForStudent(data)
+}
+
+// 重新导出 createAppointmentForStudentAsync 以支持一键续约
+export function createAppointmentForStudentAsync(data: {
+  student_id: string
+  counselor_id: string
+  consultant_name: string
+  date: string
+  start_time: string
+  end_time: string
 }) {
   if (isDev) {
     return studentMock.createAppointmentForStudent(data)
@@ -22,8 +35,8 @@ export function createAppointmentAsync(data: {
 }
 
 // 咨询师创建预约
-export function counselorSetSlot(data: {
-  counselorId: string
+export function consultantSetSlot(data: {
+  counselor_id: string
   date: string
   time: string
 }) {
@@ -77,6 +90,11 @@ export function getAvailableDates(start: string, days = 10) {
   return request.get('/api/appointment/dates', { params: { start, days } })
 }
 
-function addScheduleSlot(data: { counselorId: string; date: string; time: string }) {
+// 通用：通过id获取单条预约
+export function getAppointmentByIdAsync(id: string) {
+  return getAppointmentById(id)
+}
+
+function addScheduleSlot(data: { counselor_id: string; date: string; time: string }) {
   throw new Error('Function not implemented.')
 }

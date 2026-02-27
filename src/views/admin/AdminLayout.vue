@@ -24,19 +24,61 @@
     </header>
 
     <div class="main">
-      <aside class="menu">
-        <div
-          v-for="entry in menuEntries"
-          :key="entry.path"
-          v-show="entry.show"
-          class="item"
-          :class="{ active: currentPath === entry.path }"
-          @click="go(entry.path)"
-        >
-          <el-icon class="item-icon"><component :is="entry.icon" /></el-icon>
-          <span class="item-text">{{ entry.label }}</span>
-        </div>
-      </aside>
+
+      <!-- 左侧菜单 -->
+<aside class="menu">
+
+  <!-- 所有人可见 -->
+  <div class="item" @click="go('time')">
+    心理咨询时间规则
+  </div>
+  <div class="item" v-if="role === 'counselor'" @click="router.push('/case')">
+    个案管理
+  </div>
+  <div class="item" v-if="role === 'counselor'" @click="router.push('/crisis')">
+    危机管理
+  </div>
+
+    <!-- 请假管理：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/leave/list')">
+      请假管理
+    </div>
+
+    <!-- 测评查看：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/assessment/list')">
+      测评查看
+    </div>
+
+    <!-- 团体活动管理：咨询师、心理中心、管理员可见 -->
+    <div class="item" v-if="['counselor','center','admin'].includes(role)" @click="router.push('/activity/manage')">
+      团体活动管理
+    </div>
+
+  <!-- 只有管理员 -->
+  <div class="item" 
+       v-if="role === 'admin'"
+       @click="go('counselor')">
+    咨询师档案
+  </div>
+
+  <!-- 智能排班：心理中心 -->
+  <div class="item" 
+       v-if="role === 'center'"
+       @click="go('schedule')"> <!--这里后面要改-->
+    智能排班
+  </div>
+
+<!-- 咨询师 -->
+<div class="item"
+     v-if="role === 'counselor'"
+     @click="go('counselor-work')">
+  我的咨询
+</div>
+
+</aside>
+
+
+      <!-- 右侧工作区 -->
       <section class="content">
         <div class="content-header">
           <h2>欢迎进入 {{ roleName }} 工作台</h2>

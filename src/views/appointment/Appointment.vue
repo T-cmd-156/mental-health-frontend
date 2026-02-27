@@ -2,11 +2,11 @@
 import { ref, onMounted ,computed, watch } from 'vue'
 import {
   updateAppointmentStatusAsync,
+  getAppointmentByIdAsync,
 } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
 import { getVisitFormConfig, getScaleConfig, getConsentConfig } from '../../api/config'
 import { useRoute } from 'vue-router'
-import { getMyAppointmentsAsync } from '../../api/appointment'
 import { generateFromTemplate } from '../../mock/schedule'
 
 // 咨询师只是维护排班，不是创建预约
@@ -53,7 +53,8 @@ const visitConfig = ref<any>(null)
 const scaleConfig = ref<any[]>([])
 const consentConfig = ref<any>(null)
 
-const studentId = localStorage.getItem('student_id')
+// studentId 不再用于详情查询
+// const studentId = localStorage.getItem('student_id')
 
 function handleFileChange(file: any) {
   signFile.value = file.raw
@@ -143,15 +144,12 @@ async function submitSign() {
 onMounted(async () => {
   const id = route.params.id as string
 
-  const res = await getMyAppointmentsAsync(studentId)
-  const found = res.data.find(a => a.id === id)
-
-  if (!found) {
+  try {
+    const res = await getAppointmentByIdAsync(id)
+    appointment.value = res.data
+  } catch (e) {
     console.error('找不到预约', id)
-    return
   }
-
-  appointment.value = { ...found }
 })
 
 

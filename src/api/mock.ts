@@ -1,81 +1,39 @@
 import { updateAppointmentStatus } from "../mock/appointment"
 import { AppointmentStatus } from "../types/appointment"
 import { fetchSchedule } from "../mock/schedule";
+import { users } from '../mock/mock';
 
 // ===== 模拟管理员账号 =====
 // 开发者账号（便于本地查看功能，上线前可移除或改密）
 // 管理端：dev / dev123，角色选「管理员」
 // 咨询师端：dev_counselor / dev123
 export const adminUsers = [
-  {
-    id: 'dev_admin',
-    username: 'dev',
-    password: 'dev123',
-    role: 'admin',
-    name: '开发者(管理员)'
-  },
-  {
-    id: 'dev_counselor',
-    username: 'dev_counselor',
-    password: 'dev123',
-    role: 'counselor',
-    name: '开发者(咨询师)'
-  },
-  {
-  id: 'center_1',
-  username: 'center',
-  password: '123456',
-  role: 'center',
-  name: '心理中心'
-},
-  // {
-  //   username: 'counselor',
-  //   password: '123456',
-  //   role: '咨询师'
-  // },
-  {
-    id: 'tutor_1',
-    username: 'tutor',
-    password: '123456',
-    role: 'tutor',
-    name: '辅导员'
-  },
-    
-  {
-    id: 'admin_1',  
-    username: 'admin',
-    password: '123',
-    role: 'admin',
-    name: '管理员'
-  },
-
-  {
-    id: 'C1',
-    username: 'zhang',
-    password: '123456',
-    role: 'counselor',
-    name: '张老师'
-  },
-  
-  {
-    id: 'C10',
-    username: 'feng',
-    password: '123456',
-    role: 'counselor',
-    name: '冯老师'
-  }
+  { id: 'center_1', username: 'center', password: '123456', role: 'center', name: '心理中心' },
+  { id: 'tutor_1', username: 'tutor', password: '123456', role: 'tutor', name: '辅导员' },
+  { id: 'admin_1', username: 'admin', password: '123', role: 'admin', name: '管理员' },
+  { id: 'con001', username: 'zhang', password: '123456', role: 'counselor', name: '张老师' },
+  { id: 'con010', username: 'feng', password: '123456', role: 'counselor', name: '冯老师' },
 ]
 
 
 
 // ===== 模拟登录接口 =====
 export function adminLogin(data: { username: string; password: string; role: string }) {
-  const user = adminUsers.find(
+  // users: account, adminUsers: username
+  let user: any = users.find(
     u =>
-      u.username === data.username &&
+      (u.account === data.username) &&
       u.password === data.password &&
-      u.role === data.role   // 角色匹配
-  )
+      u.role === data.role
+  );
+  if (!user) {
+    user = adminUsers.find(
+      u =>
+        (u.username === data.username) &&
+        u.password === data.password &&
+        u.role === data.role
+    );
+  }
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -83,8 +41,10 @@ export function adminLogin(data: { username: string; password: string; role: str
         resolve({
           code: 200,
           data: {
-            id: user.id, 
+            id: user.id,
+            account: user.account || user.id, 
             username: user.username,
+            name: user.name,
             name: user.name,
             role: user.role,
             token: 'mock-token-123'
@@ -114,16 +74,16 @@ export function getSemester() {
 // 咨询师数据
 export function getCounselors() {
   return [
-    { id: 'C1', name: '张老师' },
-    { id: 'C2', name: '李老师' },
-    { id: 'C3', name: '王老师' },
-    { id: 'C4', name: '赵老师' },
-    { id: 'C5', name: '钱老师' },
-    { id: 'C6', name: '罗老师' },
-    { id: 'C7', name: '穆老师' },
-    { id: 'C8', name: '何老师' },
-    { id: 'C9', name: '周老师' },
-    { id: 'C10', name: '冯老师' },
+    { id: 'con001', name: '张老师' },
+    { id: 'con002', name: '钱老师' },
+    { id: 'con003', name: '罗老师' },
+    { id: 'con004', name: '穆老师' },
+    { id: 'con005', name: '何老师' },
+    { id: 'con006', name: '周老师' },
+    { id: 'con007', name: '赵老师' },
+    { id: 'con008', name: '李老师' },
+    { id: 'con009', name: '王老师' },
+    { id: 'con010', name: '冯老师' },
   ];
 }
 

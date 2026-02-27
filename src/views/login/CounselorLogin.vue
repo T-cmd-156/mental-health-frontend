@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="box">
       <h2>咨询师登录</h2>
-      <p class="hint">使用账号密码登录，或使用开发者快捷登录查看功能。</p>
+      <p class="hint">使用账号密码登录</p>
       <input v-model="form.username" placeholder="账号" />
       <input v-model="form.password" type="password" placeholder="密码" />
       <button @click="login">登录</button>

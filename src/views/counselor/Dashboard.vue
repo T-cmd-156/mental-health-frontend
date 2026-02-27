@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+<<<<<<< HEAD
     <!-- 1. 快捷入口 -->
     <section class="card quick">
       <h3>快捷应用</h3>
@@ -45,6 +46,72 @@
         <li>危机个案：{{ crisisCases }}</li>
         <li>爽约次数：{{ noShowCount }}</li>
       </ul>
+=======
+    <!-- 顶部信息卡片 -->
+    <el-row :gutter="20" class="info-cards">
+      <el-col :span="6">
+        <el-card>
+          <div>今日预约</div>
+          <div class="number">{{ todayCount }}</div>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card>
+          <div>待处理预约</div>
+          <div class="number">{{ pendingCount }}</div>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card>
+          <div>未写咨询记录</div>
+          <div class="number">{{ unwrittenCount }}</div>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card>
+          <div>当前个案</div>
+          <div class="number">{{ caseCount }}</div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <!-- 今日预约时间轴 -->
+    <section class="card timeline">
+      <h3>今日预约</h3>
+      <el-timeline>
+        <el-timeline-item
+          v-for="a in todayAppointments"
+          :key="a.id"
+          :timestamp="a.appointmentTime"
+          @click="goAppointment(a.id)"
+          style="cursor: pointer;"
+        >
+          {{ a.studentId }}
+        </el-timeline-item>
+        <div v-if="todayAppointments.length === 0">今日暂无预约</div>
+      </el-timeline>
+    </section>
+
+    <!-- 待办提醒区 -->
+    <section class="card todos">
+      <el-row>
+        <el-col :span="8">
+          <el-badge :value="pendingCount" class="badge">
+            <span>待处理预约</span>
+          </el-badge>
+        </el-col>
+        <el-col :span="8">
+          <el-badge :value="unwrittenCount" class="badge">
+            <span>未写咨询记录</span>
+          </el-badge>
+        </el-col>
+        <el-col :span="8">
+          <el-badge :value="crisisPendingCount" class="badge">
+            <span>危机待处理</span>
+          </el-badge>
+        </el-col>
+      </el-row>
+>>>>>>> master
     </section>
 
     <section class="card">
@@ -81,6 +148,101 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+<<<<<<< HEAD
+=======
+import { getCounselorAppointmentsAsync } from '../../api/appointment'
+import { getRecordsByCounselorAsync } from '../../api/record'
+import { getCasesByCounselorAsync } from '../../api/case'
+import { getCrisesByCounselorAsync } from '../../api/crisis'
+import type { Appointment } from '../../types/appointment'
+import type { Record } from '../../types/record'
+import type { Case } from '../../types/case'
+import type { Crisis } from '../../types/crisis'
+
+const router = useRouter()
+const userRole = localStorage.getItem('user_role')
+const counselorId = localStorage.getItem('user_id') || ''
+
+const appointments = ref<Appointment[]>([])
+const records = ref<Record[]>([])
+const casesList = ref<Case[]>([])
+const crises = ref<Crisis[]>([])
+
+const today = new Date().toISOString().slice(0, 10)
+
+onMounted(async () => {
+  if (userRole === 'counselor' && counselorId) {
+    try {
+      const res = await getCounselorAppointmentsAsync(counselorId)
+      appointments.value = res.data || []
+
+      const rres = await getRecordsByCounselorAsync(counselorId)
+      records.value = rres.data || []
+
+      const cres = await getCasesByCounselorAsync(counselorId)
+      casesList.value = cres.data || []
+
+      const cris = await getCrisesByCounselorAsync(counselorId)
+      crises.value = cris.data || []
+    } catch (e) {
+      console.error('获取数据失败', e)
+    }
+  }
+})
+
+const todayCount = computed(() =>
+  appointments.value.filter(a => a.appointmentDate === today).length
+)
+
+const pendingStatuses = ['draft', 'submitted', 'info_done']
+const pendingCount = computed(() =>
+  appointments.value.filter(a => pendingStatuses.includes(a.status)).length
+)
+
+const unwrittenCount = computed(() =>
+  appointments.value.filter(a =>
+    ['confirmed', 'completed', 'checked_in'].includes(a.status) &&
+    !records.value.some(r => r.appointmentId === a.id)
+  ).length
+)
+
+const caseCount = computed(() =>
+  casesList.value.filter(c => !c.isClosed).length
+)
+
+const crisisPendingCount = computed(() =>
+  crises.value.filter(c => c.status === 'pending').length
+)
+
+const todayAppointments = computed(() =>
+  appointments.value
+    .filter(a => a.appointmentDate === today)
+    .sort((a, b) => a.appointmentTime.localeCompare(b.appointmentTime))
+)
+
+function goAppointment(id: string) {
+  router.push(`/appointment/${id}`)
+}
+</script>
+
+<style scoped>
+.dashboard {
+  padding: 16px;
+}
+.info-cards .el-card {
+  text-align: center;
+}
+.info-cards .number {
+  font-size: 24px;
+  margin-top: 8px;
+}
+.card {
+  margin-top: 20px;
+}
+</style>
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+>>>>>>> master
 import { getCounselorAppointmentsAsync } from '../../api/appointment'
 import type { Appointment } from '../../types/appointment'
 
@@ -111,7 +273,21 @@ onMounted(async () => {
   if (userRole === 'counselor' && counselorId) {
     try {
       const res = await getCounselorAppointmentsAsync(counselorId)
+<<<<<<< HEAD
       appointments.value = res.data || []
+=======
+      console.log('咨询师预约:', res.data)
+      appointments.value = res.data.filter(
+  a => String(a.counselorId).toLowerCase() === String(counselorId).toLowerCase()
+)
+
+    console.log('过滤后 appointments:', appointments.value)
+      appointments.value = res.data.filter(
+  a => String(a.counselorId).toLowerCase() === String(counselorId).toLowerCase()
+)
+
+    console.log('过滤后 appointments:', appointments.value)
+>>>>>>> master
     } catch (e) {
       console.error('获取预约失败', e)
     }
@@ -130,8 +306,14 @@ const todayTodos = computed(() =>
     .filter(a =>
       ['sign_done','submitted','confirmed'].includes(a.status)
     )
+  appointmentList.value
+    .filter(a =>
+      ['sign_done','submitted','confirmed'].includes(a.status)
+    )
     .map(a => ({
       id: a.id,
+      type: '预约待办',
+      title: `${a.date} ${a.time} 学生${a.student}`
       type: '预约待办',
       title: `${a.date} ${a.time} 学生${a.student}`
     }))
@@ -140,10 +322,19 @@ const todayTodos = computed(() =>
 // --- 今日预约时间轴（仅今日且未取消） ---
 const todaySchedules = computed(() =>
   appointmentList.value
+<<<<<<< HEAD
     .filter(a => a.date === today && a.status !== 'cancelled')
     .sort((a, b) => (a.time || '').localeCompare(b.time || ''))
+=======
+  appointmentList.value
+  .filter(a => a) // 确保非 null
+    // .filter(a => a.status === 'confirmed' && a.appointmentDate === today)
+>>>>>>> master
     .map(a => ({
       id: a.id,
+      date: a.date,
+      time: a.time,
+      title: `学生 ${a.student}`
       date: a.date,
       time: a.time,
       title: `学生 ${a.student}`
@@ -191,30 +382,41 @@ const appointmentList = computed(() =>
   }))
 )
 
+
+const unfinishedCount = computed(() =>
+  appointments.value.filter(a => a.status !== 'closed').length
+)
+
+const unReportCount = computed(() =>
+  appointments.value.filter(a => a.status === 'checked_in').length
+)
+
+const appointmentList = computed(() =>
+  appointments.value.map(a => ({
+    id: a.id,
+    date: a.appointmentDate,
+    time: a.appointmentTime,
+    student: a.studentId,
+    counselor: a.counselorName,
+    status: a.status
+  }))
+)
+
 </script>
 
 <style scoped>
 .dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  padding: 16px;
+}
+.info-cards .el-card {
+  text-align: center;
+}
+.info-cards .number {
+  font-size: 24px;
+  margin-top: 8px;
 }
 .card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 8px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.item {
-  background: #f3f3f3;
-  text-align: center;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
+  margin-top: 20px;
 }
 .item:hover { background: #e6f0ff; }
 .calendar .time { display: inline-block; width: 80px; font-weight: 500; }
