@@ -1,6 +1,13 @@
 <template>
   <div class="profile-view">
-    <h2>成长档案查看</h2>
+    <div class="profile-header-section">
+      <h2>成长档案查看</h2>
+      <div class="profile-actions">
+        <button class="export-btn" @click="exportProfile">
+          导出档案
+        </button>
+      </div>
+    </div>
     
     <!-- 子女切换器 -->
     <div class="child-selector">
@@ -18,43 +25,115 @@
       <div class="info-grid">
         <div class="info-item">
           <span class="label">姓名：</span>
-          <span class="value">{{ currentChild.name }}</span>
+          <span class="value">{{ profile.name }}</span>
         </div>
         <div class="info-item">
           <span class="label">学号：</span>
-          <span class="value">{{ currentChild.studentId }}</span>
+          <span class="value">{{ profile.studentId }}</span>
         </div>
         <div class="info-item">
           <span class="label">性别：</span>
-          <span class="value">{{ currentChild.gender === 1 ? '男' : '女' }}</span>
+          <span class="value">{{ profile.gender === 1 ? '男' : '女' }}</span>
         </div>
         <div class="info-item">
           <span class="label">年龄：</span>
-          <span class="value">{{ currentChild.age }}岁</span>
+          <span class="value">{{ profile.age }}岁</span>
         </div>
         <div class="info-item">
-          <span class="label">班级：</span>
-          <span class="value">{{ currentChild.class }}</span>
+          <span class="label">出生日期：</span>
+          <span class="value">{{ profile.birthday }}</span>
         </div>
         <div class="info-item">
-          <span class="label">学院：</span>
-          <span class="value">{{ currentChild.college }}</span>
-        </div>
-        <div class="info-item">
-          <span class="label">联系方式：</span>
-          <span class="value">{{ currentChild.contact }}</span>
+          <span class="label">民族：</span>
+          <span class="value">{{ profile.nation }}</span>
         </div>
       </div>
     </div>
 
-    <!-- 测评记录 -->
+    <!-- 学业信息 -->
     <div class="profile-card">
-      <h3>测评记录</h3>
-      <div v-if="currentAssessments.length === 0" class="empty-section">
+      <h3>学业信息</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">学院：</span>
+          <span class="value">{{ profile.college }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">专业：</span>
+          <span class="value">{{ profile.major }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">班级：</span>
+          <span class="value">{{ profile.class }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">入学时间：</span>
+          <span class="value">{{ profile.enrollmentDate }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">学业状态：</span>
+          <span class="value">{{ profile.academicStatus }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 健康信息 -->
+    <div class="profile-card">
+      <h3>健康信息</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">身体状况：</span>
+          <span class="value">{{ profile.healthStatus }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">既往病史：</span>
+          <span class="value">{{ profile.medicalHistory || '无' }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">过敏史：</span>
+          <span class="value">{{ profile.allergyHistory || '无' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 联系方式 -->
+    <div class="profile-card">
+      <h3>联系方式</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">手机：</span>
+          <span class="value">{{ profile.contact.phone }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">邮箱：</span>
+          <span class="value">{{ profile.contact.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">紧急联系人：</span>
+          <span class="value">{{ profile.contact.emergencyContact }}（{{ profile.contact.emergencyRelation }}）</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 标签系统 -->
+    <div class="profile-card">
+      <h3>标签系统</h3>
+      <div v-if="profile.tags.length === 0" class="empty-section">
+        <p>暂无标签</p>
+      </div>
+      <div v-else class="tags-container">
+        <span v-for="tag in profile.tags" :key="tag" class="tag">{{ tag }}</span>
+      </div>
+    </div>
+
+    <!-- 心理测评档案 -->
+    <div class="profile-card">
+      <h3>心理测评档案</h3>
+      <div v-if="profile.assessmentRecords.length === 0" class="empty-section">
         <p>暂无测评记录</p>
       </div>
       <div v-else class="assessment-list">
-        <div v-for="assessment in currentAssessments" :key="assessment.id" class="assessment-item">
+        <div v-for="assessment in profile.assessmentRecords" :key="assessment.id" class="assessment-item">
           <div class="assessment-header">
             <span class="assessment-title">{{ assessment.title }}</span>
             <span class="assessment-date">{{ assessment.date }}</span>
@@ -67,60 +146,119 @@
       </div>
     </div>
 
-    <!-- 咨询记录 -->
+    <!-- 访谈档案 -->
     <div class="profile-card">
-      <h3>咨询记录</h3>
-      <div v-if="currentConsultations.length === 0" class="empty-section">
+      <h3>访谈档案</h3>
+      <div v-if="profile.interviewRecords.length === 0" class="empty-section">
+        <p>暂无访谈记录</p>
+      </div>
+      <div v-else class="interview-list">
+        <div v-for="interview in profile.interviewRecords" :key="interview.id" class="interview-item">
+          <div class="interview-header">
+            <span class="interview-title">{{ interview.title }}</span>
+            <span class="interview-date">{{ interview.date }}</span>
+          </div>
+          <div class="interview-body">
+            <span class="interviewer">访谈者：{{ interview.interviewer }}</span>
+            <span class="duration">{{ interview.duration }}分钟</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 咨询档案 -->
+    <div class="profile-card">
+      <h3>咨询档案</h3>
+      <div v-if="profile.consultationRecords.length === 0" class="empty-section">
         <p>暂无咨询记录</p>
       </div>
       <div v-else class="consultation-list">
-        <div v-for="consultation in currentConsultations" :key="consultation.id" class="consultation-item">
+        <div v-for="consultation in profile.consultationRecords" :key="consultation.id" class="consultation-item">
           <div class="consultation-header">
             <span class="counselor">{{ consultation.counselor }}</span>
             <span class="consultation-date">{{ consultation.date }}</span>
           </div>
           <div class="consultation-body">
             <span class="duration">{{ consultation.duration }}分钟</span>
-            <span class="method">{{ consultation.method }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 活动参与 -->
+    <!-- 危机干预档案 -->
     <div class="profile-card">
-      <h3>活动参与</h3>
-      <div v-if="currentActivities.length === 0" class="empty-section">
+      <h3>危机干预档案</h3>
+      <div v-if="profile.crisisRecords.length === 0" class="empty-section">
+        <p>暂无危机干预记录</p>
+      </div>
+      <div v-else class="crisis-list">
+        <div v-for="crisis in profile.crisisRecords" :key="crisis.id" class="crisis-item">
+          <div class="crisis-header">
+            <span class="crisis-title">{{ crisis.title }}</span>
+            <span class="crisis-date">{{ crisis.date }}</span>
+          </div>
+          <div class="crisis-body">
+            <span :class="['level', crisis.level]">{{ getCrisisLevelText(crisis.level) }}</span>
+            <span class="status">{{ crisis.status }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 活动档案 -->
+    <div class="profile-card">
+      <h3>活动档案</h3>
+      <div v-if="profile.activityRecords.length === 0" class="empty-section">
         <p>暂无活动参与记录</p>
       </div>
       <div v-else class="activity-list">
-        <div v-for="activity in currentActivities" :key="activity.id" class="activity-item">
+        <div v-for="activity in profile.activityRecords" :key="activity.id" class="activity-item">
           <div class="activity-header">
             <span class="activity-title">{{ activity.title }}</span>
             <span class="activity-date">{{ activity.date }}</span>
           </div>
           <div class="activity-body">
-            <span class="location">{{ activity.location }}</span>
             <span :class="['status', activity.status]">{{ activity.status }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 辅导员评价 -->
+    <!-- 转介记录 -->
     <div class="profile-card">
-      <h3>辅导员评价</h3>
-      <div v-if="currentEvaluations.length === 0" class="empty-section">
-        <p>暂无辅导员评价</p>
+      <h3>转介记录</h3>
+      <div v-if="profile.referralRecords.length === 0" class="empty-section">
+        <p>暂无转介记录</p>
       </div>
-      <div v-else class="evaluation-list">
-        <div v-for="evaluation in currentEvaluations" :key="evaluation.id" class="evaluation-item">
-          <div class="evaluation-header">
-            <span class="evaluator">{{ evaluation.evaluator }}</span>
-            <span class="evaluation-date">{{ evaluation.date }}</span>
+      <div v-else class="referral-list">
+        <div v-for="referral in profile.referralRecords" :key="referral.id" class="referral-item">
+          <div class="referral-header">
+            <span class="referral-title">{{ referral.title }}</span>
+            <span class="referral-date">{{ referral.date }}</span>
           </div>
-          <div class="evaluation-body">
-            <p class="content">{{ evaluation.content }}</p>
+          <div class="referral-body">
+            <span class="target">转介机构：{{ referral.target }}</span>
+            <span class="reason">转介原因：{{ referral.reason }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行为记录 -->
+    <div class="profile-card">
+      <h3>行为记录</h3>
+      <div v-if="profile.behaviorRecords.length === 0" class="empty-section">
+        <p>暂无行为记录</p>
+      </div>
+      <div v-else class="behavior-list">
+        <div v-for="behavior in profile.behaviorRecords" :key="behavior.id" class="behavior-item">
+          <div class="behavior-header">
+            <span class="behavior-title">{{ behavior.title }}</span>
+            <span class="behavior-date">{{ behavior.date }}</span>
+          </div>
+          <div class="behavior-body">
+            <span class="type">{{ behavior.type }}</span>
+            <span class="description">{{ behavior.description }}</span>
           </div>
         </div>
       </div>
@@ -129,154 +267,166 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { getChildProfile } from '../../../api/parent.js'
 
 const selectedChild = ref('1')
+const loading = ref(false)
+const children = ref([])
+const profile = ref({
+  name: '',
+  studentId: '',
+  gender: 1,
+  age: 0,
+  birthday: '',
+  nation: '',
+  college: '',
+  major: '',
+  class: '',
+  enrollmentDate: '',
+  academicStatus: '',
+  healthStatus: '',
+  medicalHistory: '',
+  allergyHistory: '',
+  contact: {
+    phone: '',
+    email: '',
+    emergencyContact: '',
+    emergencyRelation: ''
+  },
+  tags: [],
+  assessmentRecords: [],
+  interviewRecords: [],
+  consultationRecords: [],
+  crisisRecords: [],
+  activityRecords: [],
+  referralRecords: [],
+  behaviorRecords: []
+})
 
-// 模拟子女数据
-const children = ref([
-  {
-    id: '1',
-    name: '张三',
-    studentId: '2024001',
-    gender: 1,
-    age: 19,
-    class: '计算机科学与技术1班',
-    college: '计算机学院',
-    contact: '13800138000'
-  },
-  {
-    id: '2',
-    name: '李四',
-    studentId: '2024002',
-    gender: 0,
-    age: 18,
-    class: '软件工程2班',
-    college: '计算机学院',
-    contact: '13800138001'
-  }
-])
+onMounted(async () => {
+  await loadChildren()
+  await loadProfile()
+})
 
-// 模拟测评数据
-const assessments = ref([
-  {
-    id: '1',
-    childId: '1',
-    title: '心理健康状况评估',
-    date: '2026-02-20',
-    score: 75,
-    level: 'normal'
-  },
-  {
-    id: '2',
-    childId: '1',
-    title: '抑郁倾向测评',
-    date: '2026-01-15',
-    score: 60,
-    level: 'normal'
-  },
-  {
-    id: '3',
-    childId: '2',
-    title: '心理健康状况评估',
-    date: '2026-02-18',
-    score: 85,
-    level: 'excellent'
-  }
-])
+watch(selectedChild, async () => {
+  await loadProfile()
+})
 
-// 模拟咨询数据
-const consultations = ref([
-  {
-    id: '1',
-    childId: '1',
-    counselor: '张老师',
-    date: '2026-02-26',
-    duration: 50,
-    method: '线下咨询'
-  },
-  {
-    id: '2',
-    childId: '1',
-    counselor: '李老师',
-    date: '2026-02-20',
-    duration: 60,
-    method: '线上咨询'
-  },
-  {
-    id: '3',
-    childId: '2',
-    counselor: '张老师',
-    date: '2026-02-25',
-    duration: 45,
-    method: '线上咨询'
+const loadChildren = async () => {
+  try {
+    loading.value = true
+    // 模拟数据
+    children.value = [
+      {
+        id: '1',
+        name: '张三',
+        studentId: '2024001'
+      },
+      {
+        id: '2',
+        name: '李四',
+        studentId: '2024002'
+      }
+    ]
+    if (children.value.length > 0) {
+      selectedChild.value = children.value[0].id
+    }
+  } catch (error) {
+    console.error('加载子女列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
 
-// 模拟活动数据
-const activities = ref([
-  {
-    id: '1',
-    childId: '1',
-    title: '情绪管理工作坊',
-    date: '2026-03-10',
-    location: '心理健康中心活动室',
-    status: '已报名'
-  },
-  {
-    id: '2',
-    childId: '1',
-    title: '正念冥想体验',
-    date: '2026-02-20',
-    location: '瑜伽室',
-    status: '已完成'
-  },
-  {
-    id: '3',
-    childId: '2',
-    title: '人际关系小组',
-    date: '2026-03-05',
-    location: '心理咨询室',
-    status: '已报名'
+const loadProfile = async () => {
+  try {
+    loading.value = true
+    // 模拟数据
+    profile.value = {
+      name: '张三',
+      studentId: '2024001',
+      gender: 1,
+      age: 19,
+      birthday: '2007-01-01',
+      nation: '汉族',
+      college: '计算机学院',
+      major: '计算机科学与技术',
+      class: '计算机科学与技术1班',
+      enrollmentDate: '2024-09-01',
+      academicStatus: '正常',
+      healthStatus: '良好',
+      medicalHistory: '',
+      allergyHistory: '',
+      contact: {
+        phone: '13800138000',
+        email: 'zhangsan@example.com',
+        emergencyContact: '张父',
+        emergencyRelation: '父亲'
+      },
+      tags: ['积极向上', '学习认真', '团队合作'],
+      assessmentRecords: [
+        {
+          id: 1,
+          title: '心理健康状况评估',
+          date: '2026-02-15',
+          score: 75,
+          level: 'normal'
+        },
+        {
+          id: 2,
+          title: '抑郁倾向测评',
+          date: '2026-01-20',
+          score: 60,
+          level: 'excellent'
+        }
+      ],
+      interviewRecords: [
+        {
+          id: 1,
+          title: '入学访谈',
+          date: '2024-09-15',
+          interviewer: '李老师',
+          duration: 30
+        }
+      ],
+      consultationRecords: [
+        {
+          id: 1,
+          date: '2026-02-10',
+          counselor: '王老师',
+          duration: 50
+        }
+      ],
+      crisisRecords: [
+        {
+          id: 1,
+          title: '学业压力危机',
+          date: '2026-01-05',
+          level: 'yellow',
+          status: '已干预'
+        }
+      ],
+      activityRecords: [
+        {
+          id: 1,
+          title: '心理健康讲座',
+          date: '2026-02-20',
+          status: '已参与'
+        }
+      ],
+      referralRecords: [],
+      behaviorRecords: []
+    }
+  } catch (error) {
+    console.error('加载成长档案失败', error)
+  } finally {
+    loading.value = false
   }
-])
-
-// 模拟辅导员评价数据
-const evaluations = ref([
-  {
-    id: '1',
-    childId: '1',
-    evaluator: '王辅导员',
-    date: '2026-02-10',
-    content: '该生学习态度认真，积极参与班级活动，与同学相处融洽，希望继续保持。'
-  },
-  {
-    id: '2',
-    childId: '2',
-    evaluator: '李辅导员',
-    date: '2026-02-05',
-    content: '该生性格开朗，乐于助人，学习成绩优异，是班级的积极分子。'
-  }
-])
+}
 
 const currentChild = computed(() => {
   return children.value.find(child => child.id === selectedChild.value) || children.value[0]
-})
-
-const currentAssessments = computed(() => {
-  return assessments.value.filter(assessment => assessment.childId === selectedChild.value)
-})
-
-const currentConsultations = computed(() => {
-  return consultations.value.filter(consultation => consultation.childId === selectedChild.value)
-})
-
-const currentActivities = computed(() => {
-  return activities.value.filter(activity => activity.childId === selectedChild.value)
-})
-
-const currentEvaluations = computed(() => {
-  return evaluations.value.filter(evaluation => evaluation.childId === selectedChild.value)
 })
 
 const switchChild = () => {
@@ -293,6 +443,21 @@ const getLevelText = (level) => {
   }
   return levelMap[level] || level
 }
+
+const getCrisisLevelText = (level) => {
+  const levelMap = {
+    red: '红色（极高危）',
+    orange: '橙色（高危）',
+    yellow: '黄色（中危）',
+    blue: '蓝色（轻度）',
+    green: '绿色（正常/关注）'
+  }
+  return levelMap[level] || level
+}
+
+const exportProfile = () => {
+  alert('档案导出功能正在开发中')
+}
 </script>
 
 <style scoped>
@@ -300,6 +465,35 @@ const getLevelText = (level) => {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.profile-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.export-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export-btn:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a428e 100%);
+  transform: translateY(-1px);
 }
 
 /* 子女切换器 */
@@ -366,6 +560,23 @@ const getLevelText = (level) => {
 .info-item .value {
   color: #333;
   font-size: 0.95rem;
+}
+
+/* 标签系统 */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 6px 16px;
+  background: #f0f5ff;
+  color: #667eea;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #e0e7ff;
 }
 
 /* 空状态 */
@@ -444,6 +655,69 @@ const getLevelText = (level) => {
   background: #dc3545;
 }
 
+.level.red {
+  background: #dc3545;
+}
+
+.level.orange {
+  background: #fd7e14;
+}
+
+.level.yellow {
+  background: #ffc107;
+  color: #333;
+}
+
+.level.blue {
+  background: #17a2b8;
+}
+
+.level.green {
+  background: #28a745;
+}
+
+/* 访谈档案 */
+.interview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.interview-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #fd7e14;
+}
+
+.interview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.interview-title {
+  font-weight: 500;
+  color: #333;
+}
+
+.interview-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.interview-body {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.interviewer {
+  color: #555;
+  font-size: 0.95rem;
+}
+
 /* 咨询记录 */
 .consultation-list {
   display: flex;
@@ -481,13 +755,49 @@ const getLevelText = (level) => {
   align-items: center;
 }
 
-.duration,
-.method {
+.duration {
   color: #555;
   font-size: 0.95rem;
 }
 
-/* 活动参与 */
+/* 危机干预档案 */
+.crisis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.crisis-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #dc3545;
+}
+
+.crisis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.crisis-title {
+  font-weight: 500;
+  color: #333;
+}
+
+.crisis-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.crisis-body {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* 活动档案 */
 .activity-list {
   display: flex;
   flex-direction: column;
@@ -524,11 +834,6 @@ const getLevelText = (level) => {
   align-items: center;
 }
 
-.location {
-  color: #555;
-  font-size: 0.95rem;
-}
-
 .status {
   padding: 4px 12px;
   border-radius: 12px;
@@ -549,47 +854,107 @@ const getLevelText = (level) => {
   background: #6c757d;
 }
 
-/* 辅导员评价 */
-.evaluation-list {
+.status.已参与 {
+  background: #28a745;
+}
+
+/* 转介记录 */
+.referral-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.evaluation-item {
+.referral-item {
   padding: 15px;
   background: #f8f9fa;
   border-radius: 8px;
-  border-left: 4px solid #667eea;
+  border-left: 4px solid #6f42c1;
 }
 
-.evaluation-header {
+.referral-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.evaluator {
+.referral-title {
   font-weight: 500;
   color: #333;
 }
 
-.evaluation-date {
+.referral-date {
   font-size: 0.85rem;
   color: #666;
 }
 
-.evaluation-body .content {
-  margin: 0;
+.referral-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.target,
+.reason {
   color: #555;
-  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* 行为记录 */
+.behavior-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.behavior-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #20c997;
+}
+
+.behavior-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.behavior-title {
+  font-weight: 500;
+  color: #333;
+}
+
+.behavior-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.behavior-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.type,
+.description {
+  color: #555;
   font-size: 0.95rem;
 }
 
 @media (max-width: 768px) {
   .profile-view {
     padding: 15px;
+  }
+
+  .profile-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   .child-selector {
@@ -612,7 +977,10 @@ const getLevelText = (level) => {
   .assessment-header,
   .consultation-header,
   .activity-header,
-  .evaluation-header {
+  .interview-header,
+  .crisis-header,
+  .referral-header,
+  .behavior-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
@@ -620,7 +988,9 @@ const getLevelText = (level) => {
 
   .assessment-body,
   .consultation-body,
-  .activity-body {
+  .activity-body,
+  .interview-body,
+  .crisis-body {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;

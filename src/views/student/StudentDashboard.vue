@@ -78,8 +78,8 @@ const menuItems = [
   },
   {
     title: '心理自助',
-    desc: '心理百科、美文与自助学习入口',
-    path: '/wiki',
+    desc: '心理百科、美文、微课、音乐调节与课程',
+    path: '/student/self-help',
     color: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)',
     icon: Reading,
   },

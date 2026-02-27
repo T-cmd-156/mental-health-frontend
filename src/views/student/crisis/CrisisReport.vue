@@ -13,19 +13,20 @@
       </div>
 
       <div class="form-group">
-        <label>危机程度：</label>
-        <div class="severity-options">
-          <div 
-            v-for="severity in severities" 
-            :key="severity.value"
-            :class="['severity-option', { selected: form.severity === severity.value }]"
-            @click="form.severity = severity.value"
-          >
-            <span class="severity-label">{{ severity.label }}</span>
-            <span class="severity-desc">{{ severity.desc }}</span>
-          </div>
+      <label>危机等级：</label>
+      <div class="severity-options">
+        <div 
+          v-for="severity in severities" 
+          :key="severity.value"
+          :class="['severity-option', { selected: form.severity === severity.value }]"
+          :style="{ '--severity-color': getSeverityColor(severity.value) }"
+          @click="form.severity = severity.value"
+        >
+          <span class="severity-label">{{ severity.label }}</span>
+          <span class="severity-desc">{{ severity.desc }}</span>
         </div>
       </div>
+    </div>
 
       <div class="form-group">
         <label>危机描述：</label>
@@ -129,19 +130,29 @@ const form = ref({
 
 const severities = [
   {
-    value: 'low',
-    label: '轻度',
-    desc: '情绪波动，能正常学习生活'
+    value: 'red',
+    label: '红色（极高危）',
+    desc: '出现严重自伤或伤人倾向，需要紧急干预'
   },
   {
-    value: 'medium',
-    label: '中度',
+    value: 'orange',
+    label: '橙色（高危）',
+    desc: '情绪极度不稳定，有自伤风险'
+  },
+  {
+    value: 'yellow',
+    label: '黄色（中危）',
     desc: '情绪困扰明显，影响学习生活'
   },
   {
-    value: 'high',
-    label: '重度',
-    desc: '出现自伤或伤人倾向'
+    value: 'blue',
+    label: '蓝色（轻度）',
+    desc: '情绪波动，能正常学习生活'
+  },
+  {
+    value: 'green',
+    label: '绿色（正常/关注）',
+    desc: '情绪稳定，学习生活正常'
   }
 ]
 
@@ -165,6 +176,17 @@ const submitReport = () => {
     alert('上报成功！我们将尽快与您联系')
     resetForm()
   }, 1000)
+}
+
+const getSeverityColor = (value) => {
+  const colorMap = {
+    red: '#dc3545',
+    orange: '#fd7e14',
+    yellow: '#ffc107',
+    blue: '#17a2b8',
+    green: '#28a745'
+  }
+  return colorMap[value] || '#667eea'
 }
 
 const resetForm = () => {
@@ -252,13 +274,38 @@ const resetForm = () => {
 }
 
 .severity-option:hover {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: var(--severity-color, #667eea);
+  background: rgba(102, 126, 234, 0.1);
 }
 
 .severity-option.selected {
-  border-color: #667eea;
-  background: #f0f5ff;
+  border-color: var(--severity-color, #667eea);
+  background: rgba(var(--severity-color-rgb, 102, 126, 234), 0.1);
+}
+
+.severity-option[style*="red"] {
+  --severity-color: #dc3545;
+  --severity-color-rgb: 220, 53, 69;
+}
+
+.severity-option[style*="orange"] {
+  --severity-color: #fd7e14;
+  --severity-color-rgb: 253, 126, 20;
+}
+
+.severity-option[style*="yellow"] {
+  --severity-color: #ffc107;
+  --severity-color-rgb: 255, 193, 7;
+}
+
+.severity-option[style*="blue"] {
+  --severity-color: #17a2b8;
+  --severity-color-rgb: 23, 162, 184;
+}
+
+.severity-option[style*="green"] {
+  --severity-color: #28a745;
+  --severity-color-rgb: 40, 167, 69;
 }
 
 .severity-label {

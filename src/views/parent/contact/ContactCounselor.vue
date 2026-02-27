@@ -90,94 +90,79 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { getParentCounselor, sendParentMessage, getParentMessages } from '../../../api/parent.js'
 
 const selectedChild = ref('1')
-
-// 模拟子女数据
-const children = ref([
-  {
-    id: '1',
-    name: '张三',
-    studentId: '2024001'
-  },
-  {
-    id: '2',
-    name: '李四',
-    studentId: '2024002'
-  }
-])
-
-// 模拟辅导员数据
-const counselors = ref([
-  {
-    id: '1',
-    childId: '1',
-    name: '王辅导员',
-    title: '计算机学院辅导员',
-    phone: '13800138002',
-    email: 'wang@example.com',
-    office: '行政楼301',
-    workingHours: '周一至周五 8:30-17:30',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20counselor%20portrait&image_size=square'
-  },
-  {
-    id: '2',
-    childId: '2',
-    name: '李辅导员',
-    title: '计算机学院辅导员',
-    phone: '13800138003',
-    email: 'li@example.com',
-    office: '行政楼302',
-    workingHours: '周一至周五 8:30-17:30',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20female%20counselor%20portrait&image_size=square'
-  }
-])
-
-// 模拟留言数据
-const messages = ref([
-  {
-    id: '1',
-    childId: '1',
-    subject: '关于孩子最近的学习情况',
-    content: '老师您好，我想了解一下孩子最近在学校的学习情况，是否有什么需要家长配合的地方？',
-    urgency: 'medium',
-    sendTime: '2026-02-20 14:30',
-    status: '已回复',
-    reply: {
-      content: '家长您好，孩子最近学习态度认真，成绩稳定，希望继续保持。',
-      replyTime: '2026-02-20 16:00'
-    }
-  },
-  {
-    id: '2',
-    childId: '1',
-    subject: '孩子的心理健康问题',
-    content: '老师您好，孩子最近回家后情绪比较低落，请问在学校是否有类似情况？',
-    urgency: 'high',
-    sendTime: '2026-02-15 10:00',
-    status: '已回复',
-    reply: {
-      content: '家长您好，我已经注意到孩子的情绪变化，建议带孩子到心理健康中心进行咨询。',
-      replyTime: '2026-02-15 11:00'
-    }
-  },
-  {
-    id: '3',
-    childId: '2',
-    subject: '关于孩子的社团活动',
-    content: '老师您好，孩子想参加学校的社团活动，请问有哪些推荐的社团？',
-    urgency: 'low',
-    sendTime: '2026-02-22 09:00',
-    status: '未回复'
-  }
-])
-
+const loading = ref(false)
+const children = ref([])
+const counselors = ref([])
+const messages = ref([])
 const message = ref({
   subject: '',
   content: '',
   urgency: ''
 })
+
+onMounted(async () => {
+  await loadChildren()
+  await loadCounselor()
+  await loadMessages()
+})
+
+watch(selectedChild, async () => {
+  await loadCounselor()
+  await loadMessages()
+})
+
+const loadChildren = async () => {
+  try {
+    loading.value = true
+    const res = await fetch('/api/parent/children')
+    const data = await res.json()
+    children.value = data.data || []
+    if (children.value.length > 0) {
+      selectedChild.value = children.value[0].id
+    }
+  } catch (error) {
+    console.error('加载子女列表失败', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadCounselor = async () => {
+  try {
+    loading.value = true
+    const child = children.value.find(c => c.id === selectedChild.value)
+    if (child) {
+      const res = await getParentCounselor(child.studentId)
+      counselors.value = res.data ? [res.data] : []
+    }
+  } catch (error) {
+    console.error('加载辅导员信息失败', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadMessages = async () => {
+  try {
+    loading.value = true
+    const child = children.value.find(c => c.id === selectedChild.value)
+    if (child) {
+      const res = await getParentMessages({
+        studentId: child.studentId,
+        fromRole: 'parent'
+      })
+      messages.value = res.data || []
+    }
+  } catch (error) {
+    console.error('加载留言记录失败', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const currentCounselor = computed(() => {
   return counselors.value.find(counselor => counselor.childId === selectedChild.value) || counselors.value[0]
@@ -201,25 +186,33 @@ const getUrgencyText = (urgency) => {
   return urgencyMap[urgency] || urgency
 }
 
-const sendMessage = () => {
-  // 模拟发送留言
-  const newMessage = {
-    id: (messages.value.length + 1).toString(),
-    childId: selectedChild.value,
-    ...message.value,
-    sendTime: new Date().toLocaleString('zh-CN'),
-    status: '未回复'
+const sendMessage = async () => {
+  try {
+    const child = children.value.find(c => c.id === selectedChild.value)
+    const counselor = counselors.value[0]
+    if (child && counselor) {
+      await sendParentMessage({
+        counselorId: counselor.id,
+        content: message.value.content,
+        subject: message.value.subject,
+        fromRole: 'parent',
+        studentId: child.studentId
+      })
+      
+      await loadMessages()
+      
+      message.value = {
+        subject: '',
+        content: '',
+        urgency: ''
+      }
+      
+      alert('留言发送成功')
+    }
+  } catch (error) {
+    console.error('发送留言失败', error)
+    alert('发送留言失败，请重试')
   }
-  messages.value.unshift(newMessage)
-  
-  // 重置表单
-  message.value = {
-    subject: '',
-    content: '',
-    urgency: ''
-  }
-  
-  alert('留言发送成功')
 }
 </script>
 

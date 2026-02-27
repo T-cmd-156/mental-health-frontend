@@ -95,7 +95,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { getParentMessages, sendParentMessage } from '../../../api/parent.js'
 
 const message = ref({
   recipient: '',
@@ -106,45 +107,26 @@ const message = ref({
 
 const statusFilter = ref('all')
 const recipientFilter = ref('all')
+const loading = ref(false)
+const messages = ref([])
 
-// 模拟留言数据
-const messages = ref([
-  {
-    id: '1',
-    recipient: 'counselor',
-    subject: '关于孩子的学习情况',
-    content: '老师您好，我想了解一下孩子最近在学校的学习情况，是否有什么需要家长配合的地方？',
-    urgency: 'medium',
-    sendTime: '2026-02-20 14:30',
-    status: 'replied',
-    reply: {
-      content: '家长您好，孩子最近学习态度认真，成绩稳定，希望继续保持。',
-      replyTime: '2026-02-20 16:00'
-    }
-  },
-  {
-    id: '2',
-    recipient: 'mental-health',
-    subject: '孩子的心理健康问题',
-    content: '您好，我的孩子最近情绪比较低落，请问可以预约心理咨询吗？',
-    urgency: 'high',
-    sendTime: '2026-02-18 10:00',
-    status: 'read',
-    reply: {
-      content: '家长您好，可以通过系统预约心理咨询，我们会尽快安排。',
-      replyTime: '2026-02-18 11:00'
-    }
-  },
-  {
-    id: '3',
-    recipient: 'school',
-    subject: '关于学校的心理健康服务',
-    content: '您好，我想了解一下学校提供哪些心理健康服务？',
-    urgency: 'low',
-    sendTime: '2026-02-15 09:00',
-    status: 'unread'
+onMounted(async () => {
+  await loadMessages()
+})
+
+const loadMessages = async () => {
+  try {
+    loading.value = true
+    const res = await getParentMessages({
+      fromRole: 'parent'
+    })
+    messages.value = res.data || []
+  } catch (error) {
+    console.error('加载留言记录失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
 
 const filteredMessages = computed(() => {
   return messages.value.filter(msg => {
@@ -184,25 +166,29 @@ const getStatusText = (status) => {
   return statusMap[status] || status
 }
 
-const sendMessage = () => {
-  // 模拟发送留言
-  const newMessage = {
-    id: (messages.value.length + 1).toString(),
-    ...message.value,
-    sendTime: new Date().toLocaleString('zh-CN'),
-    status: 'unread'
+const sendMessage = async () => {
+  try {
+    await sendParentMessage({
+      counselorId: message.value.recipient,
+      content: message.value.content,
+      subject: message.value.subject,
+      fromRole: 'parent'
+    })
+    
+    await loadMessages()
+    
+    message.value = {
+      recipient: '',
+      subject: '',
+      content: '',
+      urgency: ''
+    }
+    
+    alert('留言发送成功')
+  } catch (error) {
+    console.error('发送留言失败', error)
+    alert('发送留言失败，请重试')
   }
-  messages.value.unshift(newMessage)
-  
-  // 重置表单
-  message.value = {
-    recipient: '',
-    subject: '',
-    content: '',
-    urgency: ''
-  }
-  
-  alert('留言发送成功')
 }
 
 const viewMessage = (id) => {

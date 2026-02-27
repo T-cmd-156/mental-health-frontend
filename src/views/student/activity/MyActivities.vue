@@ -71,42 +71,33 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getMyActivities, cancelActivityRegistration, checkinActivity as apiCheckinActivity } from '../../../api/activity.js'
 
 const router = useRouter()
 const statusFilter = ref('all')
+const loading = ref(false)
+const myActivities = ref([])
 
-// 模拟我的活动数据
-const myActivities = ref([
-  {
-    id: 1,
-    title: '情绪管理工作坊',
-    time: '2026-03-10 14:00-16:00',
-    location: '心理健康中心活动室',
-    status: 'upcoming',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mental%20health%20workshop%20activity&image_size=landscape_4_3',
-    feedbackSubmitted: false
-  },
-  {
-    id: 3,
-    title: '人际关系小组',
-    time: '每周三 16:00-17:30',
-    location: '心理咨询室',
-    status: 'ongoing',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=interpersonal%20relationship%20group%20activity&image_size=landscape_4_3',
-    feedbackSubmitted: false
-  },
-  {
-    id: 4,
-    title: '正念冥想体验',
-    time: '2026-02-20 16:00-17:00',
-    location: '瑜伽室',
-    status: 'ended',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mindfulness%20meditation%20activity&image_size=landscape_4_3',
-    feedbackSubmitted: true
+onMounted(async () => {
+  await loadActivities()
+})
+
+const loadActivities = async () => {
+  try {
+    loading.value = true
+    const res = await getMyActivities({
+      page: 1,
+      pageSize: 20
+    })
+    myActivities.value = res.data || []
+  } catch (error) {
+    console.error('加载活动列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
 
 const filteredActivities = computed(() => {
   if (statusFilter.value === 'all') {
@@ -128,21 +119,31 @@ const viewActivity = (id) => {
   router.push(`/student/activity/${id}`)
 }
 
-const cancelActivity = (id) => {
+const cancelActivity = async (id) => {
   if (confirm('确定要取消报名吗？')) {
-    // 模拟取消报名
-    setTimeout(() => {
-      const index = myActivities.value.findIndex(activity => activity.id === id)
-      if (index !== -1) {
-        myActivities.value.splice(index, 1)
-        alert('取消报名成功')
-      }
-    }, 500)
+    try {
+      await cancelActivityRegistration({ id })
+      await loadActivities()
+      alert('取消报名成功')
+    } catch (error) {
+      console.error('取消报名失败', error)
+      alert('取消报名失败，请重试')
+    }
   }
 }
 
-const checkinActivity = (id) => {
-  alert('签到成功')
+const checkinActivity = async (id) => {
+  const code = prompt('请输入签到码')
+  if (code) {
+    try {
+      await apiCheckinActivity({ id, code })
+      alert('签到成功')
+      await loadActivities()
+    } catch (error) {
+      console.error('签到失败', error)
+      alert('签到失败，请检查签到码是否正确')
+    }
+  }
 }
 
 const submitFeedback = (id) => {

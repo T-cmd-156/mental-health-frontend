@@ -73,63 +73,53 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { getChildActivities } from '../../../api/parent.js'
 
 const selectedChild = ref('1')
+const loading = ref(false)
+const children = ref([])
+const activities = ref([])
 
-// 模拟子女数据
-const children = ref([
-  {
-    id: '1',
-    name: '张三',
-    studentId: '2024001'
-  },
-  {
-    id: '2',
-    name: '李四',
-    studentId: '2024002'
-  }
-])
+onMounted(async () => {
+  await loadChildren()
+  await loadActivities()
+})
 
-// 模拟活动数据
-const activities = ref([
-  {
-    id: '1',
-    childId: '1',
-    title: '情绪管理工作坊',
-    time: '2026-03-10 14:00-16:00',
-    location: '心理健康中心活动室',
-    status: '已报名',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mental%20health%20workshop%20activity&image_size=landscape_4_3'
-  },
-  {
-    id: '2',
-    childId: '1',
-    title: '正念冥想体验',
-    time: '2026-02-20 16:00-17:00',
-    location: '瑜伽室',
-    status: '已完成',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mindfulness%20meditation%20activity&image_size=landscape_4_3'
-  },
-  {
-    id: '3',
-    childId: '1',
-    title: '压力管理讲座',
-    time: '2026-02-15 15:00-17:00',
-    location: '学术报告厅',
-    status: '已完成',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=stress%20management%20lecture&image_size=landscape_4_3'
-  },
-  {
-    id: '4',
-    childId: '2',
-    title: '人际关系小组',
-    time: '每周三 16:00-17:30',
-    location: '心理咨询室',
-    status: '已报名',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=interpersonal%20relationship%20group%20activity&image_size=landscape_4_3'
+watch(selectedChild, async () => {
+  await loadActivities()
+})
+
+const loadChildren = async () => {
+  try {
+    loading.value = true
+    const res = await fetch('/api/parent/children')
+    const data = await res.json()
+    children.value = data.data || []
+    if (children.value.length > 0) {
+      selectedChild.value = children.value[0].id
+    }
+  } catch (error) {
+    console.error('加载子女列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
+
+const loadActivities = async () => {
+  try {
+    loading.value = true
+    const child = children.value.find(c => c.id === selectedChild.value)
+    if (child) {
+      const res = await getChildActivities(child.studentId)
+      activities.value = res.data || []
+    }
+  } catch (error) {
+    console.error('加载活动记录失败', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const currentActivities = computed(() => {
   return activities.value.filter(activity => activity.childId === selectedChild.value)

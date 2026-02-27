@@ -65,56 +65,34 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getActivityList, joinActivity as apiJoinActivity } from '../../../api/activity.js'
 
 const router = useRouter()
 const typeFilter = ref('all')
 const statusFilter = ref('all')
+const loading = ref(false)
+const activities = ref([])
 
-// 模拟活动数据
-const activities = ref([
-  {
-    id: 1,
-    title: '情绪管理工作坊',
-    description: '学习如何有效管理情绪，提高心理健康水平',
-    type: 'workshop',
-    status: 'upcoming',
-    time: '2026-03-10 14:00-16:00',
-    location: '心理健康中心活动室',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mental%20health%20workshop%20activity&image_size=landscape_4_3'
-  },
-  {
-    id: 2,
-    title: '压力管理讲座',
-    description: '专家讲解如何应对学习和生活中的压力',
-    type: 'lecture',
-    status: 'upcoming',
-    time: '2026-03-05 15:00-17:00',
-    location: '学术报告厅',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=stress%20management%20lecture&image_size=landscape_4_3'
-  },
-  {
-    id: 3,
-    title: '人际关系小组',
-    description: '通过小组活动改善人际关系技巧',
-    type: 'group',
-    status: 'ongoing',
-    time: '每周三 16:00-17:30',
-    location: '心理咨询室',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=interpersonal%20relationship%20group%20activity&image_size=landscape_4_3'
-  },
-  {
-    id: 4,
-    title: '正念冥想体验',
-    description: '学习正念冥想技巧，提高专注力和内心平静',
-    type: 'workshop',
-    status: 'ended',
-    time: '2026-02-20 16:00-17:00',
-    location: '瑜伽室',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mindfulness%20meditation%20activity&image_size=landscape_4_3'
+onMounted(async () => {
+  await loadActivities()
+})
+
+const loadActivities = async () => {
+  try {
+    loading.value = true
+    const res = await getActivityList({
+      page: 1,
+      pageSize: 20
+    })
+    activities.value = res.data || []
+  } catch (error) {
+    console.error('加载活动列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
 
 const filteredActivities = computed(() => {
   return activities.value.filter(activity => {
@@ -133,8 +111,17 @@ const getStatusText = (status) => {
   return statusMap[status] || status
 }
 
-const joinActivity = (id) => {
-  router.push(`/student/activity/${id}`)
+const joinActivity = async (id) => {
+  try {
+    const res = await apiJoinActivity({ activityId: id })
+    if (res.code === 200) {
+      alert('报名成功')
+      router.push(`/student/activity/${id}`)
+    }
+  } catch (error) {
+    console.error('报名失败', error)
+    alert('报名失败，请稍后重试')
+  }
 }
 
 const viewActivity = (id) => {

@@ -125,6 +125,30 @@ const routes = [
   meta: { needAuth: true }
 },
 {
+  path: '/student/self-help',
+  name: 'SelfHelp',
+  component: () => import('../views/student/selfHelp/SelfHelp.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/self-help/micro-course',
+  name: 'MicroCourse',
+  component: () => import('../views/student/selfHelp/MicroCourse.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/self-help/music-therapy',
+  name: 'MusicTherapy',
+  component: () => import('../views/student/selfHelp/MusicTherapy.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/self-help/health-course',
+  name: 'HealthCourse',
+  component: () => import('../views/student/selfHelp/HealthCourse.vue'),
+  meta: { needAuth: true }
+},
+{
   path: '/parent/dashboard',
   name: 'ParentDashboard',
   component: () => import('../views/parent/ParentDashboard.vue'),

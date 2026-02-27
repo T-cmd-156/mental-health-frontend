@@ -72,67 +72,53 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { getChildAssessments } from '../../../api/parent.js'
 
 const selectedChild = ref('1')
+const loading = ref(false)
+const children = ref([])
+const assessments = ref([])
 
-// 模拟子女数据
-const children = ref([
-  {
-    id: '1',
-    name: '张三',
-    studentId: '2024001'
-  },
-  {
-    id: '2',
-    name: '李四',
-    studentId: '2024002'
-  }
-])
+onMounted(async () => {
+  await loadChildren()
+  await loadAssessments()
+})
 
-// 模拟测评数据
-const assessments = ref([
-  {
-    id: '1',
-    childId: '1',
-    title: '心理健康状况评估',
-    date: '2026-02-20',
-    score: 75,
-    level: 'normal',
-    duration: 15,
-    status: '已完成'
-  },
-  {
-    id: '2',
-    childId: '1',
-    title: '抑郁倾向测评',
-    date: '2026-01-15',
-    score: 60,
-    level: 'normal',
-    duration: 10,
-    status: '已完成'
-  },
-  {
-    id: '3',
-    childId: '1',
-    title: '焦虑倾向测评',
-    date: '2026-03-01',
-    score: 0,
-    level: '',
-    duration: 0,
-    status: '待完成'
-  },
-  {
-    id: '4',
-    childId: '2',
-    title: '心理健康状况评估',
-    date: '2026-02-18',
-    score: 85,
-    level: 'excellent',
-    duration: 12,
-    status: '已完成'
+watch(selectedChild, async () => {
+  await loadAssessments()
+})
+
+const loadChildren = async () => {
+  try {
+    loading.value = true
+    const res = await fetch('/api/parent/children')
+    const data = await res.json()
+    children.value = data.data || []
+    if (children.value.length > 0) {
+      selectedChild.value = children.value[0].id
+    }
+  } catch (error) {
+    console.error('加载子女列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
+
+const loadAssessments = async () => {
+  try {
+    loading.value = true
+    const child = children.value.find(c => c.id === selectedChild.value)
+    if (child) {
+      const res = await getChildAssessments(child.studentId)
+      assessments.value = res.data || []
+    }
+  } catch (error) {
+    console.error('加载测评记录失败', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const currentAssessments = computed(() => {
   return assessments.value.filter(assessment => assessment.childId === selectedChild.value)

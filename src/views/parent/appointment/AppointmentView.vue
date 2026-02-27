@@ -73,67 +73,53 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { getChildAppointments } from '../../../api/parent.js'
 
 const selectedChild = ref('1')
+const loading = ref(false)
+const children = ref([])
+const appointments = ref([])
 
-// 模拟子女数据
-const children = ref([
-  {
-    id: '1',
-    name: '张三',
-    studentId: '2024001'
-  },
-  {
-    id: '2',
-    name: '李四',
-    studentId: '2024002'
-  }
-])
+onMounted(async () => {
+  await loadChildren()
+  await loadAppointments()
+})
 
-// 模拟预约数据
-const appointments = ref([
-  {
-    id: '1',
-    childId: '1',
-    counselor: '张老师',
-    date: '2026-02-26',
-    time: '09:00-10:00',
-    method: '线下咨询',
-    status: '已确认',
-    createdAt: '2026-02-20 14:30'
-  },
-  {
-    id: '2',
-    childId: '1',
-    counselor: '李老师',
-    date: '2026-02-20',
-    time: '14:00-15:00',
-    method: '线上咨询',
-    status: '已完成',
-    createdAt: '2026-02-18 10:00'
-  },
-  {
-    id: '3',
-    childId: '1',
-    counselor: '王老师',
-    date: '2026-02-15',
-    time: '16:00-17:00',
-    method: '线下咨询',
-    status: '已取消',
-    createdAt: '2026-02-10 09:00'
-  },
-  {
-    id: '4',
-    childId: '2',
-    counselor: '张老师',
-    date: '2026-02-25',
-    time: '10:00-11:00',
-    method: '线上咨询',
-    status: '已完成',
-    createdAt: '2026-02-22 15:00'
+watch(selectedChild, async () => {
+  await loadAppointments()
+})
+
+const loadChildren = async () => {
+  try {
+    loading.value = true
+    const res = await fetch('/api/parent/children')
+    const data = await res.json()
+    children.value = data.data || []
+    if (children.value.length > 0) {
+      selectedChild.value = children.value[0].id
+    }
+  } catch (error) {
+    console.error('加载子女列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
+
+const loadAppointments = async () => {
+  try {
+    loading.value = true
+    const child = children.value.find(c => c.id === selectedChild.value)
+    if (child) {
+      const res = await getChildAppointments(child.studentId)
+      appointments.value = res.data || []
+    }
+  } catch (error) {
+    console.error('加载预约记录失败', error)
+  } finally {
+    loading.value = false
+  }
+}
 
 const currentAppointments = computed(() => {
   return appointments.value.filter(appointment => appointment.childId === selectedChild.value)

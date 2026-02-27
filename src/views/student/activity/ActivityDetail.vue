@@ -76,7 +76,7 @@
       <button 
         v-else-if="isJoined && activity.status === 'ended'" 
         class="feedback-btn" 
-        @click="submitFeedback"
+        @click="showFeedbackDialog = true"
       >
         提交反馈
       </button>
@@ -87,6 +87,51 @@
         返回列表
       </button>
     </div>
+
+    <el-dialog
+      v-model="showFeedbackDialog"
+      title="活动反馈"
+      width="500px"
+      :close-on-click-modal="false"
+    >
+      <el-form :model="feedbackForm" label-width="80px">
+        <el-form-item label="活动评分">
+          <el-rate v-model="feedbackForm.rating" :max="5" show-text />
+        </el-form-item>
+        <el-form-item label="活动内容">
+          <el-rate v-model="feedbackForm.contentRating" :max="5" show-text />
+        </el-form-item>
+        <el-form-item label="主讲人">
+          <el-rate v-model="feedbackForm.speakerRating" :max="5" show-text />
+        </el-form-item>
+        <el-form-item label="活动组织">
+          <el-rate v-model="feedbackForm.organizationRating" :max="5" show-text />
+        </el-form-item>
+        <el-form-item label="收获程度">
+          <el-rate v-model="feedbackForm.gainRating" :max="5" show-text />
+        </el-form-item>
+        <el-form-item label="反馈意见">
+          <el-input
+            v-model="feedbackForm.comment"
+            type="textarea"
+            :rows="4"
+            placeholder="请输入您的反馈意见..."
+          />
+        </el-form-item>
+        <el-form-item label="建议改进">
+          <el-input
+            v-model="feedbackForm.suggestion"
+            type="textarea"
+            :rows="3"
+            placeholder="请输入您的改进建议..."
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="showFeedbackDialog = false">取消</el-button>
+        <el-button type="primary" @click="submitFeedback">提交反馈</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -119,6 +164,16 @@ const activity = ref({
 })
 
 const isJoined = ref(false)
+const showFeedbackDialog = ref(false)
+const feedbackForm = ref({
+  rating: 5,
+  contentRating: 5,
+  speakerRating: 5,
+  organizationRating: 5,
+  gainRating: 5,
+  comment: '',
+  suggestion: ''
+})
 
 onMounted(() => {
   // 模拟检查是否已报名
@@ -171,8 +226,26 @@ const checkinActivity = () => {
 }
 
 const submitFeedback = () => {
+  if (!feedbackForm.value.comment.trim()) {
+    alert('请填写反馈意见')
+    return
+  }
+  
   // 模拟提交反馈
-  alert('反馈提交功能正在开发中')
+  console.log('提交反馈:', feedbackForm.value)
+  alert('反馈提交成功！感谢您的参与')
+  showFeedbackDialog.value = false
+  
+  // 重置表单
+  feedbackForm.value = {
+    rating: 5,
+    contentRating: 5,
+    speakerRating: 5,
+    organizationRating: 5,
+    gainRating: 5,
+    comment: '',
+    suggestion: ''
+  }
 }
 
 const goBack = () => {

@@ -49,39 +49,33 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getMyAssessments } from '../../../api/assessment.js'
 
 const router = useRouter()
 const statusFilter = ref('all')
+const loading = ref(false)
+const assessments = ref([])
 
-// 模拟测评数据
-const assessments = ref([
-  {
-    id: 1,
-    title: '心理健康状况评估',
-    description: '全面评估你的心理健康状况，包括情绪、压力、人际关系等方面',
-    status: 'pending',
-    deadline: '2026-03-31',
-    duration: 20
-  },
-  {
-    id: 2,
-    title: '抑郁倾向测评',
-    description: '评估你是否有抑郁倾向，及早发现并干预',
-    status: 'completed',
-    deadline: '2026-03-15',
-    duration: 15
-  },
-  {
-    id: 3,
-    title: '焦虑水平测试',
-    description: '测量你的焦虑水平，了解压力来源',
-    status: 'pending',
-    deadline: '2026-04-10',
-    duration: 10
+onMounted(async () => {
+  await loadAssessments()
+})
+
+const loadAssessments = async () => {
+  try {
+    loading.value = true
+    const res = await getMyAssessments({
+      page: 1,
+      pageSize: 20
+    })
+    assessments.value = res.data || []
+  } catch (error) {
+    console.error('加载测评列表失败', error)
+  } finally {
+    loading.value = false
   }
-])
+}
 
 const filteredAssessments = computed(() => {
   if (statusFilter.value === 'all') {
