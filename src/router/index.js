@@ -77,6 +77,102 @@ const routes = [
   meta: { needAuth: true }
 },
 {
+  path: '/student/assessment',
+  name: 'AssessmentList',
+  component: () => import('../views/student/assessment/AssessmentList.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/assessment/:id',
+  name: 'Assessment',
+  component: () => import('../views/student/assessment/Assessment.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/assessment/:id/result',
+  name: 'AssessmentResult',
+  component: () => import('../views/student/assessment/AssessmentResult.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity',
+  name: 'ActivityList',
+  component: () => import('../views/student/activity/ActivityList.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity/:id',
+  name: 'ActivityDetail',
+  component: () => import('../views/student/activity/ActivityDetail.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity/my',
+  name: 'MyActivities',
+  component: () => import('../views/student/activity/MyActivities.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/crisis',
+  name: 'CrisisReport',
+  component: () => import('../views/student/crisis/CrisisReport.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/profile',
+  name: 'Profile',
+  component: () => import('../views/student/profile/Profile.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/dashboard',
+  name: 'ParentDashboard',
+  component: () => import('../views/parent/ParentDashboard.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/children',
+  name: 'ChildManagement',
+  component: () => import('../views/parent/children/ChildManagement.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/assessment',
+  name: 'AssessmentView',
+  component: () => import('../views/parent/assessment/AssessmentView.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/appointment',
+  name: 'AppointmentView',
+  component: () => import('../views/parent/appointment/AppointmentView.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/activity',
+  name: 'ActivityView',
+  component: () => import('../views/parent/activity/ActivityView.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/profile',
+  name: 'ProfileView',
+  component: () => import('../views/parent/profile/ProfileView.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/contact',
+  name: 'ContactCounselor',
+  component: () => import('../views/parent/contact/ContactCounselor.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/parent/message',
+  name: 'ParentMessage',
+  component: () => import('../views/parent/message/ParentMessage.vue'),
+  meta: { needAuth: true }
+},
+{
   path: '/my-appointment',
   name: 'MyAppointment',
   component: () => import('../views/appointment/MyAppointments.vue'),

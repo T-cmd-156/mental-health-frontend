@@ -100,9 +100,8 @@
             立即注册
           </button>
         </div>
-        <div class="dev-entry">
-          <button type="button" class="dev-link" @click="devLogin">开发者入口（dev / dev123）</button>
-        </div>
+
+
       </div>
     </div>
 
@@ -416,8 +415,17 @@ const submitRegister = () => {
   showRegisterPassword.value = false
 }
 
-// 开发者账号（便于本地查看学生端功能，上线前可移除）
-const DEV_STUDENT = { username: 'dev', password: 'dev123' }
+// 测试账号
+const TEST_ACCOUNTS = {
+  student: {
+    username: 'student',
+    password: '123456',
+  },
+  parent: {
+    username: '13800138001',
+    password: '123456',
+  }
+}
 
 const login = () => {
   if (!form.username || !form.password) {
@@ -425,13 +433,21 @@ const login = () => {
     return
   }
 
-  // 开发者账号直接通过，无需注册
-  if (form.username === DEV_STUDENT.username && form.password === DEV_STUDENT.password) {
-    identity.value = 'student'
-    localStorage.setItem('student_id', DEV_STUDENT.username)
+  // 检查测试账号
+  const testAccount = TEST_ACCOUNTS[identity.value]
+  if (form.username === testAccount.username && form.password === testAccount.password) {
+    // 模拟登录逻辑
+    console.log('测试账号登录信息：', {
+      identity: identity.value,
+      ...form
+    })
+
+    // 保存登录信息到本地存储
+    localStorage.setItem('student_id', testAccount.username)
     localStorage.setItem('User_token', 'student_' + Date.now())
-    localStorage.setItem('User_role', 'student')
-    const redirectPath = router.currentRoute.value.query.redirect || '/student/dashboard'
+    localStorage.setItem('User_role', identity.value)
+
+    const redirectPath = router.currentRoute.value.query.redirect || (identity.value === 'parent' ? '/parent/dashboard' : '/student/dashboard')
     router.push(redirectPath)
     return
   }
@@ -463,15 +479,8 @@ const login = () => {
   localStorage.setItem('User_token', 'student_' + Date.now())
   localStorage.setItem('User_role', identity.value)
 
-  const redirectPath = router.currentRoute.value.query.redirect || '/student/dashboard'
+  const redirectPath = router.currentRoute.value.query.redirect || (identity.value === 'parent' ? '/parent/dashboard' : '/student/dashboard')
   router.push(redirectPath)
-}
-
-const devLogin = () => {
-  form.username = DEV_STUDENT.username
-  form.password = DEV_STUDENT.password
-  identity.value = 'student'
-  login()
 }
 </script>
 
@@ -907,26 +916,7 @@ const devLogin = () => {
   margin-top: 20px;
 }
 
-.dev-entry {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px dashed #eee;
-  text-align: center;
-}
 
-.dev-link {
-  background: none;
-  border: none;
-  color: #999;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 4px 0;
-}
-
-.dev-link:hover {
-  color: #667eea;
-  text-decoration: underline;
-}
 
 /* 响应式设计 */
 @media (max-width: 600px) {

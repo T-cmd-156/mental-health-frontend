@@ -16,11 +16,6 @@
       </select>
 
       <button @click="login">登录</button>
-
-      <div class="dev-tip">
-        <span class="dev-label">开发者</span>
-        <button type="button" class="dev-btn" @click="devLogin">快捷登录（dev / dev123）</button>
-      </div>
     </div>
   </div>
 </template>
@@ -50,13 +45,6 @@ const ROLE_MAP = {
   admin: '管理员'
 }
 
-
-const devLogin = () => {
-  form.value.username = 'dev'
-  form.value.password = 'dev123'
-  form.value.role = 'admin'
-  login()
-}
 
 const login = async () => {
   try {
@@ -186,30 +174,7 @@ button:active {
   transform: translateY(0);
 }
 
-.dev-tip {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px dashed #e0e0e0;
-  text-align: center;
-}
 
-.dev-label {
-  font-size: 12px;
-  color: #999;
-  margin-right: 8px;
-}
-
-.dev-btn {
-  width: auto !important;
-  padding: 6px 12px !important;
-  margin-top: 0 !important;
-  font-size: 12px !important;
-  background: #6b7280 !important;
-}
-
-.dev-btn:hover {
-  background: #4b5563 !important;
-}
 
 /* 底部信息 */
 .footer {

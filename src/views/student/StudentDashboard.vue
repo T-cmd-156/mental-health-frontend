@@ -11,7 +11,7 @@
         v-for="(item, index) in menuItems"
         :key="item.path || item.title"
         class="card"
-        :class="{ placeholder: item.placeholder, 'card-last': index === 6 }"
+        :class="{ placeholder: item.placeholder }"
         @click="!item.placeholder && go(item.path)"
       >
         <div class="card-accent" :style="{ background: item.color }"></div>
@@ -63,18 +63,18 @@ const menuItems = [
     icon: Plus,
   },
   {
-    title: '谈心谈话',
-    desc: '查看辅导员谈心谈话安排与记录（功能开发中）',
-    placeholder: true,
+    title: '心理测评',
+    desc: '完成心理测评任务，查看测评结果',
+    path: '/student/assessment',
     color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
-    icon: ChatDotRound,
+    icon: EditPen,
   },
   {
-    title: '月报填写',
-    desc: '心理委员/班级月报上报（功能开发中）',
-    placeholder: true,
+    title: '团体活动',
+    desc: '查看和报名心理健康团体活动',
+    path: '/student/activity',
     color: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-    icon: EditPen,
+    icon: Bell,
   },
   {
     title: '心理自助',
@@ -84,18 +84,18 @@ const menuItems = [
     icon: Reading,
   },
   {
-    title: '最新通知',
-    desc: '查看心理健康相关通知公告',
-    path: '/notices',
-    color: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-    icon: Bell,
-  },
-  {
-    title: '危机管理',
-    desc: '危机事件上报与求助（功能开发中）',
-    placeholder: true,
+    title: '危机上报',
+    desc: '危机事件上报与求助',
+    path: '/student/crisis',
     color: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
     icon: Warning,
+  },
+  {
+    title: '个人档案',
+    desc: '查看个人心理档案和历史记录',
+    path: '/student/profile',
+    color: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+    icon: ChatDotRound,
   },
 ]
 
@@ -167,10 +167,6 @@ function go(path) {
   opacity: 0.92;
 }
 
-.card-last {
-  grid-column: 2;
-}
-
 .card-accent {
   position: absolute;
   left: 0;
@@ -236,18 +232,11 @@ function go(path) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
-  .card-last {
-    grid-column: 1 / -1;
-    max-width: 100%;
-  }
 }
 
 @media (max-width: 520px) {
   .cards {
     grid-template-columns: 1fr;
-  }
-  .card-last {
-    grid-column: 1;
   }
 }
 </style>
