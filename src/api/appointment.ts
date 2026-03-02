@@ -1,0 +1,111 @@
+import request from './request.js'
+// 导入学生端模拟数据
+import * as studentMock from '../mock/student.ts'
+
+import type { Appointment, AppointmentStatus } from '../types/appointment'
+import { createAppointmentForStudent, getAppointmentById } from '../mock/appointment.ts'
+
+// 开发环境使用模拟数据，生产环境使用真实接口
+const isDev = process.env.NODE_ENV === 'development'
+
+// 学生创建预约
+export function createAppointmentAsync(data: {
+  studentId: string
+  counselorId: string
+  consultantName: string
+  date: string
+  create_time: string
+  end_time: string
+}) {
+  return createAppointmentForStudent(data)
+}
+
+// 重新导出 createAppointmentForStudentAsync 以支持一键续约
+export function createAppointmentForStudentAsync(data: {
+  studentId: string
+  counselorId: string
+  counselorName: string
+  appointmentDate: string
+  create_time: string
+  update_time: string
+}) {
+  if (isDev) {
+    return studentMock.createAppointmentForStudent(data)
+  }
+  return request.post('/api/appointment/create', data)
+}
+
+// 咨询师创建预约
+export function consultantSetSlot(data: {
+  counselorId: string
+  date: string
+  time: string
+}) {
+  if (isDev) {
+    return Promise.resolve({ code: 200, data: { success: true } })
+  }
+  return request.post('/api/appointment/slot', data)
+}
+
+// 更新预约状态updateAppointmentStatusAsync
+export function updateAppointmentStatusAsync(
+  id: string,
+  status: AppointmentStatus,
+  payload?: Partial<Appointment>,
+) {
+  if (isDev) {
+    return studentMock.updateAppointmentStatus(id, status, payload)
+  }
+  return request.post('/api/appointment/update', { id, status, ...payload })
+}
+
+// 查询学生预约列表
+export function getMyAppointmentsAsync(studentId: string) {
+  if (isDev) {
+    return studentMock.getAppointmentsByStudent(studentId)
+  }
+  return request.get('/api/appointment/my', { params: { studentId } })
+}
+
+// 咨询师：查询全部预约
+export function getCounselorAppointmentsAsync(counselorId: string) {
+  if (isDev) {
+    const dbStr = localStorage.getItem('MOCK_DB') || '{}'
+    const db = JSON.parse(dbStr)
+    const appointments = db.appointments || []
+
+    // 用新的字段名筛选
+    const filtered = appointments.filter(a => a.counselorId === counselorId)
+
+        console.log('MOCK_DB', db)
+    console.log('counselorId', counselorId)
+    console.log('filtered appointments', filtered)
+    return Promise.resolve({ code: 200, data: filtered })
+  }
+  return request.get('/api/appointment/counselor', { params: { counselorId } })
+}
+
+// 获取可预约时间
+export function getAvailableSlots(date: string) {
+  if (isDev) {
+    return studentMock.getAvailableSlots(date)
+  }
+  return request.get('/api/appointment/slots', { params: { date } })
+}
+
+// 获取可预约日期
+export function getAvailableDates(start: string, days = 10) {
+  if (isDev) {
+    return studentMock.getAvailableDates(start, days)
+  }
+  return request.get('/api/appointment/dates', { params: { start, days } })
+}
+
+// 通用：通过id获取单条预约
+export function getAppointmentByIdAsync(id: string) {
+  return getAppointmentById(id)
+}
+
+function addScheduleSlot(data: { counselorId: string; date: string; time: string }) {
+  throw new Error('Function not implemented.')
+}
