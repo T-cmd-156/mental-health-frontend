@@ -1,0 +1,61 @@
+{
+  "docCount": 129,
+  "codeCount": 142,
+  "missingCount": 0,
+  "undocumentedCount": 13,
+  "missing": [],
+  "undocumented": [
+    {
+      "method": "GET",
+      "path": "/api/admin/data/archive/config"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/data/archive/config"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/data/archive/history"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/data/backup/list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/data/backup"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/data/dict/items"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/data/dict/items"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/data/dict/types"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/data/dict/types"
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/data/restore"
+    },
+    {
+      "method": "POST",
+      "path": "/api/leave/cancel"
+    },
+    {
+      "method": "GET",
+      "path": "/api/leave/list"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/schedule/update"
+    }
+  ]
+}
