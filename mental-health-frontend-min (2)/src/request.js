@@ -169,23 +169,12 @@ function normalizeApiBody(body, config = {}) {
       data: inferDefaultData(config?.url, config?.method),
     }
   }
+  /** 保留 data: null（如绑定状态无记录）；勿用 ?? 把 null 换成 inferDefaultData 的 {} */
+  const hasDataKey = Object.prototype.hasOwnProperty.call(body, 'data')
   return {
     ...body,
     msg: body.msg ?? body.message ?? 'ok',
-    data: body.data ?? inferDefaultData(config?.url, config?.method),
-  }
-}
-
-/** 读取浏览器 Cookie（Spring Security 常把 CSRF 放在 XSRF-TOKEN，需随 POST 带上 X-XSRF-TOKEN） */
-function readBrowserCookie(name) {
-  if (typeof document === 'undefined' || !name) return ''
-  const escaped = String(name).replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1')
-  const m = document.cookie.match(new RegExp(`(?:^|;\\s*)${escaped}=([^;]*)`))
-  if (!m) return ''
-  try {
-    return decodeURIComponent(m[1])
-  } catch {
-    return m[1]
+    data: hasDataKey ? body.data : inferDefaultData(config?.url, config?.method),
   }
 }
 
@@ -249,18 +238,6 @@ request.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`
   } else {
     delete config.headers.Authorization
-  }
-
-  const method = String(config.method || 'get').toLowerCase()
-  if (['post', 'put', 'patch', 'delete'].includes(method)) {
-    config.headers['X-Requested-With'] = 'XMLHttpRequest'
-    const xsrf =
-      readBrowserCookie('XSRF-TOKEN') ||
-      readBrowserCookie('XSRF_TOKEN') ||
-      readBrowserCookie('csrfToken')
-    if (xsrf) {
-      config.headers['X-XSRF-TOKEN'] = xsrf
-    }
   }
 
   return config

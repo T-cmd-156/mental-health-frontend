@@ -26,12 +26,21 @@ export function normalizeNoticeItem(row) {
 
 export function mapSelfHelpToPortalItem(row) {
   if (!row || typeof row !== 'object') return row
+  const pt = row.publishTime ?? row.createTime
+  const date =
+    pt == null
+      ? row.date ?? ''
+      : typeof pt === 'string'
+        ? pt
+        : Array.isArray(pt)
+          ? pt.slice(0, 3).join('-')
+          : String(pt)
   return {
     id: row.id,
     title: row.title,
     summary: row.summary ?? row.description ?? '',
-    category: row.category ?? '',
-    date: row.publishTime ?? row.date ?? '',
+    category: row.category ?? row.sourceOrg ?? '',
+    date,
   }
 }
 

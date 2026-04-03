@@ -13,19 +13,15 @@
       <template v-else>
         <div class="status-row">
           <span class="label">状态：</span>
-          <el-tag :type="statusTagType(bindStatus)" size="large">{{ statusText(bindStatus) }}</el-tag>
+          <el-tag :type="statusTagType(statusCode)" size="large">{{ statusText(statusCode) }}</el-tag>
         </div>
-        <p v-if="showPendingTip" class="pending-tip">
-          有家长申请与您关联，请核对身份后点击「确认」或「拒绝」。接口使用当前登录账号的 studentId（路径参数）。
-        </p>
-        <p v-else-if="showBindActions && bindStatus == null" class="pending-tip muted">
-          未能解析绑定状态，若确有家长申请，仍可尝试「确认」或「拒绝」。
-        </p>
-        <div class="actions">
-          <template v-if="showBindActions">
-            <el-button type="primary" size="large" :loading="acting" @click="onConfirm">确认</el-button>
-            <el-button type="danger" plain size="large" :loading="acting" @click="onReject">拒绝</el-button>
-          </template>
+        <p v-if="statusCode === 0" class="pending-tip">有家长申请与您关联，请确认对方身份后选择「接受」或「拒绝」。</p>
+        <div v-if="statusCode === 0" class="actions">
+          <el-button type="primary" :loading="acting" @click="onConfirm">接受绑定</el-button>
+          <el-button type="danger" plain :loading="acting" @click="onReject">拒绝</el-button>
+          <el-button link type="primary" @click="refresh">刷新状态</el-button>
+        </div>
+        <div v-else class="actions">
           <el-button link type="primary" @click="refresh">刷新状态</el-button>
         </div>
       </template>
@@ -36,30 +32,44 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import {
-  getBindStatus,
-  confirmStudentBind,
-  rejectStudentBind,
-  normalizeBindStatus,
-} from '@/api/studentBind.js'
+import { getBindStatus, confirmStudentBind, rejectStudentBind } from '@/api/studentBind.js'
 import { getStudentBindUserId } from '@/utils/studentBindSession.js'
+
+function parseBindStatusPayload(data) {
+  if (data == null) return null
+  if (typeof data === 'number' && !Number.isNaN(data)) return data
+  if (typeof data === 'string' && data.trim() !== '') {
+    const n = Number(data)
+    return Number.isNaN(n) ? null : n
+  }
+  if (typeof data === 'object') {
+    const v =
+      data.verificationStatus ??
+      data.verification_status ??
+      data.status
+    if (v != null && v !== '') {
+      const n = Number(v)
+      return Number.isNaN(n) ? null : n
+    }
+  }
+  return null
+}
 
 const loading = ref(false)
 const acting = ref(false)
 const bindStatus = ref(null)
 const bindUserId = ref('')
 
-/** 已绑定(1)、已拒绝(2) 不再显示确认/拒绝；待确认(0)、未知(null) 及其他非终态显示按钮 */
-const showBindActions = computed(() => {
-  if (!bindUserId.value) return false
-  const s = bindStatus.value
-  if (s === 1 || s === 2) return false
-  return true
+/** 后端返回整数状态，统一成数字以免 string 与 === 0 比较失败 */
+const statusCode = computed(() => {
+  const raw = bindStatus.value
+  if (raw === null || raw === undefined || raw === '') return null
+  const n = Number(raw)
+  return Number.isNaN(n) ? null : n
 })
 
-const showPendingTip = computed(() => bindStatus.value === 0)
-
 function statusText(v) {
+  if (v === null || v === undefined) return '未查询'
   const n = Number(v)
   if (Number.isNaN(n)) return '未知'
   if (n === 0) return '待确认'
@@ -69,7 +79,9 @@ function statusText(v) {
 }
 
 function statusTagType(v) {
+  if (v === null || v === undefined) return 'info'
   const n = Number(v)
+  if (Number.isNaN(n)) return 'info'
   if (n === 1) return 'success'
   if (n === 0) return 'warning'
   if (n === 2) return 'info'
@@ -77,7 +89,7 @@ function statusTagType(v) {
 }
 
 async function refresh() {
-  const sid = (getStudentBindUserId() || '').trim()
+  const sid = getStudentBindUserId()
   bindUserId.value = sid
   if (!sid) {
     bindStatus.value = null
@@ -86,8 +98,8 @@ async function refresh() {
   loading.value = true
   try {
     const res = await getBindStatus(sid)
-    if (res.code === 200) {
-      bindStatus.value = normalizeBindStatus(res.data)
+    if (res.code == null ? false : Number(res.code) === 200) {
+      bindStatus.value = parseBindStatusPayload(res.data)
     } else {
       ElMessage.error(res.msg || '查询失败')
     }
@@ -99,16 +111,9 @@ async function refresh() {
   }
 }
 
-function resolveStudentId() {
-  return (getStudentBindUserId() || bindUserId.value || '').trim()
-}
-
 async function onConfirm() {
-  const sid = resolveStudentId()
-  if (!sid) {
-    ElMessage.warning('缺少 studentId，请重新登录')
-    return
-  }
+  const sid = bindUserId.value
+  if (!sid) return
   try {
     await ElMessageBox.confirm('确认后将与家长建立关联，是否继续？', '接受绑定', { type: 'warning' })
     acting.value = true
@@ -130,11 +135,8 @@ async function onConfirm() {
 }
 
 async function onReject() {
-  const sid = resolveStudentId()
-  if (!sid) {
-    ElMessage.warning('缺少 studentId，请重新登录')
-    return
-  }
+  const sid = bindUserId.value
+  if (!sid) return
   try {
     await ElMessageBox.confirm('拒绝后家长需重新发起绑定，是否拒绝？', '拒绝绑定', { type: 'warning' })
     acting.value = true
@@ -192,9 +194,6 @@ onMounted(refresh)
   color: #92400e;
   font-size: 14px;
   line-height: 1.5;
-}
-.pending-tip.muted {
-  color: #64748b;
 }
 .actions {
   display: flex;

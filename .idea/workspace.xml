@@ -248,9 +248,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/psychological_platform" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="3BpUkJv068x85plY40awpHDUGGX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -259,7 +259,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "<未知>",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "F:/mental-health-frontend-min (6)",
     "node.js.detected.package.eslint": "true",
@@ -307,7 +307,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1775185646956</updated>
-      <workItem from="1775185648027" duration="10763000" />
+      <workItem from="1775185648027" duration="9672000" />
     </task>
     <servers />
   </component>

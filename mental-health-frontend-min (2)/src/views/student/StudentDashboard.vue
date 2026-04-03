@@ -328,7 +328,6 @@ import {
   getBindStatus,
   confirmStudentBind,
   rejectStudentBind,
-  normalizeBindStatus,
 } from '@/api/studentBind.js'
 import { getStudentBindUserId } from '@/utils/studentBindSession.js'
 
@@ -551,7 +550,7 @@ async function checkPendingParentBind() {
   if (!sid) return
   try {
     const res = await getBindStatus(sid)
-    if (res.code === 200 && normalizeBindStatus(res.data) === 0) {
+    if (res.code === 200 && Number(res.data) === 0) {
       showParentBindPrompt.value = true
     }
   } catch (e) {

@@ -15,7 +15,7 @@
       <template #header>
         <span>发起绑定（待学生确认）</span>
       </template>
-      <p class="hint">请求体字段：studentId、studentName、relationType、verificationInfo；学生 ID 为系统 userId（UUID），与学生 JWT subject 一致。</p>
+      <p class="hint">参数与后端 ParentBindChildDTO 一致；学生 ID 须为系统中的 userId（UUID），与 JWT subject 一致。</p>
       <el-form :model="newChild" label-width="100px" class="bind-form">
         <el-form-item label="学生ID" required>
           <el-input v-model="newChild.studentId" placeholder="例：c2437fc2-ca09-48f0-a23e-bf7a22b42181" />

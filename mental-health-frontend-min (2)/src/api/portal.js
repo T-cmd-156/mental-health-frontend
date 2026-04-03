@@ -8,6 +8,13 @@ import {
   mapActivityToPortalItem,
 } from './helpers'
 
+/** 心理百科/CMS 接口前缀：开发默认 `/cms`（Vite 重写为 `/api/cms`）；直连后端时可设 `VITE_CMS_API_PREFIX=/api/cms` */
+const CMS_API_PREFIX =
+  (typeof import.meta !== 'undefined' &&
+    import.meta.env &&
+    import.meta.env.VITE_CMS_API_PREFIX) ||
+  '/cms'
+
 const STATIC_ACTIVITIES = [
   { id: 1, title: '心理健康月开幕式圆满举行', date: '2025-02-20' },
   { id: 2, title: '各学院心理委员培训顺利开展', date: '2025-02-18' },
@@ -42,8 +49,13 @@ const WIKI_LIST = [
 
 export const getWiki = async (params = {}) => {
   try {
-    const res = await request.get('/api/self-help/list', {
-      params: { category: params.category || undefined },
+    /** GET /cms/wiki → 后端 `/api/cms/wiki`（PageResult.records；Query：page、pageSize、keyWords） */
+    const res = await request.get(`${CMS_API_PREFIX}/wiki`, {
+      params: {
+        page: 1,
+        pageSize: 500,
+        keyWords: params.keyword?.trim() || undefined,
+      },
     })
     let list = unwrapListPayload(res?.data).map(mapSelfHelpToPortalItem)
     if (list.length) {
@@ -74,6 +86,20 @@ export const getWiki = async (params = {}) => {
 }
 
 export const getWikiDetail = async (id) => {
+  try {
+    const res = await request.get(`${CMS_API_PREFIX}/detail`, { params: { id } })
+    if (res?.code === 200 && res.data) {
+      const d = res.data
+      return {
+        id: d.id,
+        title: d.title,
+        summary: d.summary || d.description || '',
+        category: d.category || d.sourceOrg || '',
+        date: d.publishTime || d.date || d.createTime || '',
+        content: d.content || '<p>暂无内容</p>',
+      }
+    }
+  } catch (_) {}
   try {
     const res = await request.get('/api/self-help/detail', { params: { id } })
     if (res?.code === 200 && res.data) {

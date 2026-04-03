@@ -1,7 +1,10 @@
 import request from './request.js'
 import * as parentMock from '../mock/parent.ts'
 
-/** 仅当 VITE_USE_MOCK_PARENT=true 时走 mock（开发环境默认请求真实 /api，与 .env.development 说明一致） */
+/**
+ * 仅当 VITE_USE_MOCK_PARENT=true 时使用家长端 mock。
+ * 开发环境默认走真实接口（/api/parent/...），以便与 psychological_platform 联调双向绑定。
+ */
 function useMockParent() {
   return (
     typeof import.meta !== 'undefined' &&
@@ -60,10 +63,17 @@ export function getChildrenList() {
   )
 }
 
+/** POST /api/parent/children/bind，请求体对齐 ParentBindChildDTO（studentId / studentName / relationType / verificationInfo） */
 export function bindChild(data) {
   return parentOrMock(
     () => parentMock.bindChild(data),
-    () => request.post('/api/parent/children/bind', data)
+    () =>
+      request.post('/api/parent/children/bind', {
+        studentId: data?.studentId ?? '',
+        studentName: data?.studentName ?? '',
+        relationType: data?.relationType ?? '',
+        verificationInfo: data?.verificationInfo ?? '',
+      })
   )
 }
 

@@ -1,10 +1,19 @@
+import { getStoredAccessToken } from '../request.js'
+import { getJwtSubject } from './jwtPayload.js'
+
 /**
- * 家长-学生绑定接口里的 studentId 与库表 parent_student_relation.student_id 一致，
- * 通常为 JWT subject（user.user_id）。登录页在 psychological_platform 模式下会写入 userId。
+ * `/api/bind/status/{studentId}` 等接口的路径参数：与 `parent_student_relation.student_id` 及家长绑定入参一致。
+ * 业务上多为学号/登录账号（localStorage `studentId`），不是 JWT 里的 user_id（UUID）。
+ * 顺序：studentId → userId / JWT sub（仅在后端关系表按 user_id 存储时使用）。
  */
 export function getStudentBindUserId() {
   if (typeof localStorage === 'undefined') return ''
-  const uid = localStorage.getItem('userId')
-  if (uid) return uid
-  return localStorage.getItem('studentId') || ''
+  const sid = localStorage.getItem('studentId')
+  if (sid && String(sid).trim()) return String(sid).trim()
+  const sidSnake = localStorage.getItem('student_id')
+  if (sidSnake && String(sidSnake).trim()) return String(sidSnake).trim()
+  const fromLs = localStorage.getItem('userId')
+  if (fromLs && String(fromLs).trim()) return String(fromLs).trim()
+  const sub = getJwtSubject(getStoredAccessToken())
+  return sub && sub.trim() ? sub.trim() : ''
 }

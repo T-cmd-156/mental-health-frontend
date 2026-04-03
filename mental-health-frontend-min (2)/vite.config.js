@@ -14,20 +14,16 @@ export default defineConfig(({ mode }) => {
   const proxyTarget = env.VITE_API_PROXY_TARGET || 'http://localhost:8080'
 
   /** 代理到后端时把 Origin/Referer 改成目标站点，避免 Spring 等框架因「来源为 dev 地址」返回 403 */
-  const createBackendProxy = () => ({
+  const createBackendProxy = (rewrite) => ({
     target: proxyTarget,
     changeOrigin: true,
+    ...(rewrite ? { rewrite } : {}),
     configure(proxy) {
       proxy.on('proxyReq', (proxyReq) => {
         try {
           const u = new URL(proxyTarget)
           proxyReq.setHeader('origin', u.origin)
           proxyReq.setHeader('referer', `${u.origin}/`)
-          const proto = (u.protocol || 'http:').replace(/:$/, '') || 'http'
-          const port = u.port || (proto === 'https' ? '443' : '80')
-          proxyReq.setHeader('x-forwarded-proto', proto)
-          proxyReq.setHeader('x-forwarded-host', u.host)
-          proxyReq.setHeader('x-forwarded-port', String(port))
         } catch (_) {
           /* ignore */
         }
@@ -53,6 +49,8 @@ export default defineConfig(({ mode }) => {
     },
     proxy: {
       '/api': createBackendProxy(),
+      /** 心理百科等：前端请求 /cms/*，转发为后端 CmsController 的 /api/cms/* */
+      '/cms': createBackendProxy((path) => '/api' + path),
       '/getVerificationCode': createBackendProxy(),
       '/user': createBackendProxy(),
     },
