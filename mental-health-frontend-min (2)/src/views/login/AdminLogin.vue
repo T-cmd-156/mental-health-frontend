@@ -56,11 +56,6 @@ const goBack = () => {
   router.push('/')
 }
 
-localStorage.removeItem('admin_token')
-localStorage.removeItem('admin_role')
-localStorage.removeItem('auth_token')
-localStorage.removeItem('access_token')
-
 const form = ref({
   username: '',
   password: '',
@@ -85,7 +80,17 @@ const loadCaptcha = async () => {
   }
 }
 
-onMounted(() => loadCaptcha())
+onMounted(() => {
+  try {
+    localStorage.removeItem('admin_token')
+    localStorage.removeItem('admin_role')
+    localStorage.removeItem('auth_token')
+    localStorage.removeItem('access_token')
+  } catch (_) {
+    /* ignore */
+  }
+  loadCaptcha()
+})
 
 const ROLE_MAP = {
   center: '心理中心',

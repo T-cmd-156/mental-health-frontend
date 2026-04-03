@@ -115,6 +115,12 @@ const routes = [
   component: () => import('../views/assessment/AssessmentList.vue'),
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
+{
+  path: '/assessment/detail/:planId',
+  name: 'AssessmentPlanDetail',
+  component: () => import('../views/assessment/AssessmentPlanDetail.vue'),
+  meta: { needAuth: true, roles: ['counselor','center','admin'] }
+},
 
 // 团体活动管理（旧路径重定向到后台内嵌页，保留左侧菜单与布局）
 {
@@ -132,6 +138,21 @@ const routes = [
 {
   path: '/activity/summary',
   redirect: (to) => ({ path: '/admin/activity-summary', query: to.query }),
+},
+/** 打开分享链接时：/activity/join?activityId= → 学生端报名落地页（内部调 POST /api/activity/join） */
+{
+  path: '/activity/join',
+  redirect: (to) => ({ path: '/student/activity/join', query: to.query }),
+},
+/** /activity/cancel?activityId= → 取消报名落地页（POST /api/activity/cancel） */
+{
+  path: '/activity/cancel',
+  redirect: (to) => ({ path: '/student/activity/cancel', query: to.query }),
+},
+/** /activity/checkin?activityId= → 签到落地页（POST /api/activity/checkin） */
+{
+  path: '/activity/checkin',
+  redirect: (to) => ({ path: '/student/activity/checkin', query: to.query }),
 },
 
 {
@@ -239,15 +260,33 @@ const routes = [
   meta: { needAuth: true }
 },
 {
-  path: '/student/activity/:id',
-  name: 'ActivityDetail',
-  component: () => import('../views/student/activity/ActivityDetail.vue'),
+  path: '/student/activity/join',
+  name: 'ActivityJoinLanding',
+  component: () => import('../views/student/activity/ActivityJoinLanding.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity/cancel',
+  name: 'ActivityCancelLanding',
+  component: () => import('../views/student/activity/ActivityCancelLanding.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity/checkin',
+  name: 'ActivityCheckinLanding',
+  component: () => import('../views/student/activity/ActivityCheckinLanding.vue'),
   meta: { needAuth: true }
 },
 {
   path: '/student/activity/my',
   name: 'MyActivities',
   component: () => import('../views/student/activity/MyActivities.vue'),
+  meta: { needAuth: true }
+},
+{
+  path: '/student/activity/:id',
+  name: 'ActivityDetail',
+  component: () => import('../views/student/activity/ActivityDetail.vue'),
   meta: { needAuth: true }
 },
 {
@@ -783,6 +822,35 @@ if (to.path.startsWith('/admin')) {
       }
     }
     return next()
+  }
+
+  /*
+   * 与 /admin/* 共用 JWT 的顶层业务路由（如 /case、/crisis、/assessment/list）：
+   * 此前仅校验 /admin、/counselor、/leave 等前缀，导致已声明 needAuth 的页面在未带 token 时仍能通过路由，
+   * 请求 /api/** 时被 Spring Security 拒绝（常见 403）。
+   */
+  if (needAuth && Array.isArray(to.meta?.roles) && to.meta.roles.length > 0) {
+    const staffRoles = ['counselor', 'center', 'admin', 'tutor', 'college', 'leader']
+    const routeNeedsStaffSession = to.meta.roles.some((r) => staffRoles.includes(r))
+    if (
+      routeNeedsStaffSession &&
+      !to.path.startsWith('/admin') &&
+      !to.path.startsWith('/counselor') &&
+      !to.path.startsWith('/leave')
+    ) {
+      const token =
+        localStorage.getItem('auth_token') ||
+        localStorage.getItem('admin_token') ||
+        localStorage.getItem('access_token')
+      const role = localStorage.getItem('admin_role')
+      if (!token) {
+        return next({ path: '/login/admin', query: { redirect: to.fullPath } })
+      }
+      if (!role || !to.meta.roles.includes(role)) {
+        return next({ path: '/login/admin', query: { redirect: to.fullPath } })
+      }
+      return next()
+    }
   }
 
   next();

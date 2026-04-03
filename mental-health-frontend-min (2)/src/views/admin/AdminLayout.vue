@@ -213,6 +213,7 @@ function isExternalActive(path) {
   if (path === '/message') return p === '/message' || p.startsWith('/message/')
   if (path === '/case') return p === '/case' || p.startsWith('/case/')
   if (path === '/crisis') return p.startsWith('/crisis')
+  if (path === '/assessment/list') return p.startsWith('/assessment/list') || p.startsWith('/assessment/detail')
   return p === path || p.startsWith(path + '/')
 }
 </script>

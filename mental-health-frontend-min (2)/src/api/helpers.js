@@ -5,7 +5,20 @@
 export function isApiSuccess(res) {
   if (!res || typeof res !== 'object') return false
   const c = res.code
-  return c === 200 || c === 0 || res.success === true
+  return c === 200 || c === 0 || res.success === true || Number(c) === 200
+}
+
+/**
+ * POST/PUT 等写操作后的统一 R 体解析（含 msg / data），便于页面提示与分支
+ * @returns {{ ok: boolean, msg: string, data: any, raw: any }}
+ */
+export function unwrapMutationResponse(res) {
+  if (!res || typeof res !== 'object') {
+    return { ok: false, msg: '响应异常', data: undefined, raw: res }
+  }
+  const ok = isApiSuccess(res)
+  const msg = res.msg ?? res.message ?? (ok ? '操作成功' : '操作失败')
+  return { ok, msg, data: res.data, raw: res }
 }
 
 /** 解析统一响应里的 data（列表或分页） */

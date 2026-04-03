@@ -1,7 +1,7 @@
 <template>
   <div class="activity-container">
     <h2>团体活动</h2>
-    
+
     <div class="filter-section">
       <div class="filter-item">
         <label>活动类型：</label>
@@ -23,8 +23,19 @@
       </div>
     </div>
 
-    <div class="activity-list">
-      <div v-for="activity in filteredActivities" :key="activity.id" class="activity-card">
+    <p class="list-hint">以下为平台已发布的团体活动，点击卡片可查看详情（对接后端 <code>/api/activity/list</code>）。</p>
+
+    <p v-if="loading" class="loading-tip">正在加载活动列表…</p>
+    <div v-else class="activity-list">
+      <div
+        v-for="activity in filteredActivities"
+        :key="activity.id"
+        class="activity-card"
+        role="button"
+        tabindex="0"
+        @click="viewActivity(activity.id)"
+        @keydown.enter="viewActivity(activity.id)"
+      >
         <div class="activity-image">
           <img :src="activity.image" :alt="activity.title" />
         </div>
@@ -37,29 +48,32 @@
             <span :class="['status', activity.status]">{{ getStatusText(activity.status) }}</span>
           </div>
           <div class="activity-footer">
-            <button 
-              v-if="activity.status === 'upcoming'" 
-              class="join-btn" 
-              @click="joinActivity(activity.id)"
+            <button
+              v-if="activity.status === 'upcoming' && !activity.joined"
+              class="join-btn"
+              @click.stop="signup(activity.id)"
             >
               立即报名
             </button>
-            <button 
-              v-else 
-              class="detail-btn" 
-              @click="viewActivity(activity.id)"
+            <button
+              v-else-if="activity.status === 'upcoming' && activity.joined"
+              class="detail-btn"
+              @click.stop="viewActivity(activity.id)"
             >
-              查看详情
+              已报名 · 查看详情
             </button>
+            <button v-else class="detail-btn" @click.stop="viewActivity(activity.id)">查看详情</button>
           </div>
         </div>
       </div>
     </div>
 
+    <div v-if="!loading && filteredActivities.length === 0" class="empty-tip">
+      暂无活动，请稍后再试或调整筛选条件。
+    </div>
+
     <div class="my-activities-link">
-      <button class="my-activities-btn" @click="goToMyActivities">
-        查看我的活动
-      </button>
+      <button type="button" class="my-activities-btn" @click="goToMyActivities">查看我的活动</button>
     </div>
   </div>
 </template>
@@ -67,7 +81,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { getActivityList, joinActivity as apiJoinActivity } from '../../../api/activity.js'
+import { unwrapListPayload, unwrapMutationResponse } from '../../../api/helpers.js'
+import { mapListItemToCard } from '../../../utils/groupActivityDisplay.js'
 
 const router = useRouter()
 const typeFilter = ref('all')
@@ -75,60 +92,74 @@ const statusFilter = ref('all')
 const loading = ref(false)
 const activities = ref([])
 
-onMounted(async () => {
-  await loadActivities()
+onMounted(() => {
+  loadActivities()
 })
 
-const loadActivities = async () => {
+async function loadActivities() {
   try {
     loading.value = true
     const res = await getActivityList({
       page: 1,
-      pageSize: 20
+      pageSize: 500,
     })
-    activities.value = res.data || []
+    const ok = res && (Number(res.code) === 200 || res.code === 200)
+    if (!ok) {
+      activities.value = []
+      ElMessage.error(res?.msg || '加载失败')
+      return
+    }
+    const records = unwrapListPayload(res?.data)
+    activities.value = records.map(mapListItemToCard).filter(Boolean)
   } catch (error) {
     console.error('加载活动列表失败', error)
+    activities.value = []
+    ElMessage.error('加载失败，请稍后重试')
   } finally {
     loading.value = false
   }
 }
 
 const filteredActivities = computed(() => {
-  return activities.value.filter(activity => {
+  return activities.value.filter((activity) => {
     const typeMatch = typeFilter.value === 'all' || activity.type === typeFilter.value
     const statusMatch = statusFilter.value === 'all' || activity.status === statusFilter.value
     return typeMatch && statusMatch
   })
 })
 
-const getStatusText = (status) => {
+function getStatusText(status) {
   const statusMap = {
     upcoming: '即将开始',
     ongoing: '进行中',
-    ended: '已结束'
+    ended: '已结束',
   }
   return statusMap[status] || status
 }
 
-const joinActivity = async (id) => {
+async function signup(id) {
   try {
-    const res = await apiJoinActivity({ activityId: id })
-    if (res.code === 200) {
-      alert('报名成功')
+    const raw = await apiJoinActivity({ activityId: id })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '报名成功')
+      await loadActivities()
       router.push(`/student/activity/${id}`)
+    } else {
+      ElMessage.error(msg || '报名失败')
     }
   } catch (error) {
     console.error('报名失败', error)
-    alert('报名失败，请稍后重试')
+    ElMessage.error(error?.response?.data?.msg || error?.message || '报名失败，请稍后重试')
   }
 }
 
-const viewActivity = (id) => {
+function viewActivity(id) {
+  if (!id) return
   router.push(`/student/activity/${id}`)
 }
 
-const goToMyActivities = () => {
+function goToMyActivities() {
   router.push('/student/activity/my')
 }
 </script>
@@ -138,6 +169,32 @@ const goToMyActivities = () => {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.list-hint {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.list-hint code {
+  font-size: 0.8rem;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.loading-tip {
+  color: #64748b;
+  padding: 24px;
+  text-align: center;
+}
+
+.empty-tip {
+  color: #94a3b8;
+  text-align: center;
+  padding: 32px 16px;
 }
 
 .filter-section {
@@ -180,11 +237,17 @@ const goToMyActivities = () => {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .activity-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.activity-card:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }
 
 .activity-image {
@@ -257,7 +320,8 @@ const goToMyActivities = () => {
   margin-top: 15px;
 }
 
-.join-btn, .detail-btn {
+.join-btn,
+.detail-btn {
   width: 100%;
   padding: 10px;
   border: none;

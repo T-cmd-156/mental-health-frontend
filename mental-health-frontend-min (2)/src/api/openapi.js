@@ -589,10 +589,15 @@ export function getNoticeDetail(params = {}, data, config = {}) {
   })
 }
 
-// GET /api/notice/list - 获取通知列表
+// GET /cms/notices → /api/cms/notices 通知公告列表
 export function getNoticeList(params = {}, data, config = {}) {
+  const cms =
+    (typeof import.meta !== 'undefined' &&
+      import.meta.env &&
+      import.meta.env.VITE_CMS_API_PREFIX) ||
+    '/cms'
   return request({
-    url: '/api/notice/list',
+    url: `${cms}/notices`,
     method: 'get',
     params,
     ...config

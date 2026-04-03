@@ -75,6 +75,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getMyActivities, cancelActivityRegistration, checkinActivity as apiCheckinActivity } from '../../../api/activity.js'
+import { unwrapListPayload, unwrapMutationResponse } from '../../../api/helpers.js'
+import { mapMyActivityRow } from '../../../utils/groupActivityDisplay.js'
 
 const router = useRouter()
 const statusFilter = ref('all')
@@ -90,9 +92,10 @@ const loadActivities = async () => {
     loading.value = true
     const res = await getMyActivities({
       page: 1,
-      pageSize: 20
+      pageSize: 50
     })
-    myActivities.value = res.data || []
+    const records = unwrapListPayload(res?.data)
+    myActivities.value = records.map(mapMyActivityRow).filter(Boolean)
   } catch (error) {
     console.error('加载活动列表失败', error)
   } finally {
@@ -121,29 +124,35 @@ const viewActivity = (id) => {
 }
 
 const cancelActivity = async (id) => {
-  if (confirm('确定要取消报名吗？')) {
-    try {
-      await cancelActivityRegistration({ id })
+  if (!confirm('确定要取消报名吗？')) return
+  try {
+    const raw = await cancelActivityRegistration({ activityId: id })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '取消报名成功')
       await loadActivities()
-      alert('取消报名成功')
-    } catch (error) {
-      console.error('取消报名失败', error)
-      alert('取消报名失败，请重试')
+    } else {
+      ElMessage.error(msg || '取消报名失败')
     }
+  } catch (error) {
+    console.error('取消报名失败', error)
+    ElMessage.error(error?.response?.data?.msg || error?.message || '取消报名失败，请重试')
   }
 }
 
 const checkinActivity = async (id) => {
-  const code = prompt('请输入签到码')
-  if (code) {
-    try {
-      await apiCheckinActivity({ id, code })
-      alert('签到成功')
+  try {
+    const raw = await apiCheckinActivity({ activityId: id })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '签到成功')
       await loadActivities()
-    } catch (error) {
-      console.error('签到失败', error)
-      alert('签到失败，请检查签到码是否正确')
+    } else {
+      ElMessage.error(msg || '签到失败')
     }
+  } catch (error) {
+    console.error('签到失败', error)
+    ElMessage.error(error?.response?.data?.msg || error?.message || '签到失败，请重试')
   }
 }
 

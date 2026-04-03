@@ -4,6 +4,18 @@
       <el-button @click="$router.back()" :icon="ArrowLeft" text>返回上级</el-button>
       <span class="nav-title">活动详情</span>
     </div>
+
+    <div v-if="loading" class="loading-wrap">
+      <el-icon class="is-loading" :size="28"><Loading /></el-icon>
+      <span>加载活动详情中…</span>
+    </div>
+
+    <template v-else-if="loadError">
+      <el-alert type="error" :title="loadError" show-icon :closable="false" class="mb-alert" />
+      <el-button type="primary" @click="goBack">返回列表</el-button>
+    </template>
+
+    <template v-else>
     <div class="activity-header">
       <img :src="activity.image" :alt="activity.title" class="activity-banner" />
       <div class="activity-info">
@@ -36,11 +48,11 @@
     <div class="activity-body">
       <div class="section">
         <h3>活动介绍</h3>
-        <p class="description">{{ activity.description }}</p>
-        <div class="content" v-html="activity.content"></div>
+        <p v-if="activity.description" class="description">{{ activity.description }}</p>
+        <div class="content" v-html="activity.content || '<p>暂无正文</p>'"></div>
       </div>
 
-      <div class="section">
+      <div v-if="activity.speaker" class="section">
         <h3>主讲人</h3>
         <div class="speaker">
           <div class="speaker-avatar">
@@ -56,41 +68,44 @@
     </div>
 
     <div class="activity-footer">
-      <button 
-        v-if="activity.status === 'upcoming' && !isJoined" 
-        class="join-btn" 
-        @click="joinActivity"
+      <button
+        v-if="activity.status === 'upcoming' && !activity.joined"
+        class="join-btn"
+        @click="onJoin"
       >
         立即报名
       </button>
-      <button 
-        v-else-if="isJoined && activity.status === 'upcoming'" 
-        class="joined-btn" 
-        @click="cancelJoin"
+      <button
+        v-else-if="activity.joined && activity.status === 'upcoming'"
+        class="joined-btn"
+        @click="onCancelJoin"
       >
         取消报名
       </button>
-      <button 
-        v-else-if="isJoined && activity.status === 'ongoing'" 
-        class="checkin-btn" 
-        @click="checkinActivity"
+      <button
+        v-else-if="activity.joined && activity.status === 'ongoing' && !activity.checkedIn"
+        class="checkin-btn"
+        @click="onCheckin"
       >
         活动签到
       </button>
-      <button 
-        v-else-if="isJoined && activity.status === 'ended'" 
-        class="feedback-btn" 
+      <button
+        v-else-if="activity.joined && activity.status === 'ongoing' && activity.checkedIn"
+        class="back-btn"
+        disabled
+      >
+        已签到
+      </button>
+      <button
+        v-else-if="activity.joined && activity.status === 'ended'"
+        class="feedback-btn"
         @click="showFeedbackDialog = true"
       >
         提交反馈
       </button>
-      <button 
-        class="back-btn" 
-        @click="goBack"
-      >
-        返回列表
-      </button>
+      <button type="button" class="back-btn" @click="goBack">返回列表</button>
     </div>
+    </template>
 
     <el-dialog
       v-model="showFeedbackDialog"
@@ -140,35 +155,42 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ArrowLeft } from '@element-plus/icons-vue'
+import { ArrowLeft, Loading } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  getActivityDetail,
+  joinActivity as apiJoin,
+  cancelActivityRegistration as apiCancel,
+  checkinActivity as apiCheckin,
+} from '@/api/activity.js'
+import { unwrapMutationResponse } from '@/api/helpers.js'
+import { mapDetailVoToView } from '@/utils/groupActivityDisplay.js'
 
 const router = useRouter()
 const route = useRoute()
-const activityId = route.params.id
 
+const loading = ref(true)
+const loadError = ref('')
 const activity = ref({
-  id: 1,
-  title: '情绪管理工作坊',
-  description: '学习如何有效管理情绪，提高心理健康水平',
-  content: '<p>本工作坊将通过理论讲解、互动练习和小组讨论等方式，帮助参与者学习情绪管理的基本原理和实用技巧。</p><p>内容包括：</p><ul><li>情绪的本质和功能</li><li>常见的情绪调节策略</li><li>压力与情绪的关系</li><li>如何建立健康的情绪表达模式</li></ul><p>通过本工作坊，参与者将能够：</p><ul><li>更好地识别和理解自己的情绪</li><li>掌握有效的情绪调节技巧</li><li>提高应对压力的能力</li><li>建立更健康的人际关系</li></ul>',
-  type: 'workshop',
+  id: '',
+  activityId: '',
+  title: '',
+  description: '',
+  content: '',
+  type: 'group',
   status: 'upcoming',
-  time: '2026-03-10 14:00-16:00',
-  location: '心理健康中心活动室',
-  maxParticipants: 20,
-  currentParticipants: 15,
-  image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=mental%20health%20workshop%20activity&image_size=landscape_16_9',
-  speaker: {
-    name: '张老师',
-    title: '心理咨询师',
-    bio: '拥有10年心理咨询经验，专注于情绪管理和压力应对领域',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20counselor%20portrait&image_size=square'
-  }
+  time: '',
+  location: '',
+  maxParticipants: 0,
+  currentParticipants: 0,
+  image: '',
+  joined: false,
+  checkedIn: false,
+  speaker: null,
 })
 
-const isJoined = ref(false)
 const showFeedbackDialog = ref(false)
 const feedbackForm = ref({
   rating: 5,
@@ -180,10 +202,43 @@ const feedbackForm = ref({
   suggestion: ''
 })
 
-onMounted(() => {
-  // 模拟检查是否已报名
-  isJoined.value = Math.random() > 0.5
-})
+async function loadDetail() {
+  const id = route.params.id
+  if (!id) {
+    loadError.value = '缺少活动 ID'
+    loading.value = false
+    return
+  }
+  loading.value = true
+  loadError.value = ''
+  try {
+    const res = await getActivityDetail(id)
+    const ok = res && (Number(res.code) === 200 || res.code === 200)
+    if (!ok || res.data == null) {
+      loadError.value = res?.msg || '未找到该活动'
+      return
+    }
+    const mapped = mapDetailVoToView(res.data)
+    if (!mapped?.activityId) {
+      loadError.value = '活动数据无效'
+      return
+    }
+    activity.value = mapped
+  } catch (e) {
+    console.error(e)
+    loadError.value = e?.response?.data?.msg || e?.message || '加载失败'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(loadDetail)
+watch(
+  () => route.params.id,
+  (next, prev) => {
+    if (next && next !== prev) loadDetail()
+  },
+)
 
 const getTypeText = (type) => {
   const typeMap = {
@@ -203,31 +258,65 @@ const getStatusText = (status) => {
   return statusMap[status] || status
 }
 
-const joinActivity = () => {
-  if (activity.value.currentParticipants >= activity.value.maxParticipants) {
-    alert('活动人数已满')
+async function onJoin() {
+  const aid = activity.value.activityId
+  if (!aid) return
+  if (
+    activity.value.maxParticipants > 0 &&
+    activity.value.currentParticipants >= activity.value.maxParticipants
+  ) {
+    ElMessage.warning('活动人数已满')
     return
   }
-  
-  // 模拟报名
-  setTimeout(() => {
-    isJoined.value = true
-    activity.value.currentParticipants++
-    alert('报名成功')
-  }, 500)
+  try {
+    const raw = await apiJoin({ activityId: aid })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '报名成功')
+      await loadDetail()
+    } else {
+      ElMessage.error(msg || '报名失败')
+    }
+  } catch (e) {
+    ElMessage.error(e?.response?.data?.msg || e?.message || '报名失败')
+  }
 }
 
-const cancelJoin = () => {
-  // 模拟取消报名
-  setTimeout(() => {
-    isJoined.value = false
-    activity.value.currentParticipants--
-    alert('取消报名成功')
-  }, 500)
+async function onCancelJoin() {
+  const aid = activity.value.activityId
+  if (!aid) return
+  try {
+    await ElMessageBox.confirm('确定取消报名吗？', '取消报名', { type: 'warning' })
+    const raw = await apiCancel({ activityId: aid })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '已取消报名')
+      await loadDetail()
+    } else {
+      ElMessage.error(msg || '取消失败')
+    }
+  } catch (e) {
+    if (e !== 'cancel') {
+      ElMessage.error(e?.response?.data?.msg || e?.message || '取消失败')
+    }
+  }
 }
 
-const checkinActivity = () => {
-  alert('签到成功')
+async function onCheckin() {
+  const aid = activity.value.activityId
+  if (!aid) return
+  try {
+    const raw = await apiCheckin({ activityId: aid })
+    const { ok, msg } = unwrapMutationResponse(raw)
+    if (ok) {
+      ElMessage.success(msg || '签到成功')
+      await loadDetail()
+    } else {
+      ElMessage.error(msg || '签到失败')
+    }
+  } catch (e) {
+    ElMessage.error(e?.response?.data?.msg || e?.message || '签到失败')
+  }
 }
 
 const submitFeedback = () => {
@@ -259,6 +348,19 @@ const goBack = () => {
 </script>
 
 <style scoped>
+.loading-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 20px;
+  color: #64748b;
+}
+
+.mb-alert {
+  margin-bottom: 16px;
+}
+
 .activity-detail {
   padding: 20px;
   max-width: 1000px;
