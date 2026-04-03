@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5d9aad6c-6a96-4230-9e5a-cfb8817896d1" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/Default module.openapi.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/api_diff_report.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/api_diff_report.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/apifox-reports-2026-03-23-14-35-29.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/doc_endpoints.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/docs/APPOINTMENT_BACKEND_ALIGNMENT.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/image-8583b990-2f01-4849-b18e-c7751ceb3794.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/openapi_required_endpoints.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/albackground.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/consent.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/hero-bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/vite.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/public/项目结构与功能说明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/activity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/adminConfigApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/appointment.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/appointmentApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/appointmentEnv.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/assessment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/assessment.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/case.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/centerArchive.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/commonApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/consultApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/conversationApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/crisis.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/crisisApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/dataManage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/helpers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/leaveApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/message.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/microCourse.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/mock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/notice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/openapi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/parent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/peerForum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/portal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/profileApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/psychPlatformAppointment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/record.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/reportApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/schedule.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/selfHelp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/statsApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/studentBind.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/studentParent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/teacherMessage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/assets/images/activity.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/assets/images/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/assets/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/assets/vue.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/components/BackButton.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/components/HelloWorld.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/hooks/usePermission.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/appointment.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/case.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/consentConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/counselor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/crisis.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/db.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/formConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/mock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/parent.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/record.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/scaleConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/schedule.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/student.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/mock/studentFamily.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/router/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/store/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/stores/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/appointment.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/case.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/class.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/college.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/consultant.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/crisis.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/echarts.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/peerForum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/record.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/schedule.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/student.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/teacher.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/types/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/counselorSession.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/exporter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/jwtPayload.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/portalSession.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/studentBindSession.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/utils/verificationCode.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/activity/ActivityCreate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/activity/ActivityManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/activity/ActivitySign.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/activity/ActivitySummary.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminAssessmentSystem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminCrisis.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminDataManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminLayout.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminLeave.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminPeerForum.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminStudents.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminSystemManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminSystemMonitor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminUserManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/AdminWorkbench.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/CenterReportExport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/CenterStatistics.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/CenterSystemMonitor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/Counselor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/CrisisReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/InterviewManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/ScaleManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/TimeRule.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/components/CrisisDetailPanel.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/schedule/BatchGenerate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/schedule/ScheduleCenter.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/admin/schedule/WeekTemplate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/appointment/Appointment.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/appointment/AppointmentDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/appointment/MyAppointments.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/appointment/SelectSlot.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/articles/ArticleDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/articles/ArticleList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/assessment/AssessmentList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/case/CaseDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/case/CaseList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/case/CaseOperate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/case/CaseStats.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeCrisis.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeManage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeStatistics.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeStudents.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/college/CollegeWorkbench.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/ConsultRecordChangeRequest.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/ConsultRecords.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/Cou nselorDashboard_clean.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/CounselorAppointments.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/CounselorDashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/Dashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/counselor/ScheduleCenter.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/crisis/CrisisAssess.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/crisis/CrisisClose.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/crisis/CrisisIntervene.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/crisis/CrisisLevel.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/crisis/CrisisList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leader/LeaderColleges.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leader/LeaderCrisis.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leader/LeaderReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leader/LeaderStatistics.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leader/LeaderWorkbench.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leave/LeaveApply.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/leave/LeaveList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/login/AdminLogin.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/login/CasCallback.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/login/CounselorLogin.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/login/UserLogin.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/message/MessageCenter.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/notices/NoticeDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/notices/NoticeList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/ParentDashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/activity/ActivityView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/appointment/AppointmentView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/assessment/AssessmentView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/children/ChildManagement.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/contact/ContactCounselor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/message/ParentMessage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/parent/profile/ProfileView.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/peer/PeerSupport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/peer/PeerSupportDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/portal/Home.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/record/RecordForm.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/record/RecordList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/StudentDashboard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/activity/ActivityDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/activity/ActivityList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/activity/MyActivities.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/assessment/Assessment.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/assessment/AssessmentList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/assessment/AssessmentResult.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/contact/ContactCounselor.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/crisis/CrisisReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/family/StudentParentBinding.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/profile/Profile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/profile/StudentPsychProfile.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/selfhelp/HealthCourse.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/selfhelp/MicroCourse.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/selfhelp/MusicTherapy.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/student/selfhelp/SelfHelp.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorAppointment.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorAssessment.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorConversation.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorCrisisReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorInterview.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorParentMessage.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorReport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorStudents.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/tutor/TutorWorkbench.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/wiki/WikiDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/src/views/wiki/WikiList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/tmp_api_diff.cjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/tmp_api_diff.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/tmp_generate_openapi_api.cjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/vite.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/危机上报.openapi.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/后端接口API文档-前端需求说明.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/咨询师模块.openapi.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/微信接口.openapi.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/数据库说明文档.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/移动端数据库说明文档.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/结构.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mental-health-frontend-min (2)/网页前端接口.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/psychological_platform" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="3BpUkJv068x85plY40awpHDUGGX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "F:/mental-health-frontend-min (6)",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.MetalHealthPlatformApplication">
+    <configuration name="MetalHealthPlatformApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="metal-health-platform (1)" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sasu.platform.mhm.MetalHealthPlatformApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MetalHealthPlatformApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="metal-health-platform (1)" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="sasu.platform.mhm.MetalHealthPlatformApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="5d9aad6c-6a96-4230-9e5a-cfb8817896d1" name="更改" comment="" />
+      <created>1775185646956</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775185646956</updated>
+      <workItem from="1775185648027" duration="10763000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/mental-health-frontend/mental-health-frontend-min (2)/src/api/assessment.js" />
+        <option value="$PROJECT_DIR$/mental-health-frontend-min (2)/src/api/assessment.js" />
+      </list>
+    </option>
+  </component>
+</project>

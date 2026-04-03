@@ -1,0 +1,1974 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "ConsulateController"
+    },
+    {
+      "name": "ConsulateController Copy"
+    },
+    {
+      "name": "咨询记录控制器"
+    },
+    {
+      "name": "咨询审批（长程申请）接口"
+    }
+  ],
+  "paths": {
+    "/api/consulate/setConsultationTime": {
+      "post": {
+        "summary": "设置咨询师的预约时间段",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ConsulateController Copy"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationScheduleDTO",
+                "description": "咨询预约时间信息DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "返回操作结果，成功时返回设置成功消息"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consulate/makeAppointment": {
+      "post": {
+        "summary": "创建预约",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ConsulateController Copy"
+        ],
+        "parameters": [
+          {
+            "name": "scheduleId",
+            "in": "query",
+            "description": "预约时间ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appointmentType",
+            "in": "query",
+            "description": "预约类型",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "consultationMode",
+            "in": "query",
+            "description": "咨询方式",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "description": "预约地点",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isUrgent",
+            "in": "query",
+            "description": "是否紧急预约",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "description": "预约备注",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "返回操作结果，包含预约是否成功及相关信息"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consulate/list": {
+      "post": {
+        "summary": "获取咨询师列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ConsulateController Copy"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageQueryDTO",
+                "description": "分页查询参数"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "返回咨询师列表的分页结果"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consulate/detail": {
+      "get": {
+        "summary": "getCounselorDetail",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ConsulateController Copy"
+        ],
+        "parameters": [
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "通用返回结果类，服务端响应的数据最终都会封装成此对象"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consulate/schedule": {
+      "get": {
+        "summary": "getScheduleByParams",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ConsulateController Copy"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageQueryDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RPageResult"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "total": 0,
+                        "records": [
+                          {}
+                        ]
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "total": 0,
+                        "records": [
+                          {}
+                        ]
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "total": 0,
+                        "records": []
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/list": {
+      "get": {
+        "summary": "咨询记录列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "内容的id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "栏目类型：1-活动风采 2-通知公告 3-朋辈互助 4-心理百科 5-心理美文",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "keyWords",
+            "in": "query",
+            "description": "关键词",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "状态",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "通用用户ID（部分列表如预约、消息等会用到）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "org_id",
+            "in": "query",
+            "description": "组织id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortType",
+            "in": "query",
+            "description": "排序方式 0-时间降序 1-时间升序",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "开始时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "结束时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scheduleDate",
+            "in": "query",
+            "description": "排版日期（星期）",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "slotDuration",
+            "in": "query",
+            "description": "单词咨询时间（分钟）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "咨询师ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "studentId",
+            "in": "query",
+            "description": "学生ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appointmentId",
+            "in": "query",
+            "description": "预约ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "recordStatus",
+            "in": "query",
+            "description": "记录状态",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "开始日期",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "结束日期",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RPageResult"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "total": 0,
+                        "records": [
+                          {}
+                        ]
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "total": 0,
+                        "records": []
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/detail": {
+      "get": {
+        "summary": "咨询记录详情",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RRecordVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/by-appointment": {
+      "get": {
+        "summary": "根据预约ID查询记录",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RRecordVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/create": {
+      "post": {
+        "summary": "创建咨询记录",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "appointmentId": {
+                    "type": "string",
+                    "description": "预约ID"
+                  },
+                  "recordDate": {
+                    "type": "string",
+                    "description": "记录日期"
+                  },
+                  "sessionNumber": {
+                    "type": "integer",
+                    "description": "第几次咨询"
+                  },
+                  "presentingProblem": {
+                    "type": "string",
+                    "description": "呈现问题"
+                  },
+                  "sessionContent": {
+                    "type": "string",
+                    "description": "咨询内容（必填）"
+                  },
+                  "counselorObservations": {
+                    "type": "string",
+                    "description": "咨询师观察"
+                  },
+                  "interventionMethods": {
+                    "type": "string",
+                    "description": "干预方法"
+                  },
+                  "homeworkAssignment": {
+                    "type": "string",
+                    "description": "家庭作业"
+                  },
+                  "nextSessionPlan": {
+                    "type": "string",
+                    "description": "下次咨询计划"
+                  },
+                  "counselorNotes": {
+                    "type": "string",
+                    "description": "咨询师备注"
+                  },
+                  "handwrittenRecordFile": {
+                    "description": "手写咨询记录图片",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "confidentialLevel": {
+                    "type": "string",
+                    "description": "保密级别"
+                  },
+                  "recordStatus": {
+                    "type": "string",
+                    "description": "记录状态"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "附件图片URL列表"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RRecordVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/update": {
+      "put": {
+        "summary": "更新咨询记录",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordUpdateDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RRecordVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/record/autosave": {
+      "post": {
+        "summary": "自动保存咨询记录（草稿）",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询记录控制器"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordUpdateDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RRecordVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "appointmentId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "recordDate": "",
+                        "sessionNumber": 0,
+                        "presentingProblem": "",
+                        "content": "",
+                        "summary": "",
+                        "problemType": "",
+                        "counselorObservations": "",
+                        "interventionMethods": "",
+                        "homeworkAssignment": "",
+                        "nextSessionPlan": "",
+                        "counselorNotes": "",
+                        "handwrittenRecordUrl": "",
+                        "confidentialLevel": "",
+                        "status": "",
+                        "images": [
+                          ""
+                        ],
+                        "createTime": "",
+                        "updateTime": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/center/approval/consultation/list": {
+      "get": {
+        "summary": "获取长程咨询申请审批列表",
+        "deprecated": false,
+        "description": "（具体路径根据前端 openapi，一般类似 /api/center/approval/list 或 /long-term/list）",
+        "tags": [
+          "咨询审批（长程申请）接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "内容的id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "审批类型（预留），例如 longTerm",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "keyWords",
+            "in": "query",
+            "description": "关键词",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "状态：pending / approved / rejected / all",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "通用用户ID（部分列表如预约、消息等会用到）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "org_id",
+            "in": "query",
+            "description": "组织id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortType",
+            "in": "query",
+            "description": "排序方式 0-时间降序 1-时间升序",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "description": "开始时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "结束时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scheduleDate",
+            "in": "query",
+            "description": "排版日期（星期）",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "slotDuration",
+            "in": "query",
+            "description": "单词咨询时间（分钟）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "approvalStatus",
+            "in": "query",
+            "description": "审批状态：pending / approved / rejected / all\n避免与 PageQueryDTO.status(Integer) 冲突",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "关键字（学生姓名/学号）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RPageResult"
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "",
+                  "data": {
+                    "total": 0,
+                    "records": []
+                  },
+                  "map": {
+                    "": {}
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/center/approval/consultation/approve": {
+      "post": {
+        "summary": "通过长程咨询申请",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询审批（长程申请）接口"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationApprovalActionDTO",
+                "description": ""
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RVoid"
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "",
+                  "data": null,
+                  "map": {
+                    "": {}
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/center/approval/consultation/reject": {
+      "post": {
+        "summary": "驳回长程咨询申请",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "咨询审批（长程申请）接口"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationApprovalActionDTO",
+                "description": ""
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RVoid"
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "",
+                  "data": null,
+                  "map": {
+                    "": {}
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConsultationApprovalActionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "申请 ID"
+          },
+          "comment": {
+            "type": "string",
+            "description": "审批意见"
+          },
+          "approvedSessions": {
+            "type": "integer",
+            "description": "批准的次数（通过时）"
+          },
+          "approvedFrequency": {
+            "type": "string",
+            "description": "批准的频率（如 weekly, biweekly）"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "开始日期（通过时）"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "结束日期（通过时）"
+          }
+        }
+      },
+      "PageResult": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "总记录数",
+            "format": "int64"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {},
+              "description": "java.util.List"
+            },
+            "description": "当前页数据集合"
+          }
+        }
+      },
+      "key": {
+        "type": "object",
+        "properties": {}
+      },
+      "MapObject": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/key"
+          }
+        }
+      },
+      "RPageResult": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：1成功，0和其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PageResult",
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      },
+      "PageQueryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "内容的id"
+          },
+          "type": {
+            "type": "integer",
+            "description": "栏目类型：1-活动风采 2-通知公告 3-朋辈互助 4-心理百科 5-心理美文"
+          },
+          "page": {
+            "type": "integer",
+            "description": "页码"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "每页记录数"
+          },
+          "keyWords": {
+            "type": "string",
+            "description": "关键词"
+          },
+          "status": {
+            "type": "integer",
+            "description": "状态"
+          },
+          "counselorId": {
+            "type": "string",
+            "description": ""
+          },
+          "userId": {
+            "type": "string",
+            "description": "通用用户ID（部分列表如预约、消息等会用到）"
+          },
+          "org_id": {
+            "type": "string",
+            "description": "组织id"
+          },
+          "sortType": {
+            "type": "integer",
+            "description": "排序方式 0-时间降序 1-时间升序"
+          },
+          "startTime": {
+            "type": "string",
+            "description": "开始时间"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "结束时间"
+          },
+          "scheduleDate": {
+            "type": "integer",
+            "description": "排版日期（星期）"
+          },
+          "slotDuration": {
+            "type": "string",
+            "description": "单词咨询时间（分钟）"
+          }
+        }
+      },
+      "R": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：1成功，0和其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "type": "object",
+            "properties": {},
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      },
+      "RVoid": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：200成功，其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "description": "数据",
+            "type": "null"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      },
+      "ConsultationScheduleDTO": {
+        "type": "object",
+        "properties": {
+          "consultationScheduleDates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConsultationScheduleDate",
+              "description": "sasu.platform.mhm.pojo.dto.ConsultationScheduleDTO.ConsultationScheduleDate"
+            },
+            "description": ""
+          }
+        }
+      },
+      "RecordVO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "记录ID"
+          },
+          "appointmentId": {
+            "type": "string",
+            "description": "预约ID"
+          },
+          "studentId": {
+            "type": "string",
+            "description": "学生ID"
+          },
+          "studentName": {
+            "type": "string",
+            "description": "学生姓名"
+          },
+          "counselorId": {
+            "type": "string",
+            "description": "咨询师ID"
+          },
+          "counselorName": {
+            "type": "string",
+            "description": "咨询师姓名"
+          },
+          "recordDate": {
+            "type": "string",
+            "description": "记录日期"
+          },
+          "sessionNumber": {
+            "type": "integer",
+            "description": "第几次咨询"
+          },
+          "presentingProblem": {
+            "type": "string",
+            "description": "呈现问题"
+          },
+          "content": {
+            "type": "string",
+            "description": "咨询内容"
+          },
+          "summary": {
+            "type": "string",
+            "description": "摘要（从咨询内容中提取或单独字段）"
+          },
+          "problemType": {
+            "type": "string",
+            "description": "问题类型"
+          },
+          "counselorObservations": {
+            "type": "string",
+            "description": "咨询师观察"
+          },
+          "interventionMethods": {
+            "type": "string",
+            "description": "干预方法"
+          },
+          "homeworkAssignment": {
+            "type": "string",
+            "description": "家庭作业"
+          },
+          "nextSessionPlan": {
+            "type": "string",
+            "description": "下次咨询计划"
+          },
+          "counselorNotes": {
+            "type": "string",
+            "description": "咨询师备注"
+          },
+          "handwrittenRecordUrl": {
+            "type": "string",
+            "description": "手写咨询记录图片URL"
+          },
+          "confidentialLevel": {
+            "type": "string",
+            "description": "保密级别"
+          },
+          "status": {
+            "type": "string",
+            "description": "记录状态"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "附件图片URL列表"
+          },
+          "createTime": {
+            "type": "string",
+            "description": "创建时间"
+          },
+          "updateTime": {
+            "type": "string",
+            "description": "更新时间"
+          }
+        }
+      },
+      "RRecordVO": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：200成功，其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RecordVO",
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      },
+      "RecordUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "type": "string",
+            "description": "记录ID"
+          },
+          "recordStatus": {
+            "type": "string",
+            "description": "记录状态: DRAFT-草稿, SUBMITTED-已提交"
+          },
+          "sessionContent": {
+            "type": "string",
+            "description": "咨询内容"
+          },
+          "counselorObservations": {
+            "type": "string",
+            "description": "咨询师观察"
+          },
+          "interventionMethods": {
+            "type": "string",
+            "description": "干预方法"
+          },
+          "homeworkAssignment": {
+            "type": "string",
+            "description": "家庭作业"
+          },
+          "nextSessionPlan": {
+            "type": "string",
+            "description": "下次咨询计划"
+          },
+          "counselorNotes": {
+            "type": "string",
+            "description": "咨询师备注"
+          },
+          "presentingProblem": {
+            "type": "string",
+            "description": "呈现问题"
+          },
+          "confidentialLevel": {
+            "type": "string",
+            "description": "保密级别"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "附件图片URL列表"
+          }
+        }
+      },
+      "ConsultationTime": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "description": "开始时间"
+          },
+          "endTime": {
+            "type": "string",
+            "description": "结束时间"
+          },
+          "status": {
+            "type": "integer",
+            "description": "状状态: 0-停用, 1-启用, 2-已满"
+          },
+          "schedule_type": {
+            "type": "string",
+            "description": "排班类型: REGULAR-常规, SPECIAL-特殊, HOLIDAY-节假日"
+          },
+          "reservationLocation": {
+            "type": "string",
+            "description": "预约地点 线上则直接填写线上咨询 线下直接填写咨询地点（校区）"
+          }
+        }
+      },
+      "ConsultationScheduleDate": {
+        "type": "object",
+        "properties": {
+          "schedule_date": {
+            "type": "integer",
+            "description": ""
+          },
+          "consultationTime": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConsultationTime",
+              "description": "sasu.platform.mhm.pojo.dto.ConsultationScheduleDTO.ConsultationTime"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

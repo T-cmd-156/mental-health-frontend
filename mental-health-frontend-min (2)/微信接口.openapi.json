@@ -1,0 +1,6559 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "微信接口",
+    "description": "前端 API 接口文档转换为 OpenAPI 3.0 格式，用于导入 Apifox。",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "微信前端/公共数据"
+    },
+    {
+      "name": "公共数据"
+    },
+    {
+      "name": "微信前端/消息通知"
+    },
+    {
+      "name": "消息通知"
+    },
+    {
+      "name": "微信前端/谈话阈值配置"
+    },
+    {
+      "name": "谈话阈值配置"
+    },
+    {
+      "name": "微信前端/二级辅导站配置"
+    },
+    {
+      "name": "二级辅导站配置"
+    },
+    {
+      "name": "微信前端/校区规则配置"
+    },
+    {
+      "name": "校区规则配置"
+    },
+    {
+      "name": "微信前端/节假日配置"
+    },
+    {
+      "name": "节假日配置"
+    },
+    {
+      "name": "微信前端/系统配置"
+    },
+    {
+      "name": "系统配置"
+    },
+    {
+      "name": "微信前端/角色权限管理"
+    },
+    {
+      "name": "角色权限管理"
+    },
+    {
+      "name": "微信前端/用户管理"
+    },
+    {
+      "name": "用户管理"
+    },
+    {
+      "name": "微信前端/咨询师档案"
+    },
+    {
+      "name": "咨询师档案"
+    },
+    {
+      "name": "微信前端/学生档案"
+    },
+    {
+      "name": "学生档案"
+    },
+    {
+      "name": "微信前端/请假审批"
+    },
+    {
+      "name": "请假审批"
+    },
+    {
+      "name": "微信前端/转介审批"
+    },
+    {
+      "name": "转介审批"
+    },
+    {
+      "name": "微信前端/危机审批"
+    },
+    {
+      "name": "危机审批"
+    },
+    {
+      "name": "微信前端/咨询审批"
+    },
+    {
+      "name": "咨询审批"
+    },
+    {
+      "name": "微信前端/报表查看"
+    },
+    {
+      "name": "报表查看"
+    },
+    {
+      "name": "微信前端/报告生成器"
+    },
+    {
+      "name": "报告生成器"
+    },
+    {
+      "name": "微信前端/统计概览"
+    },
+    {
+      "name": "统计概览"
+    },
+    {
+      "name": "微信前端/微课管理"
+    },
+    {
+      "name": "微课管理"
+    },
+    {
+      "name": "微信前端/内容互动"
+    },
+    {
+      "name": "内容互动"
+    },
+    {
+      "name": "微信前端/自助内容展示"
+    },
+    {
+      "name": "自助内容展示"
+    },
+    {
+      "name": "微信前端/活动签到"
+    },
+    {
+      "name": "活动签到"
+    },
+    {
+      "name": "微信前端/活动发布与管理"
+    },
+    {
+      "name": "活动发布与管理"
+    },
+    {
+      "name": "微信前端/活动报名与审核"
+    },
+    {
+      "name": "活动报名与审核"
+    },
+    {
+      "name": "微信前端/活动展示"
+    },
+    {
+      "name": "活动展示"
+    },
+    {
+      "name": "微信前端/谈心谈话管理"
+    },
+    {
+      "name": "谈心谈话管理"
+    },
+    {
+      "name": "微信前端/危机评估与干预"
+    },
+    {
+      "name": "危机评估与干预"
+    },
+    {
+      "name": "微信前端/干预团队批量调整"
+    },
+    {
+      "name": "干预团队批量调整"
+    },
+    {
+      "name": "微信前端/危机列表与详情"
+    },
+    {
+      "name": "危机列表与详情"
+    },
+    {
+      "name": "微信前端/危机上报"
+    },
+    {
+      "name": "危机上报"
+    },
+    {
+      "name": "微信前端/科研与导入"
+    },
+    {
+      "name": "科研与导入"
+    },
+    {
+      "name": "微信前端/测评答题"
+    },
+    {
+      "name": "测评答题"
+    },
+    {
+      "name": "微信前端/测评计划"
+    },
+    {
+      "name": "测评计划"
+    },
+    {
+      "name": "微信前端/量表库"
+    },
+    {
+      "name": "量表库"
+    },
+    {
+      "name": "微信前端/预约排队"
+    },
+    {
+      "name": "预约排队"
+    },
+    {
+      "name": "微信前端/咨询记录"
+    },
+    {
+      "name": "咨询记录"
+    },
+    {
+      "name": "微信前端/排班与规则"
+    },
+    {
+      "name": "排班与规则"
+    },
+    {
+      "name": "微信前端/咨询预约管理"
+    },
+    {
+      "name": "咨询预约管理"
+    },
+    {
+      "name": "微信前端/通知公告"
+    },
+    {
+      "name": "通知公告"
+    },
+    {
+      "name": "微信前端/用户认证与个人信息"
+    },
+    {
+      "name": "用户认证与个人信息"
+    }
+  ],
+  "paths": {
+    "/api/common/colleges": {
+      "get": {
+        "summary": "获取学院列表",
+        "deprecated": false,
+        "description": "获取所有学院信息\n代码位置: 多处使用 `collegeOptions` 数据",
+        "operationId": "getCollegeList",
+        "tags": [
+          "微信前端/公共数据",
+          "公共数据"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string",
+                            "example": "计算机学院"
+                          },
+                          "value": {
+                            "type": "string",
+                            "example": "计算机学院"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/common/risk-levels": {
+      "get": {
+        "summary": "获取风险等级配置",
+        "deprecated": false,
+        "description": "获取五级预警等级配置\n代码位置: 多处使用",
+        "operationId": "getRiskLevels",
+        "tags": [
+          "微信前端/公共数据",
+          "公共数据"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "example": "red"
+                          },
+                          "label": {
+                            "type": "string",
+                            "example": "极高危"
+                          },
+                          "color": {
+                            "type": "string",
+                            "example": "EF4444"
+                          },
+                          "desc": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/message/list": {
+      "get": {
+        "summary": "获取消息列表",
+        "deprecated": false,
+        "description": "获取当前用户的消息列表\n代码位置: `pages/message/message.js` - `loadRealMessages()`",
+        "operationId": "getMessages",
+        "tags": [
+          "微信前端/消息通知",
+          "消息通知"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "content": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "appointment"
+                              },
+                              "read": {
+                                "type": "boolean"
+                              },
+                              "sender": {
+                                "type": "string"
+                              },
+                              "sendTime": {
+                                "type": "string"
+                              },
+                              "action": {
+                                "type": "object",
+                                "properties": {}
+                              }
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/message/mark-read": {
+      "post": {
+        "summary": "标记消息已读",
+        "deprecated": false,
+        "description": "标记指定消息为已读\n代码位置: `pages/message/message.js` - `markAsRead()`",
+        "operationId": "markMessagesRead",
+        "tags": [
+          "微信前端/消息通知",
+          "消息通知"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messageIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/message/mark-unread": {
+      "post": {
+        "summary": "标记消息未读",
+        "deprecated": false,
+        "description": "标记指定消息为未读\n代码位置: `pages/message/message.js` - `markAsUnread()`",
+        "operationId": "markMessagesUnread",
+        "tags": [
+          "微信前端/消息通知",
+          "消息通知"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messageIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/message/delete": {
+      "delete": {
+        "summary": "删除消息",
+        "deprecated": false,
+        "description": "删除消息\n代码位置: `pages/message/message.js` - `deleteMessages()`",
+        "operationId": "deleteMessages",
+        "tags": [
+          "微信前端/消息通知",
+          "消息通知"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messageIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/message/send": {
+      "post": {
+        "summary": "发送消息",
+        "deprecated": false,
+        "description": "系统内部发送消息给用户\n代码位置: `pages/message/message.js` - `createAppointmentMessage()`",
+        "operationId": "sendMessage",
+        "tags": [
+          "微信前端/消息通知",
+          "消息通知"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "relatedId": {
+                    "type": "string"
+                  },
+                  "relatedType": {
+                    "type": "string"
+                  },
+                  "action": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/conversation-thresholds": {
+      "get": {
+        "summary": "获取谈话次数阈值",
+        "deprecated": false,
+        "description": "获取谈话次数阈值配置\n代码位置: `pages/center/config/conversation-threshold.js` - `loadConfig()`",
+        "operationId": "getConversationThresholds",
+        "tags": [
+          "微信前端/谈话阈值配置",
+          "谈话阈值配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存谈话次数阈值",
+        "deprecated": false,
+        "description": "保存各风险等级每月最少谈话次数\n代码位置: `pages/center/config/conversation-threshold.js` - `saveConfig()`",
+        "operationId": "saveConversationThresholds",
+        "tags": [
+          "微信前端/谈话阈值配置",
+          "谈话阈值配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "thresholds": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string"
+                        },
+                        "minCount": {
+                          "type": "integer"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "desc": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "globalEnabled": {
+                    "type": "boolean"
+                  },
+                  "reminderSettings": {
+                    "type": "object",
+                    "properties": {
+                      "notifyTeacher": {
+                        "type": "boolean"
+                      },
+                      "threshold": {
+                        "type": "integer"
+                      },
+                      "remindTime": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/station": {
+      "get": {
+        "summary": "获取辅导站配置",
+        "deprecated": false,
+        "description": "获取辅导站配置\n代码位置: `pages/center/config/station.js` - `loadConfig()`",
+        "operationId": "getStationConfig",
+        "tags": [
+          "微信前端/二级辅导站配置",
+          "二级辅导站配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存辅导站配置",
+        "deprecated": false,
+        "description": "保存二级辅导站配置\n代码位置: `pages/center/config/station.js` - `saveConfig()`",
+        "operationId": "saveStationConfig",
+        "tags": [
+          "微信前端/二级辅导站配置",
+          "二级辅导站配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "mode": {
+                    "type": "string",
+                    "example": "exclusive|shared|mixed"
+                  },
+                  "defaultSettings": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "collegeSettings": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/campus-rules": {
+      "get": {
+        "summary": "获取校区规则",
+        "deprecated": false,
+        "description": "获取校区规则配置\n代码位置: `pages/center/config/campus.js` - `loadConfig()`",
+        "operationId": "getCampusRules",
+        "tags": [
+          "微信前端/校区规则配置",
+          "校区规则配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存校区规则",
+        "deprecated": false,
+        "description": "保存各校区的预约规则\n代码位置: `pages/center/config/campus.js` - `saveConfig()`",
+        "operationId": "saveCampusRules",
+        "tags": [
+          "微信前端/校区规则配置",
+          "校区规则配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "maxAdvanceDays": {
+                      "type": "integer"
+                    },
+                    "allowSameDay": {
+                      "type": "boolean"
+                    },
+                    "allowedTimeRange": {
+                      "type": "object",
+                      "properties": {
+                        "start": {
+                          "type": "string"
+                        },
+                        "end": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "maxPerSlot": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/holidays": {
+      "get": {
+        "summary": "获取节假日列表",
+        "deprecated": false,
+        "description": "获取节假日列表\n代码位置: `pages/center/config/holiday.js` - `loadHolidayList()`",
+        "operationId": "getHolidayList",
+        "tags": [
+          "微信前端/节假日配置",
+          "节假日配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存节假日列表",
+        "deprecated": false,
+        "description": "保存节假日列表\n代码位置: `pages/center/config/holiday.js` - `saveHolidayList()`",
+        "operationId": "saveHolidayList",
+        "tags": [
+          "微信前端/节假日配置",
+          "节假日配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "holidays": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/system": {
+      "get": {
+        "summary": "获取系统配置",
+        "deprecated": false,
+        "description": "获取系统配置（安全、通知等）\n代码位置: `pages/admin/system-management.js` - `loadSystemData()`",
+        "operationId": "getSystemConfig",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存系统配置",
+        "deprecated": false,
+        "description": "保存系统配置\n代码位置: `pages/admin/system-management.js` - `saveConfig()`",
+        "operationId": "saveSystemConfig",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "basic": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "security": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "notification": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "advanced": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/config/teacher-query-password": {
+      "get": {
+        "summary": "获取辅导员查询密码配置",
+        "deprecated": false,
+        "description": "获取辅导员查询密码配置\n代码位置: `pages/admin/system-management.js` - `onLoad()`",
+        "operationId": "getTeacherQueryPasswordConfig",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "保存辅导员查询密码配置",
+        "deprecated": false,
+        "description": "保存辅导员查询密码设置\n代码位置: `pages/admin/system-management.js` - `saveConfig()`",
+        "operationId": "saveTeacherQueryPasswordConfig",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "expireDays": {
+                    "type": "integer"
+                  },
+                  "complexity": {
+                    "type": "string",
+                    "example": "medium"
+                  },
+                  "allowRemember": {
+                    "type": "boolean"
+                  },
+                  "maxAttempts": {
+                    "type": "integer"
+                  },
+                  "lockMinutes": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/verify/teacher-query-password": {
+      "post": {
+        "summary": "验证辅导员查询密码",
+        "deprecated": false,
+        "description": "验证辅导员输入的密码\n代码位置: `pages/admin/system-management.js` - `testTeacherQueryPassword()`",
+        "operationId": "verifyTeacherQueryPassword",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teacherId": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "deviceId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/reset/teacher-query-password": {
+      "post": {
+        "summary": "重置辅导员查询密码",
+        "deprecated": false,
+        "description": "管理员重置辅导员查询密码\n代码位置: `pages/admin/system-management.js` - `resetTeacherQueryPassword()`",
+        "operationId": "resetTeacherQueryPassword",
+        "tags": [
+          "微信前端/系统配置",
+          "系统配置"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "operatorId": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/role/list": {
+      "get": {
+        "summary": "获取角色列表",
+        "deprecated": false,
+        "description": "获取所有角色及权限\n代码位置: `pages/admin/counselor-management.js` - `roleList`",
+        "operationId": "getRoleList",
+        "tags": [
+          "微信前端/角色权限管理",
+          "角色权限管理"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/role/update-permissions": {
+      "put": {
+        "summary": "更新角色权限",
+        "deprecated": false,
+        "description": "修改角色权限\n代码位置: `pages/admin/counselor-management.js` - `saveRolePermissions()`",
+        "operationId": "updateRolePermissions",
+        "tags": [
+          "微信前端/角色权限管理",
+          "角色权限管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roleId": {
+                    "type": "string"
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/user/list": {
+      "get": {
+        "summary": "获取用户列表",
+        "deprecated": false,
+        "description": "获取系统用户列表（管理员用）\n代码位置: `pages/admin/counselor-management.js` - `loadUserList()`",
+        "operationId": "getUserList",
+        "tags": [
+          "微信前端/用户管理",
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/user/toggle-status": {
+      "post": {
+        "summary": "启用/禁用用户",
+        "deprecated": false,
+        "description": "启用或禁用用户账号\n代码位置: `pages/admin/counselor-management.js` - `toggleUserStatus()`",
+        "operationId": "toggleUserStatus",
+        "tags": [
+          "微信前端/用户管理",
+          "用户管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "active|inactive"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/user/reset-password": {
+      "post": {
+        "summary": "重置密码",
+        "deprecated": false,
+        "description": "管理员重置用户密码\n代码位置: `pages/admin/counselor-management.js` - `resetPassword()`",
+        "operationId": "resetUserPassword",
+        "tags": [
+          "微信前端/用户管理",
+          "用户管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/archive/counselors": {
+      "get": {
+        "summary": "获取咨询师档案列表",
+        "deprecated": false,
+        "description": "获取咨询师档案列表\n代码位置: `pages/center/archive/index.js` - `loadCounselorData()`",
+        "operationId": "getCounselorArchiveList",
+        "tags": [
+          "微信前端/咨询师档案",
+          "咨询师档案"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "college",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "active|inactive"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/archive/counselor/detail": {
+      "get": {
+        "summary": "获取咨询师档案详情",
+        "deprecated": false,
+        "description": "获取单个咨询师完整档案\n代码位置: `pages/center/archive/index.js` - `viewCounselorDetail()`",
+        "operationId": "getCounselorArchiveDetail",
+        "tags": [
+          "微信前端/咨询师档案",
+          "咨询师档案"
+        ],
+        "parameters": [
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/archive/students": {
+      "get": {
+        "summary": "获取学生档案列表",
+        "deprecated": false,
+        "description": "获取学生档案列表（支持搜索、筛选）\n代码位置: `pages/center/archive/index.js` - `loadStudentData()`",
+        "operationId": "getStudentArchiveList",
+        "tags": [
+          "微信前端/学生档案",
+          "学生档案"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "college",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "normal|attention|crisis"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/archive/student/detail": {
+      "get": {
+        "summary": "获取学生档案详情",
+        "deprecated": false,
+        "description": "获取单个学生完整档案（含测评、咨询、危机等）\n代码位置: `pages/psych-profile/psych-profile.js` - `loadProfileData()`",
+        "operationId": "getStudentArchiveDetail",
+        "tags": [
+          "微信前端/学生档案",
+          "学生档案"
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/leave/approval/list": {
+      "get": {
+        "summary": "获取请假审批列表",
+        "deprecated": false,
+        "description": "管理员获取待审批请假列表\n代码位置: `pages/schedule/admin/leave-approval/index.js` - `loadList()`",
+        "operationId": "getLeaveApprovalList",
+        "tags": [
+          "微信前端/请假审批",
+          "请假审批"
+        ],
+        "parameters": [
+          {
+            "name": "campus",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pending|approved|rejected"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/leave/approve": {
+      "post": {
+        "summary": "通过请假",
+        "deprecated": false,
+        "description": "通过请假申请\n代码位置: `pages/schedule/admin/leave-approval/index.js` - `approveSingle()`",
+        "operationId": "approveLeave",
+        "tags": [
+          "微信前端/请假审批",
+          "请假审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "leaveId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/leave/reject": {
+      "post": {
+        "summary": "驳回请假",
+        "deprecated": false,
+        "description": "驳回请假申请\n代码位置: `pages/schedule/admin/leave-approval/index.js` - `rejectSingle()`",
+        "operationId": "rejectLeave",
+        "tags": [
+          "微信前端/请假审批",
+          "请假审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "leaveId": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/leave/batch-approve": {
+      "post": {
+        "summary": "批量通过请假",
+        "deprecated": false,
+        "description": "批量通过请假申请\n代码位置: `pages/schedule/admin/leave-approval/index.js` - `batchApprove()`",
+        "operationId": "batchApproveLeave",
+        "tags": [
+          "微信前端/请假审批",
+          "请假审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "leaveIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/leave/batch-reject": {
+      "post": {
+        "summary": "批量驳回请假",
+        "deprecated": false,
+        "description": "批量驳回请假申请\n代码位置: `pages/schedule/admin/leave-approval/index.js` - `batchReject()`",
+        "operationId": "batchRejectLeave",
+        "tags": [
+          "微信前端/请假审批",
+          "请假审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "leaveIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/referral/list": {
+      "get": {
+        "summary": "获取转介审批列表",
+        "deprecated": false,
+        "description": "获取转介审批列表\n代码位置: `pages/center/approval/referral.js` - `loadReferralList()`",
+        "operationId": "getReferralApprovalList",
+        "tags": [
+          "微信前端/转介审批",
+          "转介审批"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pending|approved|rejected|all"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/referral/approve": {
+      "post": {
+        "summary": "通过转介审批",
+        "deprecated": false,
+        "description": "通过转介申请\n代码位置: `pages/center/approval/referral.js` - `approveReferral()`",
+        "operationId": "approveReferral",
+        "tags": [
+          "微信前端/转介审批",
+          "转介审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "assignedCounselor": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/referral/reject": {
+      "post": {
+        "summary": "驳回转介审批",
+        "deprecated": false,
+        "description": "驳回转介申请\n代码位置: `pages/center/approval/referral.js` - `rejectReferral()`",
+        "operationId": "rejectReferral",
+        "tags": [
+          "微信前端/转介审批",
+          "转介审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/crisis/list": {
+      "get": {
+        "summary": "获取危机审批列表",
+        "deprecated": false,
+        "description": "获取危机上报审批列表\n代码位置: `pages/center/approval/crisis.js` - `loadCrisisList()`",
+        "operationId": "getCrisisApprovalList",
+        "tags": [
+          "微信前端/危机审批",
+          "危机审批"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pending|approved|rejected|all"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/crisis/approve": {
+      "post": {
+        "summary": "通过危机审批",
+        "deprecated": false,
+        "description": "通过危机上报\n代码位置: `pages/center/approval/crisis.js` - `approveCrisis()`",
+        "operationId": "approveCrisis",
+        "tags": [
+          "微信前端/危机审批",
+          "危机审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/crisis/reject": {
+      "post": {
+        "summary": "驳回危机审批",
+        "deprecated": false,
+        "description": "驳回危机上报\n代码位置: `pages/center/approval/crisis.js` - `rejectCrisis()`",
+        "operationId": "rejectCrisis",
+        "tags": [
+          "微信前端/危机审批",
+          "危机审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/list": {
+      "get": {
+        "summary": "获取审批列表",
+        "deprecated": false,
+        "description": "获取咨询相关的审批列表\n代码位置: `pages/center/approval/index.js` - `loadApprovalList()`",
+        "operationId": "getApprovalList",
+        "tags": [
+          "微信前端/咨询审批",
+          "咨询审批"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "transfer|longterm|record"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "pending|approved|rejected|all"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/approve": {
+      "post": {
+        "summary": "审批通过",
+        "deprecated": false,
+        "description": "通过审批\n代码位置: `pages/center/approval/index.js` - `approveApproval()`",
+        "operationId": "approveApproval",
+        "tags": [
+          "微信前端/咨询审批",
+          "咨询审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/center/approval/reject": {
+      "post": {
+        "summary": "审批拒绝",
+        "deprecated": false,
+        "description": "拒绝审批\n代码位置: `pages/center/approval/index.js` - `rejectApproval()`",
+        "operationId": "rejectApproval",
+        "tags": [
+          "微信前端/咨询审批",
+          "咨询审批"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/report/list": {
+      "get": {
+        "summary": "报表查看",
+        "deprecated": false,
+        "description": "获取所有可查看的报表（根据角色权限）\n代码位置: `pages/report/view.js` - `fetchReportList()`",
+        "operationId": "getReportList",
+        "tags": [
+          "微信前端/报表查看",
+          "报表查看"
+        ],
+        "parameters": [
+          {
+            "name": "reportType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dateRange",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "department",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "major",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/report/preview": {
+      "post": {
+        "summary": "预览报告",
+        "deprecated": false,
+        "description": "根据参数生成报告预览数据\n代码位置: `pages/center/report-generator.js` - `fetchReportPreview()`",
+        "operationId": "previewReport",
+        "tags": [
+          "微信前端/报告生成器",
+          "报告生成器"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "first|consultation|crisis"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string"
+                  },
+                  "college": {
+                    "type": "string"
+                  },
+                  "grade": {
+                    "type": "string"
+                  },
+                  "dimensions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/report/generate": {
+      "post": {
+        "summary": "生成报告",
+        "deprecated": false,
+        "description": "生成并保存报告，返回报告ID\n代码位置: `pages/center/report-generator.js` - `generateReport()`",
+        "operationId": "generateReport",
+        "tags": [
+          "微信前端/报告生成器",
+          "报告生成器"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "first|consultation|crisis"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string"
+                  },
+                  "college": {
+                    "type": "string"
+                  },
+                  "grade": {
+                    "type": "string"
+                  },
+                  "dimensions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "supplementNote": {
+                    "type": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "word"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/report/history": {
+      "get": {
+        "summary": "获取报告历史",
+        "deprecated": false,
+        "description": "获取已生成的报告列表\n代码位置: `pages/center/report-generator.js` - `loadReportHistory()`",
+        "operationId": "getReportHistory",
+        "tags": [
+          "微信前端/报告生成器",
+          "报告生成器"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/report/export": {
+      "get": {
+        "summary": "导出报告文件",
+        "deprecated": false,
+        "description": "下载指定报告文件\n代码位置: `pages/center/report-generator.js` - `downloadReportFile()`",
+        "operationId": "exportReportFile",
+        "tags": [
+          "微信前端/报告生成器",
+          "报告生成器"
+        ],
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "word|pdf|excel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "文件流",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/stats/overview": {
+      "get": {
+        "summary": "统计概览",
+        "deprecated": false,
+        "description": "获取首页统计卡片数据（根据角色不同）\n代码位置: `pages/stats/overview.js` - `loadStatsData()`",
+        "operationId": "getStatisticsOverview",
+        "tags": [
+          "微信前端/统计概览",
+          "统计概览"
+        ],
+        "parameters": [
+          {
+            "name": "timeRange",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "month|quarter|year"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/stats/crisis": {
+      "get": {
+        "summary": "危机统计",
+        "deprecated": false,
+        "description": "获取危机干预相关统计\n代码位置: `pages/stats/crisis.js` - `loadData()`",
+        "operationId": "getCrisisStatistics",
+        "tags": [
+          "微信前端/统计概览",
+          "统计概览"
+        ],
+        "parameters": [
+          {
+            "name": "dateRange",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "month|quarter|year|custom"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/course/list": {
+      "get": {
+        "summary": "微课课程列表",
+        "deprecated": false,
+        "description": "获取心理微课课程列表\n代码位置: `pages/micro-course/micro-course.js` - `loadCourseList()`",
+        "operationId": "getMicroCourseList",
+        "tags": [
+          "微信前端/微课管理",
+          "微课管理"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/course/detail": {
+      "get": {
+        "summary": "微课详情",
+        "deprecated": false,
+        "description": "获取单个微课详情（含章节、视频URL）\n代码位置: `pages/micro-course/detail.js` - `loadDetail()`",
+        "operationId": "getMicroCourseDetail",
+        "tags": [
+          "微信前端/微课管理",
+          "微课管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/course/progress": {
+      "post": {
+        "summary": "更新课程进度",
+        "deprecated": false,
+        "description": "记录视频学习进度\n代码位置: `pages/micro-course/detail.js` - `saveProgress()`",
+        "operationId": "updateCourseProgress",
+        "tags": [
+          "微信前端/微课管理",
+          "微课管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "progress": {
+                    "type": "integer"
+                  },
+                  "isFinished": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/course/my-list": {
+      "get": {
+        "summary": "我的课程",
+        "deprecated": false,
+        "description": "获取当前用户的学习课程记录\n代码位置: `pages/micro-course/my-course.js` - `loadRealData()`",
+        "operationId": "getMyCourseList",
+        "tags": [
+          "微信前端/微课管理",
+          "微课管理"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/self-help/like": {
+      "post": {
+        "summary": "点赞文章/内容",
+        "deprecated": false,
+        "description": "对文章进行点赞\n代码位置: `pages/self-help/article.js` - `handleLike()`",
+        "operationId": "likeArticle",
+        "tags": [
+          "微信前端/内容互动",
+          "内容互动"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "currentStatus": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/self-help/collect": {
+      "post": {
+        "summary": "收藏文章/内容",
+        "deprecated": false,
+        "description": "对文章进行收藏\n代码位置: `pages/self-help/article.js` - `handleCollect()`",
+        "operationId": "collectArticle",
+        "tags": [
+          "微信前端/内容互动",
+          "内容互动"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "currentStatus": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/self-help/list": {
+      "get": {
+        "summary": "获取内容列表",
+        "deprecated": false,
+        "description": "获取心理自助内容列表（文章/视频/课程）\n代码位置: `pages/self-help/self-help.js` - `loadContentList()`",
+        "operationId": "getSelfHelpList",
+        "tags": [
+          "微信前端/自助内容展示",
+          "自助内容展示"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "article|video|music|course"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/self-help/detail": {
+      "get": {
+        "summary": "获取文章详情",
+        "deprecated": false,
+        "description": "获取文章/视频/课程详情\n代码位置: `pages/self-help/article.js` - `loadArticle()`",
+        "operationId": "getSelfHelpDetail",
+        "tags": [
+          "微信前端/自助内容展示",
+          "自助内容展示"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/generate-qrcode": {
+      "post": {
+        "summary": "生成签到二维码",
+        "deprecated": false,
+        "description": "咨询师生成签到二维码（返回二维码数据）\n代码位置: `pages/activity/detail.js` - `onGenerateQRCode()`",
+        "operationId": "generateCheckInQRCode",
+        "tags": [
+          "微信前端/活动签到",
+          "活动签到"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activityId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/checkin": {
+      "post": {
+        "summary": "学生扫码签到",
+        "deprecated": false,
+        "description": "学生通过扫码签到\n代码位置: `pages/activity/my-activity.js` - `realCheckIn()`",
+        "operationId": "checkInActivity",
+        "tags": [
+          "微信前端/活动签到",
+          "活动签到"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activityId": {
+                    "type": "string"
+                  },
+                  "qrCodeData": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/manual-checkin": {
+      "post": {
+        "summary": "手动签到",
+        "deprecated": false,
+        "description": "咨询师手动为学生签到\n代码位置: `pages/activity/detail.js` - `submitCheckIn()`",
+        "operationId": "manualCheckIn",
+        "tags": [
+          "微信前端/活动签到",
+          "活动签到"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activityId": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/create": {
+      "post": {
+        "summary": "创建活动",
+        "deprecated": false,
+        "description": "管理员/咨询师创建活动\n代码位置: `pages/activity/create.js` - `submitForm()`",
+        "operationId": "createActivity",
+        "tags": [
+          "微信前端/活动发布与管理",
+          "活动发布与管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "startTime": {
+                    "type": "string"
+                  },
+                  "endTime": {
+                    "type": "string"
+                  },
+                  "place": {
+                    "type": "string"
+                  },
+                  "campus": {
+                    "type": "string"
+                  },
+                  "maxParticipants": {
+                    "type": "integer"
+                  },
+                  "needAudit": {
+                    "type": "boolean"
+                  },
+                  "credits": {
+                    "type": "integer"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "coverImage": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "requirements": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/update": {
+      "put": {
+        "summary": "编辑活动",
+        "deprecated": false,
+        "description": "管理员/咨询师更新活动\n代码位置: `pages/activity/create.js` - `submitForm()`",
+        "operationId": "updateActivity",
+        "tags": [
+          "微信前端/活动发布与管理",
+          "活动发布与管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "startTime": {
+                    "type": "string"
+                  },
+                  "endTime": {
+                    "type": "string"
+                  },
+                  "place": {
+                    "type": "string"
+                  },
+                  "campus": {
+                    "type": "string"
+                  },
+                  "maxParticipants": {
+                    "type": "integer"
+                  },
+                  "needAudit": {
+                    "type": "boolean"
+                  },
+                  "credits": {
+                    "type": "integer"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "coverImage": {
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "requirements": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/signup": {
+      "post": {
+        "summary": "报名活动",
+        "deprecated": false,
+        "description": "学生报名活动\n代码位置: `pages/activity/detail.js` - `handleSignup()`",
+        "operationId": "signupActivity",
+        "tags": [
+          "微信前端/活动报名与审核",
+          "活动报名与审核"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activityId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/cancel": {
+      "post": {
+        "summary": "取消报名活动",
+        "deprecated": false,
+        "description": "学生取消报名活动\n代码位置: `pages/activity/detail.js` - `handleSignup()`",
+        "operationId": "cancelSignup",
+        "tags": [
+          "微信前端/活动报名与审核",
+          "活动报名与审核"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activityId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/review": {
+      "post": {
+        "summary": "审核报名",
+        "deprecated": false,
+        "description": "管理员审核单个报名申请\n代码位置: `pages/activity/detail.js` - `submitReview()`",
+        "operationId": "reviewActivityApplication",
+        "tags": [
+          "微信前端/活动报名与审核",
+          "活动报名与审核"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "applicationId": {
+                    "type": "string"
+                  },
+                  "result": {
+                    "type": "string",
+                    "example": "approve|reject"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/batch-review": {
+      "post": {
+        "summary": "批量审核报名",
+        "deprecated": false,
+        "description": "批量通过或拒绝报名申请\n代码位置: `pages/activity/detail.js` - `processBatchReview()`",
+        "operationId": "batchReviewActivity",
+        "tags": [
+          "微信前端/活动报名与审核",
+          "活动报名与审核"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "applicationIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "result": {
+                    "type": "string",
+                    "example": "approve|reject"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/list": {
+      "get": {
+        "summary": "获取活动列表",
+        "deprecated": false,
+        "description": "获取活动列表（按角色、标签页不同）\n代码位置: `pages/activity/activity.js` - `loadActivityList()`",
+        "operationId": "getActivityList",
+        "tags": [
+          "微信前端/活动展示",
+          "活动展示"
+        ],
+        "parameters": [
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "student|parent|admin|counselor|teacher"
+            }
+          },
+          {
+            "name": "tabIndex",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/detail": {
+      "get": {
+        "summary": "获取活动详情",
+        "deprecated": false,
+        "description": "获取单个活动详情\n代码位置: `pages/activity/detail.js` - `loadDetail()`",
+        "operationId": "getActivityDetail",
+        "tags": [
+          "微信前端/活动展示",
+          "活动展示"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "student|parent|admin|counselor|teacher"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/activity/my-list": {
+      "get": {
+        "summary": "我的活动列表",
+        "deprecated": false,
+        "description": "获取当前用户已报名或参加的活动\n代码位置: `pages/activity/my-activity.js` - `loadRealData()`",
+        "operationId": "myActivities",
+        "tags": [
+          "微信前端/活动展示",
+          "活动展示"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "all|upcoming|ongoing|completed|cancelled"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/conversation/list": {
+      "get": {
+        "summary": "谈话记录列表",
+        "deprecated": false,
+        "description": "获取谈心谈话记录列表（辅导员/领导）\n代码位置: `pages/conversation/conversation.js` - `loadList()`",
+        "operationId": "getConversationList",
+        "tags": [
+          "微信前端/谈心谈话管理",
+          "谈心谈话管理"
+        ],
+        "parameters": [
+          {
+            "name": "timeFilter",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "week|month|all"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "studentName": {
+                                "type": "string"
+                              },
+                              "studentId": {
+                                "type": "string"
+                              },
+                              "college": {
+                                "type": "string"
+                              },
+                              "focusStatus": {
+                                "type": "string"
+                              },
+                              "talkTime": {
+                                "type": "string"
+                              },
+                              "place": {
+                                "type": "string"
+                              },
+                              "summary": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "statistics": {
+                          "type": "object",
+                          "properties": {
+                            "monthCount": {
+                              "type": "integer"
+                            },
+                            "totalCount": {
+                              "type": "integer"
+                            },
+                            "focusCount": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/conversation/detail": {
+      "get": {
+        "summary": "获取谈话详情",
+        "deprecated": false,
+        "description": "获取单条谈话记录详情\n代码位置: `pages/conversation/conversation-detail.js` - `loadDetail()`",
+        "operationId": "getConversationDetail",
+        "tags": [
+          "微信前端/谈心谈话管理",
+          "谈心谈话管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "studentName": {
+                          "type": "string"
+                        },
+                        "studentId": {
+                          "type": "string"
+                        },
+                        "college": {
+                          "type": "string"
+                        },
+                        "focusStatus": {
+                          "type": "string"
+                        },
+                        "talkDate": {
+                          "type": "string"
+                        },
+                        "talkTime": {
+                          "type": "string"
+                        },
+                        "place": {
+                          "type": "string"
+                        },
+                        "recorder": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "followUp": {
+                          "type": "string"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/conversation/save": {
+      "post": {
+        "summary": "创建/编辑谈话记录",
+        "deprecated": false,
+        "description": "保存谈话记录（新建或更新）\n代码位置: `pages/conversation/conversation-edit.js` - `submit()`",
+        "operationId": "saveConversation",
+        "tags": [
+          "微信前端/谈心谈话管理",
+          "谈心谈话管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "studentName": {
+                    "type": "string"
+                  },
+                  "focusStatus": {
+                    "type": "string",
+                    "example": "关注|预警|正常"
+                  },
+                  "talkDate": {
+                    "type": "string"
+                  },
+                  "talkTime": {
+                    "type": "string"
+                  },
+                  "place": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "followUp": {
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/assessment": {
+      "post": {
+        "summary": "提交危机评估",
+        "deprecated": false,
+        "description": "提交结构化评估表单\n代码位置: `pages/crisis-management/detail.js` - `submitAssessment()`",
+        "operationId": "submitCrisisAssessment",
+        "tags": [
+          "微信前端/危机评估与干预",
+          "危机评估与干预"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "crisisId": {
+                    "type": "string"
+                  },
+                  "riskLevel": {
+                    "type": "string",
+                    "example": "high|medium|low"
+                  },
+                  "riskTypes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "coreIssue": {
+                    "type": "string"
+                  },
+                  "intervention": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/intervention/add": {
+      "post": {
+        "summary": "添加干预记录",
+        "deprecated": false,
+        "description": "添加干预记录到时间轴\n代码位置: `pages/crisis-management/detail.js` - `submitRecord()`",
+        "operationId": "addInterventionRecord",
+        "tags": [
+          "微信前端/危机评估与干预",
+          "危机评估与干预"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "crisisId": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "operator": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/update-level": {
+      "post": {
+        "summary": "调整危机等级",
+        "deprecated": false,
+        "description": "调整危机等级并记录历史\n代码位置: `pages/crisis-management/detail.js` - `updateLevel()`",
+        "operationId": "updateCrisisLevel",
+        "tags": [
+          "微信前端/危机评估与干预",
+          "危机评估与干预"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "crisisId": {
+                    "type": "string"
+                  },
+                  "newLevel": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/batch-add": {
+      "post": {
+        "summary": "批量添加团队成员",
+        "deprecated": false,
+        "description": "批量向多个危机个案添加相同团队成员\n代码位置: `pages/crisis-management/crisis-management.js` - `confirmTeamAdjust()`",
+        "operationId": "batchAddTeamMembers",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caseIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "members": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "memberId": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "operatorId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/batch-replace": {
+      "post": {
+        "summary": "批量替换干预团队",
+        "deprecated": false,
+        "description": "批量替换多个危机个案的整个团队\n代码位置: `pages/crisis-management/crisis-management.js` - `confirmTeamAdjust()`",
+        "operationId": "batchReplaceTeam",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caseIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "newTeam": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "memberId": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "operatorId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/batch-remove": {
+      "post": {
+        "summary": "批量移除团队成员",
+        "deprecated": false,
+        "description": "从多个个案中移除指定成员\n代码位置: `pages/crisis-management/crisis-management.js` - `batchRemoveMember()`",
+        "operationId": "batchRemoveTeamMember",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caseIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "memberName": {
+                    "type": "string"
+                  },
+                  "memberId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/available-members": {
+      "get": {
+        "summary": "获取可选团队成员",
+        "deprecated": false,
+        "description": "获取可用于干预团队的人员列表\n代码位置: `pages/crisis-management/crisis-management.js` - `availableTeamMembers`",
+        "operationId": "getAvailableTeamMembers",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "department",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/stats": {
+      "post": {
+        "summary": "获取团队成员统计",
+        "deprecated": false,
+        "description": "统计指定个案集合的团队成员分布\n代码位置: `pages/crisis-management/crisis-management.js` - `showTeamStats()`",
+        "operationId": "getTeamMembersStats",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "caseIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/team/batch-history": {
+      "get": {
+        "summary": "获取批量操作历史",
+        "deprecated": false,
+        "description": "获取团队调整的历史记录\n代码位置: `pages/crisis-management/crisis-management.js` - `viewAdjustHistory()`",
+        "operationId": "getBatchOperationHistory",
+        "tags": [
+          "微信前端/干预团队批量调整",
+          "干预团队批量调整"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/list": {
+      "get": {
+        "summary": "获取危机列表",
+        "deprecated": false,
+        "description": "获取危机个案列表（支持筛选）\n代码位置: `pages/crisis-management/crisis-management.js` - `loadCrisisList()`",
+        "operationId": "getCrisisList",
+        "tags": [
+          "微信前端/危机列表与详情",
+          "危机列表与详情"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crisisLevel",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "college",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/detail": {
+      "get": {
+        "summary": "获取危机详情",
+        "deprecated": false,
+        "description": "获取单个危机个案完整信息（含干预记录）\n代码位置: `pages/crisis-management/detail.js` - `loadDetail()`",
+        "operationId": "getCrisisDetail",
+        "tags": [
+          "微信前端/危机列表与详情",
+          "危机列表与详情"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/report": {
+      "post": {
+        "summary": "提交危机上报",
+        "deprecated": false,
+        "description": "提交危机上报信息（含团队成员、审批类型）\n代码位置: `pages/crisis-report/crisis-report.js` - `submitForm()`",
+        "operationId": "submitCrisisReport",
+        "tags": [
+          "微信前端/危机上报",
+          "危机上报"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "studentName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "urgency": {
+                    "type": "string",
+                    "example": "red|orange|yellow|blue|green"
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "issueType": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "teamMembers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "approvalType": {
+                    "type": "string",
+                    "example": "parallel|serial"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/export": {
+      "post": {
+        "summary": "科研数据导出",
+        "deprecated": false,
+        "description": "导出多量表多维度数据用于科研\n代码位置: `pages/assessment/assessment.js` - `realExport()`",
+        "operationId": "exportAssessmentData",
+        "tags": [
+          "微信前端/科研与导入",
+          "科研与导入"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scales": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "dimensions": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "properties": {}
+                  },
+                  "studentRange": {
+                    "type": "string",
+                    "example": "all|college|grade|custom"
+                  },
+                  "college": {
+                    "type": "string"
+                  },
+                  "grade": {
+                    "type": "string"
+                  },
+                  "customIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "includeRaw": {
+                    "type": "boolean"
+                  },
+                  "includeStandard": {
+                    "type": "boolean"
+                  },
+                  "includeDemographics": {
+                    "type": "boolean"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "csv"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "文件流（CSV/Excel）",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/admin/scale/import": {
+      "post": {
+        "summary": "导入量表（Excel/手动）",
+        "deprecated": false,
+        "description": "导入自定义量表\n代码位置: `pages/admin/scale-import.js` - `saveScale()`",
+        "operationId": "importScale",
+        "tags": [
+          "微信前端/科研与导入",
+          "科研与导入"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "questions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "content": {
+                          "type": "string"
+                        },
+                        "options": {
+                          "type": "array",
+                          "items": {}
+                        },
+                        "scores": {
+                          "type": "array",
+                          "items": {}
+                        },
+                        "dimension": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "norms": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/start": {
+      "post": {
+        "summary": "开始测评",
+        "deprecated": false,
+        "description": "开始一次测评（获取题目）\n代码位置: `pages/assessment/process.js` - `loadDetail()`",
+        "operationId": "startAssessment",
+        "tags": [
+          "微信前端/测评答题",
+          "测评答题"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "scaleId": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "example": "preQueue|normal"
+                  },
+                  "consultantId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/submit": {
+      "post": {
+        "summary": "提交测评答案",
+        "deprecated": false,
+        "description": "提交测评答案并计算结果\n代码位置: `pages/assessment/process.js` - `submit()`",
+        "operationId": "submitAssessment",
+        "tags": [
+          "微信前端/测评答题",
+          "测评答题"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "assessmentId": {
+                    "type": "string"
+                  },
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "questionId": {
+                          "type": "string"
+                        },
+                        "optionValue": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/result": {
+      "get": {
+        "summary": "获取测评结果",
+        "deprecated": false,
+        "description": "获取已完成的测评结果\n代码位置: `pages/assessment/result.js` - `loadResult()`",
+        "operationId": "getAssessmentResult",
+        "tags": [
+          "微信前端/测评答题",
+          "测评答题"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/my-list": {
+      "get": {
+        "summary": "获取我的测评列表",
+        "deprecated": false,
+        "description": "获取当前用户的测评记录\n代码位置: `pages/assessment/my-assessment.js` - `loadRealData()`",
+        "operationId": "myAssessments",
+        "tags": [
+          "微信前端/测评答题",
+          "测评答题"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "all/recent/history/abnormal"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/plan/list": {
+      "get": {
+        "summary": "获取测评计划列表",
+        "deprecated": false,
+        "description": "管理员获取测评计划列表\n代码位置: `pages/assessment/assessment.js` - `loadCenterAdminData()`",
+        "operationId": "getAssessmentPlanList",
+        "tags": [
+          "微信前端/测评计划",
+          "测评计划"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/plan/create": {
+      "post": {
+        "summary": "创建测评计划",
+        "deprecated": false,
+        "description": "管理员创建测评计划\n代码位置: `pages/assessment/assessment.js` - `apiCreatePlan()`",
+        "operationId": "createAssessmentPlan",
+        "tags": [
+          "微信前端/测评计划",
+          "测评计划"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string"
+                  },
+                  "endDate": {
+                    "type": "string"
+                  },
+                  "targetColleges": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "targetGrades": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scales": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "required": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/scales": {
+      "get": {
+        "summary": "获取量表列表",
+        "deprecated": false,
+        "description": "获取所有量表（支持分类筛选）\n代码位置: `pages/assessment/assessment.js` - `loadCoreScales()`",
+        "operationId": "getScaleList",
+        "tags": [
+          "微信前端/量表库",
+          "量表库"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/assessment/scales/{scaleId}": {
+      "get": {
+        "summary": "获取量表详情",
+        "deprecated": false,
+        "description": "获取单个量表详细信息（含维度、常模等）\n代码位置: `pages/assessment/assessment.js` - `viewScaleDetail()`",
+        "operationId": "getScaleDetail",
+        "tags": [
+          "微信前端/量表库",
+          "量表库"
+        ],
+        "parameters": [
+          {
+            "name": "scaleId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/queue/join": {
+      "post": {
+        "summary": "加入排队",
+        "deprecated": false,
+        "description": "学生加入咨询排队\n代码位置: `pages/appointment/appointment.js` - `joinQueue()`",
+        "operationId": "joinQueue",
+        "tags": [
+          "微信前端/预约排队",
+          "预约排队"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consultantId": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "preAssessmentId": {
+                    "type": "string"
+                  },
+                  "preAssessmentScore": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/queue/status": {
+      "get": {
+        "summary": "查询排队状态",
+        "deprecated": false,
+        "description": "查询当前用户的排队状态\n代码位置: `pages/appointment/my-appointment.js` - `loadQueueData()`",
+        "operationId": "getQueueStatus",
+        "tags": [
+          "微信前端/预约排队",
+          "预约排队"
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/queue/list": {
+      "get": {
+        "summary": "获取排队列表",
+        "deprecated": false,
+        "description": "管理员查看所有排队人员\n代码位置: `pages/appointment/appointment.js` - `loadQueueList()`",
+        "operationId": "getQueueList",
+        "tags": [
+          "微信前端/预约排队",
+          "预约排队"
+        ],
+        "parameters": [
+          {
+            "name": "consultantId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/queue/cancel": {
+      "post": {
+        "summary": "取消排队",
+        "deprecated": false,
+        "description": "学生取消排队\n代码位置: `pages/appointment/my-appointment.js` - `cancelQueue()`",
+        "operationId": "cancelQueue",
+        "tags": [
+          "微信前端/预约排队",
+          "预约排队"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "queueId": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultation/records": {
+      "get": {
+        "summary": "获取咨询记录列表",
+        "deprecated": false,
+        "description": "获取咨询记录列表（咨询师视角）\n代码位置: `pages/appointment/records.js` - `loadRecordsList()`",
+        "operationId": "getConsultationRecords",
+        "tags": [
+          "微信前端/咨询记录",
+          "咨询记录"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeRange",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultation/record/detail": {
+      "get": {
+        "summary": "获取咨询记录详情",
+        "deprecated": false,
+        "description": "获取单个咨询记录详情\n代码位置: `pages/appointment/record-edit.js` - `loadRecord()`",
+        "operationId": "getConsultationRecordDetail",
+        "tags": [
+          "微信前端/咨询记录",
+          "咨询记录"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultation/record/save": {
+      "post": {
+        "summary": "保存咨询记录",
+        "deprecated": false,
+        "description": "保存或提交咨询记录（草稿/提交）\n代码位置: `pages/appointment/record-edit.js` - `submitRecord()`",
+        "operationId": "saveConsultationRecord",
+        "tags": [
+          "微信前端/咨询记录",
+          "咨询记录"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "problemType": {
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "draft|submitted"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultation/referral/apply": {
+      "post": {
+        "summary": "发起转介申请",
+        "deprecated": false,
+        "description": "提交转介申请\n代码位置: `pages/appointment/record-edit.js` - `onReferral()`",
+        "operationId": "referralApply",
+        "tags": [
+          "微信前端/咨询记录",
+          "咨询记录"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string"
+                  },
+                  "targetType": {
+                    "type": "string",
+                    "example": "hospital|senior|external"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/schedule/list": {
+      "get": {
+        "summary": "获取咨询师排班",
+        "deprecated": false,
+        "description": "获取指定咨询师某段时间的排班\n代码位置: `pages/appointment/appointment-detail.js` - `loadScheduleList()`",
+        "operationId": "getSchedule",
+        "tags": [
+          "微信前端/排班与规则",
+          "排班与规则"
+        ],
+        "parameters": [
+          {
+            "name": "consultantId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "campus",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/config/campus-rule": {
+      "get": {
+        "summary": "获取当前校区规则",
+        "deprecated": false,
+        "description": "获取指定校区的预约规则\n代码位置: `pages/appointment/appointment-detail.js` - `getCampusRule()`",
+        "operationId": "getCampusRule",
+        "tags": [
+          "微信前端/排班与规则",
+          "排班与规则"
+        ],
+        "parameters": [
+          {
+            "name": "campus",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultant/list": {
+      "get": {
+        "summary": "获取咨询师列表",
+        "deprecated": false,
+        "description": "获取可预约的咨询师列表（支持筛选、搜索）\n代码位置: `pages/appointment/appointment.js` - `loadConsultantList()`",
+        "operationId": "getConsultantList",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [
+          {
+            "name": "campus",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "specialty",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "availableOnly",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/consultant/detail": {
+      "get": {
+        "summary": "获取咨询师详情",
+        "deprecated": false,
+        "description": "获取单个咨询师详细信息\n代码位置: `pages/appointment/appointment-detail.js` - `loadConsultantDetail()`",
+        "operationId": "getConsultantDetail",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [
+          {
+            "name": "consultantId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/submit": {
+      "post": {
+        "summary": "提交预约",
+        "deprecated": false,
+        "description": "学生提交预约申请\n代码位置: `pages/appointment/appointment-detail.js` - `submitAppointment()`",
+        "operationId": "submitAppointment",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "consultantId": {
+                    "type": "string"
+                  },
+                  "schedule": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "formData": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "assessmentAnswers": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "consentSignature": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/my-list": {
+      "get": {
+        "summary": "获取我的预约列表",
+        "deprecated": false,
+        "description": "获取当前用户的预约记录\n代码位置: `pages/appointment/my-appointment.js` - `loadRealData()`",
+        "operationId": "myAppointments",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/detail": {
+      "get": {
+        "summary": "获取预约详情",
+        "deprecated": false,
+        "description": "获取单个预约的详细信息（含时间轴）\n代码位置: `pages/appointment/appointment-detail-view.js` - `loadAppointmentDetail()`",
+        "operationId": "getAppointmentDetail",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/cancel": {
+      "post": {
+        "summary": "取消预约",
+        "deprecated": false,
+        "description": "用户取消预约\n代码位置: `pages/appointment/my-appointment.js` - `realCancelAppointment()`",
+        "operationId": "cancelAppointment",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/evaluate": {
+      "post": {
+        "summary": "提交评价",
+        "deprecated": false,
+        "description": "对完成的咨询进行评价\n代码位置: `pages/appointment/my-appointment.js` - `realSubmitEvaluation()`",
+        "operationId": "submitEvaluation",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "appointmentId": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "type": "integer"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/confirm": {
+      "post": {
+        "summary": "咨询师确认预约",
+        "deprecated": false,
+        "description": "咨询师处理待确认预约 - 确认\n代码位置: `pages/appointment/appointment.js` - `confirmAppointment()`",
+        "operationId": "confirmAppointment",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/reject": {
+      "post": {
+        "summary": "咨询师拒绝预约",
+        "deprecated": false,
+        "description": "咨询师处理待确认预约 - 拒绝\n代码位置: `pages/appointment/appointment.js` - `rejectAppointment()`",
+        "operationId": "rejectAppointment",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/appointment/mark-no-show": {
+      "post": {
+        "summary": "标记爽约",
+        "deprecated": false,
+        "description": "咨询师标记学生爽约\n代码位置: `pages/appointment/my-appointment.js` - `realMarkAsNoShow()`",
+        "operationId": "markAppointmentNoShow",
+        "tags": [
+          "微信前端/咨询预约管理",
+          "咨询预约管理"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/notice/list": {
+      "get": {
+        "summary": "获取通知列表",
+        "deprecated": false,
+        "description": "分页获取通知公告列表\n代码位置: `pages/notice/notice-list.js` - `loadNoticeList()`",
+        "operationId": "getNoticeList",
+        "tags": [
+          "微信前端/通知公告",
+          "通知公告"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页数量",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "summary": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string"
+                              },
+                              "publisher": {
+                                "type": "string"
+                              },
+                              "read": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/notice/detail": {
+      "get": {
+        "summary": "获取通知详情",
+        "deprecated": false,
+        "description": "获取单个通知详情\n代码位置: `pages/notice/notice-detail.js` - `loadNotice()`",
+        "operationId": "getNoticeDetail",
+        "tags": [
+          "微信前端/通知公告",
+          "通知公告"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "通知ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "publisher": {
+                          "type": "string"
+                        },
+                        "publishTime": {
+                          "type": "string"
+                        },
+                        "attachments": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/notice/read": {
+      "post": {
+        "summary": "标记通知已读",
+        "deprecated": false,
+        "description": "将通知标记为已读\n代码位置: `pages/notice/notice-list.js` - `goToDetail()`",
+        "operationId": "markNoticeRead",
+        "tags": [
+          "微信前端/通知公告",
+          "通知公告"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "登录",
+        "deprecated": false,
+        "description": "账号密码登录（生产环境）\n代码位置: `pages/login/login.js` - `realLogin()`",
+        "operationId": "loginReal",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "verificationCode": {
+                    "type": "string"
+                  },
+                  "captchaKey": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "username": "stu003",
+                "password": "123456",
+                "verificationCode": "12",
+                "captchaKey": "Excepteur commodo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userInfo": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "role": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "account": "stu003",
+                  "role": "student",
+                  "name": "张三",
+                  "college_id": 1
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/captcha": {
+      "get": {
+        "summary": "获取验证码",
+        "deprecated": false,
+        "description": "获取登录验证码图片\n代码位置: `pages/login/login.js` - `getVerificationCode()`",
+        "operationId": "getVerificationCode",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "image": {
+                          "type": "string",
+                          "description": "base64图片"
+                        },
+                        "key": {
+                          "type": "string",
+                          "description": "验证码key"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "summary": "注册",
+        "deprecated": false,
+        "description": "用户注册\n代码位置: `pages/register/register.js` - `realRegister()`",
+        "operationId": "registerReal",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "smsCode": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "注册成功"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/send-sms": {
+      "post": {
+        "summary": "发送注册短信验证码",
+        "deprecated": false,
+        "description": "发送手机验证码\n代码位置: `pages/register/register.js` - `sendSmsCode()`",
+        "operationId": "sendRegisterSmsCode",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "验证码已发送"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/wechat-login": {
+      "post": {
+        "summary": "微信登录/绑定",
+        "deprecated": false,
+        "description": "微信授权登录\n代码位置: `pages/login/login.js` - `onWeChatLogin()`",
+        "operationId": "wechatLogin",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "encryptedData": {
+                    "type": "string"
+                  },
+                  "iv": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userInfo": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/wechat-work": {
+      "get": {
+        "summary": "企业微信授权地址",
+        "deprecated": false,
+        "description": "获取企业微信授权跳转地址\n代码位置: `pages/login/login.js` - `wechatWorkLogin()`",
+        "operationId": "wechatWorkAuth",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [
+          {
+            "name": "redirect",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "返回重定向URL",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/user/info": {
+      "get": {
+        "summary": "获取用户信息",
+        "deprecated": false,
+        "description": "获取当前登录用户信息\n代码位置: `pages/profile/profile.js` - `loadUserInfo()`",
+        "operationId": "getUserInfo",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "account": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "roleName": {
+                          "type": "string"
+                        },
+                        "college": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "wechatBound": {
+                          "type": "boolean"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/user/update": {
+      "put": {
+        "summary": "更新用户信息",
+        "deprecated": false,
+        "description": "更新用户信息（昵称、签名等）\n代码位置: `pages/profile/profile.js` - `updateUserInfo()`",
+        "operationId": "updateUserInfo",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "signature": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "updated": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/user/upload-avatar": {
+      "post": {
+        "summary": "上传头像",
+        "deprecated": false,
+        "description": "上传用户头像\n代码位置: `pages/profile/profile.js` - `uploadAvatar()`",
+        "operationId": "uploadAvatar",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "退出登录",
+        "deprecated": false,
+        "description": "用户退出登录\n代码位置: `pages/profile/profile.js` - `handleLogout()`",
+        "operationId": "logout",
+        "tags": [
+          "微信前端/用户认证与个人信息",
+          "用户认证与个人信息"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "退出成功"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
