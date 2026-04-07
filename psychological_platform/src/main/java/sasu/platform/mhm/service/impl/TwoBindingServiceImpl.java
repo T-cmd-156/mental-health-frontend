@@ -15,7 +15,11 @@ public class TwoBindingServiceImpl implements TwoBindingService {
 
     @Override
     public int getStatus(String studentId) {
-       return twoBindingMapper.getStatus(studentId);
+//        log.info("查询绑定状态1:{}",studentId);
+        Integer status = twoBindingMapper.getStatus(studentId);
+//        log.info("查询绑定状态:{}",status);
+        //默认未绑定
+        return status != null ? status : -1;
     }
 
     @Override

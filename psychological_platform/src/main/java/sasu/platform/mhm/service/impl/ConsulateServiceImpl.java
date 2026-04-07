@@ -2,6 +2,7 @@ package sasu.platform.mhm.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,6 +21,7 @@ import sasu.platform.mhm.pojo.vo.CounselorVO;
 import sasu.platform.mhm.service.ConsulateService;
 import sasu.platform.mhm.util.ConsultationScheduleBuilderConverter;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -81,9 +83,10 @@ public class ConsulateServiceImpl implements ConsulateService {
 
     @Override
     public PageResult counselorList(PageQueryDTO pageQueryDTO) {
-        PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
-        Page<CounselorVO> counselorVOS = consulateMapper.counselorList(pageQueryDTO);
-        return new PageResult(counselorVOS.getTotal(), counselorVOS.getResult());
+        PageHelper.startPage(pageQueryDTO.getPage(), pageQueryDTO.getPageSize());
+        List<ConsultationSchedule> scheduleList = consulateMapper.getScheduleByParams(pageQueryDTO);
+        PageInfo<ConsultationSchedule> pageInfo = new PageInfo<>(scheduleList);
+        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override

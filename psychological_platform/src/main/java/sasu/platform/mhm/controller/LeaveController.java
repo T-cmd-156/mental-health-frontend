@@ -68,6 +68,14 @@ public class LeaveController {
         leaveService.reject(dto);
         return R.success();
     }
+
+    /**
+     * TODO 审批列表（辅导员/管理员查看待审批的请假申请）
+     */
+//    @GetMapping("/approval/list")
+//    public R<PageResult> approvalList(LeaveListQueryDTO query) {
+//        return R.success(leaveService.approvalList(query));
+//    }
 }
 
 

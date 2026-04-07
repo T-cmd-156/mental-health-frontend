@@ -45,6 +45,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { adminLogin } from '../../api/mock'
 import { login as apiLogin, fetchVerificationCode } from '../../api/auth'
 import { setAuthToken } from '../../api/request'
@@ -146,7 +147,7 @@ const login = async () => {
         localStorage.setItem('user_name', form.value.username)
         localStorage.setItem('user_id', form.value.username)
 
-        alert('登录成功')
+        ElMessage.success('登录成功')
         router.push('/admin')
         return
       }
@@ -160,7 +161,7 @@ const login = async () => {
     const user = res.data
     console.log('res.data = ', user)
     if (!user) {
-      alert('账号或密码错误')
+      ElMessage.warning('账号或密码错误')
       return
     }
 
@@ -175,11 +176,11 @@ const login = async () => {
     localStorage.setItem('admin_token', user.role + Date.now())
     localStorage.setItem('admin_role', user.role)
 
-    alert('登录成功')
+    ElMessage.success('登录成功')
     router.push('/admin')
 
   } catch (err) {
-    alert(err.message || '登录失败')
+    ElMessage.error(err.message || '登录失败')
   }
 }
 

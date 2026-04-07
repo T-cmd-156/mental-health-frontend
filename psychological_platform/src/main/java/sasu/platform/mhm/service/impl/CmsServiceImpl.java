@@ -28,7 +28,15 @@ public class CmsServiceImpl implements CmsService {
     private CmsMapper cmsMapper;
     @Override
     public PageResult getCmss(int status, PageQueryDTO pageQueryDTO) {
-
+        if (pageQueryDTO == null) {
+            pageQueryDTO = new PageQueryDTO();
+        }
+        if (pageQueryDTO.getPage() == null || pageQueryDTO.getPage() < 1) {
+            pageQueryDTO.setPage(1);
+        }
+        if (pageQueryDTO.getPageSize() == null || pageQueryDTO.getPageSize() < 1) {
+            pageQueryDTO.setPageSize(10);
+        }
         pageQueryDTO.setStatus(status);
         PageHelper.startPage(pageQueryDTO.getPage(),pageQueryDTO.getPageSize());
         //下一条sql进行分页，自动加入limit关键字分页

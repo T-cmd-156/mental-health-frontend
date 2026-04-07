@@ -70,7 +70,7 @@ function statusTagType(status: string) {
 }
 
 function goDetail(planId: string) {
-  router.push({ name: 'AssessmentPlanDetail', params: { planId } })
+  router.push({ name: 'AdminAssessmentPlanDetail', params: { planId } })
 }
 
 function onSurveyPageChange() {

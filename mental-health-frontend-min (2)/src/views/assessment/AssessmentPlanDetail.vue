@@ -98,7 +98,7 @@ function formatDateTime(v: unknown) {
 }
 
 function goBack() {
-  router.push('/assessment/list')
+  router.push('/admin/assessment-list')
 }
 
 async function load() {

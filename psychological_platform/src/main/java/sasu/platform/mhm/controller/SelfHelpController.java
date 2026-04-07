@@ -32,8 +32,8 @@ public class SelfHelpController {
             query = new PageQueryDTO();
         }
         normalizePaging(query);
-        int type = query.getType();
-        if (type < 1 || type > 5) {
+        Integer type = query.getType();
+        if (type == null || type < 1 || type > 5) {
             type = DEFAULT_TYPE;
             query.setType(type);
         }

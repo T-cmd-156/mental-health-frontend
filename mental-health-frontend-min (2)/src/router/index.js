@@ -10,7 +10,7 @@ const routes = [
 {
   path: '/case',
   name: 'CaseList',
-  component: () => import('../views/case/CaseList.vue'),
+  redirect: '/admin/case-list',
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 {
@@ -36,7 +36,7 @@ const routes = [
 {
   path: '/crisis',
   name: 'CrisisList',
-  component: () => import('../views/crisis/CrisisList.vue'),
+  redirect: '/admin/crisis-list',
   meta: { needAuth: true, roles: ['counselor','center','admin','tutor','college','leader'] }
 },
 {
@@ -104,7 +104,7 @@ const routes = [
 {
   path: '/leave/list',
   name: 'LeaveList',
-  component: () => import('../views/leave/LeaveList.vue'),
+  redirect: '/admin/leave-list',
   meta: { needAuth: true, roles: ['counselor'] }
 },
 
@@ -112,13 +112,13 @@ const routes = [
 {
   path: '/assessment/list',
   name: 'AssessmentList',
-  component: () => import('../views/assessment/AssessmentList.vue'),
+  redirect: '/admin/assessment-list',
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 {
   path: '/assessment/detail/:planId',
   name: 'AssessmentPlanDetail',
-  component: () => import('../views/assessment/AssessmentPlanDetail.vue'),
+  redirect: (to) => ({ path: `/admin/assessment-detail/${to.params.planId}` }),
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 
@@ -526,6 +526,36 @@ const routes = [
       name: 'AdminActivitySummary',
       component: () => import('../views/activity/ActivitySummary.vue'),
       meta: { needAuth: true, roles: ['counselor', 'center', 'admin', 'tutor'] }
+    },
+    {
+      path: 'assessment-list',
+      name: 'AdminAssessmentList',
+      component: () => import('../views/assessment/AssessmentList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
+    },
+    {
+      path: 'case-list',
+      name: 'AdminCaseList',
+      component: () => import('../views/case/CaseList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
+    },
+    {
+      path: 'crisis-list',
+      name: 'AdminCrisisList',
+      component: () => import('../views/crisis/CrisisList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin', 'tutor', 'college', 'leader'] }
+    },
+    {
+      path: 'leave-list',
+      name: 'AdminLeaveList',
+      component: () => import('../views/leave/LeaveList.vue'),
+      meta: { needAuth: true, roles: ['counselor'] }
+    },
+    {
+      path: 'assessment-detail/:planId',
+      name: 'AdminAssessmentPlanDetail',
+      component: () => import('../views/assessment/AssessmentPlanDetail.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
     },
     {
       path: 'students',

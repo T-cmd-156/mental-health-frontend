@@ -2,7 +2,7 @@
   <div class="admin">
     <!-- 顶部 -->
     <header class="top">
-      <div class="top-left">
+      <div class="top-left" @click="goHome">
         <img class="logo" src="../../assets/images/logo.png" alt="校徽" />
         <div class="brand">
           <span class="system-title">心理健康管理后台</span>
@@ -79,14 +79,14 @@
   <template v-else>
     <div class="item" :class="{ active: currentPath === 'workbench' }" @click="go('workbench')">工作台</div>
     <div class="item" :class="{ active: currentPath === 'time' }" @click="go('time')">预约规则配置</div>
-    <div class="item" v-if="role === 'counselor'" :class="{ active: isExternalActive('/case') }" @click="router.push('/case')">个案管理</div>
-    <div class="item" v-if="role === 'counselor'" :class="{ active: isExternalActive('/crisis') }" @click="router.push('/crisis')">危机管理</div>
+    <div class="item" v-if="role === 'counselor'" :class="{ active: currentPath === 'case-list' }" @click="go('case-list')">个案管理</div>
+    <div class="item" v-if="role === 'counselor'" :class="{ active: currentPath === 'crisis-list' }" @click="go('crisis-list')">危机管理</div>
 
     <!-- 请假管理（我的申请/撤销）：仅咨询师；管理员/心理中心在侧栏「请假审批」 -->
-    <div class="item" v-if="role === 'counselor'" :class="{ active: isExternalActive('/leave/list') }" @click="router.push('/leave/list')">我的请假</div>
+    <div class="item" v-if="role === 'counselor'" :class="{ active: currentPath === 'leave-list' }" @click="go('leave-list')">我的请假</div>
 
     <!-- 测评查看/测评管理：咨询师、心理中心可见 -->
-    <div class="item" v-if="['counselor','center'].includes(role)" :class="{ active: isExternalActive('/assessment/list') }" @click="router.push('/assessment/list')">测评管理</div>
+    <div class="item" v-if="['counselor','center'].includes(role)" :class="{ active: currentPath === 'assessment-list' || currentPath.startsWith('assessment-detail/') }" @click="go('assessment-list')">测评管理</div>
 
     <!-- 学生管理：心理中心可见 -->
     <div class="item" v-if="role === 'center'" :class="{ active: currentPath === 'students' }" @click="go('students')">学生管理</div>
@@ -131,7 +131,7 @@
           <h2>欢迎进入 {{ roleName }} 工作台</h2>
         </div>
         <div class="content-body">
-          <router-view />
+          <router-view :key="viewKey" />
         </div>
       </section>
     </div>
@@ -141,7 +141,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getUnreadCount } from '../../api/message'
+import { getNoticeList } from '../../api/notice'
 import {
   Bell,
   Odometer,
@@ -161,8 +161,13 @@ const route = useRoute()
 const unreadCount = ref(0)
 onMounted(async () => {
   try {
-    const res = await getUnreadCount()
-    unreadCount.value = res.data || 0
+    const res = await getNoticeList({ page: 1, pageSize: 1 })
+    const payload = res?.data
+    const total =
+      payload && typeof payload === 'object' && !Array.isArray(payload)
+        ? Number(payload.total || 0)
+        : 0
+    unreadCount.value = Number.isFinite(total) ? total : 0
   } catch (_) {}
 })
 
@@ -188,6 +193,7 @@ const currentPath = computed(() => {
   if (p.startsWith('/admin/')) return p.replace('/admin/', '') || 'workbench'
   return 'workbench'
 })
+const viewKey = computed(() => route.fullPath)
 
 const menuEntries = computed(() => [
   { path: 'workbench', label: '工作台', icon: Odometer, show: true },
@@ -206,6 +212,10 @@ const menuEntries = computed(() => [
 
 function go(page) {
   router.push('/admin/' + page)
+}
+
+function goHome() {
+  router.push('/')
 }
 
 function isExternalActive(path) {
@@ -239,6 +249,7 @@ function isExternalActive(path) {
   display: flex;
   align-items: center;
   gap: 12px;
+  cursor: pointer;
 }
 
 .logo {

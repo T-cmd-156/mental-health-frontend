@@ -2,6 +2,7 @@ package sasu.platform.mhm.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,9 @@ public class LeaveServiceImpl implements LeaveService {
         }
 
         PageHelper.startPage(query.getPage(), query.getPageSize());
-        Page<LeaveVO> page = (Page<LeaveVO>) leaveMapper.selectList(query);
-        return new PageResult(page.getTotal(), page.getResult());
+        List<LeaveVO> leaveList = leaveMapper.selectList(query);
+        PageInfo<LeaveVO> pageInfo = new PageInfo<>(leaveList);
+        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override
