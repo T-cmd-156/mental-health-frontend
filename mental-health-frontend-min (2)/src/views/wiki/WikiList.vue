@@ -1,5 +1,6 @@
 <template>
   <div class="wiki-list">
+    <PortalNavBar active-key="wiki" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-shape deco-shape-1"></div>
@@ -154,6 +155,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getWiki } from '@/api/portal'
 import { 
   Search, ArrowRight, Document, Reading, Collection, 

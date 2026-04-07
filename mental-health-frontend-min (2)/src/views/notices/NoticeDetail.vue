@@ -1,5 +1,6 @@
 <template>
   <div class="notice-detail">
+    <PortalNavBar active-key="notices" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
@@ -108,6 +109,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getNoticeDetail } from '@/api/portal'
 import { ArrowLeft, Loading, Calendar, View, Document, Bell, Top, Printer } from '@element-plus/icons-vue'
 

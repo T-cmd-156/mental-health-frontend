@@ -1,5 +1,6 @@
 <template>
   <div class="notice-list">
+    <PortalNavBar active-key="notices" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-wave"></div>
@@ -155,6 +156,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getNotices } from '@/api/portal'
 import { Search, ArrowRight, Document, Bell, Calendar, Top, Tickets } from '@element-plus/icons-vue'
 
