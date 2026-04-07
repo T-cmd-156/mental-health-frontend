@@ -462,9 +462,11 @@ const exportProfile = () => {
 
 <style scoped>
 .profile-view {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .profile-header-section {
@@ -500,11 +502,14 @@ const exportProfile = () => {
 .child-selector {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
   padding: 15px 20px;
   background: #f8f9fa;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .child-selector label {
@@ -947,10 +952,6 @@ const exportProfile = () => {
 }
 
 @media (max-width: 768px) {
-  .profile-view {
-    padding: 15px;
-  }
-
   .profile-header-section {
     flex-direction: column;
     align-items: flex-start;

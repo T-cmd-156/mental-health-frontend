@@ -1,5 +1,15 @@
 <template>
   <div class="student-dashboard">
+    <PortalNav class="embed-portal-nav" />
+    <el-alert
+      v-if="bindStatus === -1 && isStudentUser"
+      type="info"
+      :closable="false"
+      show-icon
+      class="bind-alert"
+      title="家长绑定：未绑定"
+      description="当前学号在系统中尚未绑定家长账号，请及时完成绑定以便家校沟通。"
+    />
     <!-- 顶部欢迎区域 -->
     <header class="dashboard-header">
       <div class="header-left">
@@ -301,8 +311,13 @@ import {
 } from '@element-plus/icons-vue'
 import { getMyAssessments } from '@/api/assessment'
 import { getMyActivities } from '@/api/activity'
+import { getStudentBindStatus } from '@/api/studentBind'
+import PortalNav from '@/components/portal/PortalNav.vue'
 
 const router = useRouter()
+
+const bindStatus = ref(null)
+const isStudentUser = computed(() => localStorage.getItem('User_role') === 'student')
 
 const userName = computed(
   () => localStorage.getItem('user_name') || localStorage.getItem('User_name') || ''
@@ -516,10 +531,27 @@ async function loadData() {
   }
 }
 
+async function loadBindStatus() {
+  const sid = localStorage.getItem('studentId')
+  if (!sid || !isStudentUser.value) return
+  try {
+    const res = await getStudentBindStatus(sid)
+    const d = res?.data
+    if (typeof d === 'number') {
+      bindStatus.value = d
+    } else if (d != null && typeof d === 'object' && typeof d.status === 'number') {
+      bindStatus.value = d.status
+    }
+  } catch {
+    bindStatus.value = null
+  }
+}
+
 onMounted(() => {
   updateTime()
   timer = setInterval(updateTime, 1000)
   loadData()
+  loadBindStatus()
 })
 
 onUnmounted(() => {
@@ -534,6 +566,14 @@ onUnmounted(() => {
   min-height: 100vh;
   padding: 24px;
   background: linear-gradient(160deg, #f0f4ff 0%, #e8f0fe 35%, #f5f7fa 70%, #fafbfc 100%);
+}
+
+.embed-portal-nav {
+  margin: -24px -24px 16px -24px;
+}
+
+.bind-alert {
+  margin-bottom: 16px;
 }
 
 .dashboard-header {

@@ -159,20 +159,25 @@ const cancelAppointment = (id) => {
 
 <style scoped>
 .appointment-view {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 子女切换器 */
 .child-selector {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
   padding: 15px 20px;
   background: #f8f9fa;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .child-selector label {
@@ -213,9 +218,15 @@ const cancelAppointment = (id) => {
 }
 
 .records-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
+}
+
+@media (min-width: 1100px) {
+  .records-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .appointment-card {
@@ -370,10 +381,6 @@ const cancelAppointment = (id) => {
 }
 
 @media (max-width: 768px) {
-  .appointment-view {
-    padding: 15px;
-  }
-
   .child-selector {
     flex-direction: column;
     align-items: stretch;

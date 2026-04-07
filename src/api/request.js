@@ -20,7 +20,7 @@ function buildDevFallback(err) {
 }
 
 const request = axios.create({
-  baseURL: 'http://localhost:8080', // 之后换成后端
+  baseURL: 'http://127.0.0.1:5173', // 对接对方后端
   timeout: 5000
 })
 

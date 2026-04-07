@@ -1,26 +1,6 @@
 <template>
   <div class="parent-dashboard">
-    <!-- 顶部导航 -->
-    <header class="dashboard-header">
-      <div class="header-left">
-        <div class="logo-area">
-          <img src="/logo.png" alt="Logo" class="logo" />
-          <span class="system-name">心理健康服务平台</span>
-        </div>
-      </div>
-      <div class="header-right">
-        <div class="user-info">
-          <div class="user-avatar">{{ userName.charAt(0) }}</div>
-          <span class="user-name">{{ userName }}</span>
-        </div>
-        <button class="logout-btn" @click="logout">
-          <span class="logout-icon">⏻</span>
-          退出
-        </button>
-      </div>
-    </header>
-
-    <!-- 主内容区 -->
+    <!-- 主内容区（顶栏由 ParentLayout + PortalNav 提供，含首页与退出） -->
     <main class="dashboard-main">
       <!-- 欢迎区域 -->
       <section class="welcome-section">
@@ -430,13 +410,6 @@ const switchChild = (childId) => {
   selectedChild.value = childId
 }
 
-const logout = () => {
-  localStorage.removeItem('User_token')
-  localStorage.removeItem('User_role')
-  localStorage.removeItem('User_name')
-  router.push('/login')
-}
-
 const handleTodo = (item) => {
   if (item.action === 'assessment') {
     goToAssessment()
@@ -461,104 +434,22 @@ const goToNotices = () => router.push('/notices')
 
 <style scoped>
 .parent-dashboard {
-  min-height: 100vh;
-  background: #f5f7fa;
+  width: 100%;
+  max-width: min(1600px, 100%);
+  margin: 0 auto;
+  min-height: 100%;
+  background: transparent;
   display: flex;
   flex-direction: column;
-}
-
-/* 顶部导航 */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  background: #fff;
-  color: #333;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-}
-
-.system-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.user-name {
-  font-size: 14px;
-  color: #333;
-}
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
-  background: #f5f7fa;
-  border: 1px solid #e4e7ed;
-  border-radius: 6px;
-  color: #606266;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.logout-btn:hover {
-  background: #ecf5ff;
-  border-color: #409eff;
-  color: #409eff;
+  box-sizing: border-box;
 }
 
 /* 主内容区 */
 .dashboard-main {
   flex: 1;
-  padding: 20px 24px;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -1293,14 +1184,6 @@ const goToNotices = () => router.push('/notices')
 }
 
 @media (max-width: 768px) {
-  .dashboard-header {
-    padding: 10px 16px;
-  }
-
-  .system-name {
-    display: none;
-  }
-
   .dashboard-main {
     padding: 16px;
     padding-bottom: 80px;

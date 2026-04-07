@@ -151,9 +151,11 @@ const getRelationshipText = (relationship) => {
 
 <style scoped>
 .child-management {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .bind-form {
@@ -234,8 +236,14 @@ const getRelationshipText = (relationship) => {
 
 .children-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media (min-width: 1200px) {
+  .children-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .child-card {
@@ -313,10 +321,6 @@ const getRelationshipText = (relationship) => {
 }
 
 @media (max-width: 768px) {
-  .child-management {
-    padding: 15px;
-  }
-
   .bind-form,
   .child-list {
     padding: 20px;

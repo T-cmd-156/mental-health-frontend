@@ -243,20 +243,25 @@ const sendMessage = async () => {
 
 <style scoped>
 .contact-counselor {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 子女切换器 */
 .child-selector {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
   padding: 15px 20px;
   background: #f8f9fa;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .child-selector label {
@@ -547,10 +552,6 @@ const sendMessage = async () => {
 }
 
 @media (max-width: 768px) {
-  .contact-counselor {
-    padding: 15px;
-  }
-
   .child-selector {
     flex-direction: column;
     align-items: stretch;

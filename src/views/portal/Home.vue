@@ -1,26 +1,5 @@
 <template>
   <div class="home">
-    <header class="header">
-      <div class="logo-area">
-        <img src="@/assets/logo.png" alt="校徽" class="logo-img" />
-        <span class="title">心理健康服务平台</span>
-      </div>
-
-      <nav class="nav-menu">
-        <router-link to="/" class="nav-item active-nav">首页</router-link>
-        <router-link to="/wiki" class="nav-item">心理百科</router-link>
-        <router-link to="/articles" class="nav-item">心理美文</router-link>
-        <router-link to="/peer-support" class="nav-item">朋辈互助</router-link>
-        <router-link to="/notices" class="nav-item">通知公告</router-link>
-      </nav>
-
-      <div class="actions">
-        <button class="btn-login" @click="goLogin('admin')">管理登录</button>
-        <button class="btn-login" @click="goLogin('user')">学生登录</button>
-        <button class="btn-appoint" @click="goAppointment">在线预约</button>
-      </div>
-    </header>
-    
     <section class="hero-banner">
       <div class="hero-content">
         <div class="hero-badge">四川文理学院</div>
@@ -186,9 +165,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { getNotices, getWiki, getArticles, getActivities } from '../../api/portal'
 
 const router = useRouter()
+import { getNotices, getWiki, getArticles, getActivities } from '../../api/portal'
 
 const notices = ref([])
 const wiki = ref([])
@@ -206,20 +185,6 @@ onMounted(async () => {
   }
 })
 
-const goLogin = (type) => {
-  router.push(type === 'admin' ? '/login/admin' : '/login/user')
-}
-
-const goAppointment = () => {
-  const token = localStorage.getItem('User_token')
-  const role = localStorage.getItem('User_role')
-  if (!token || !role) {
-    router.push({ path: '/login/user', query: { redirect: '/appointment/select' } })
-  } else {
-    router.push('/appointment/select')
-  }
-}
-
 const goDetail = (type, id) => {
   const pathMap = { wiki: '/wiki', article: '/articles', peer: '/peer-support', notice: '/notices' }
   const base = pathMap[type]
@@ -231,95 +196,6 @@ const goDetail = (type, id) => {
 .home {
   min-height: 100vh;
   background: #f8f9fa;
-}
-
-.header {
-  background: #a51c30;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 40px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-img {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 8px;
-}
-
-.nav-item {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: all 0.2s;
-}
-
-.nav-item:hover,
-.nav-item.active-nav {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-}
-
-.btn-login,
-.btn-appoint {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.btn-login {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-}
-
-.btn-login:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.btn-appoint {
-  background: #c9a227;
-  color: white;
-  box-shadow: 0 4px 15px rgba(201, 162, 39, 0.4);
-}
-
-.btn-appoint:hover {
-  transform: translateY(-2px);
-  background: #b8921f;
-  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.5);
 }
 
 .hero-banner {
@@ -864,15 +740,6 @@ const goDetail = (type, id) => {
 }
 
 @media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    padding: 15px;
-    gap: 15px;
-  }
-  .nav-menu {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
   .hero-title {
     font-size: 32px;
   }

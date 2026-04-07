@@ -205,9 +205,11 @@ const viewMessage = (id) => {
 
 <style scoped>
 .parent-message {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .message-form {
@@ -474,10 +476,6 @@ const viewMessage = (id) => {
 }
 
 @media (max-width: 768px) {
-  .parent-message {
-    padding: 15px;
-  }
-
   .message-form,
   .message-records {
     padding: 20px;

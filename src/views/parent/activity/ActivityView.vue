@@ -160,20 +160,25 @@ const cancelActivity = (id) => {
 
 <style scoped>
 .activity-view {
-  padding: 20px;
-  max-width: 1200px;
+  width: 100%;
+  max-width: min(1600px, 100%);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 子女切换器 */
 .child-selector {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
   padding: 15px 20px;
   background: #f8f9fa;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .child-selector label {
@@ -215,8 +220,14 @@ const cancelActivity = (id) => {
 
 .records-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+@media (min-width: 1200px) {
+  .records-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .activity-card {
@@ -379,10 +390,6 @@ const cancelActivity = (id) => {
 }
 
 @media (max-width: 768px) {
-  .activity-view {
-    padding: 15px;
-  }
-
   .child-selector {
     flex-direction: column;
     align-items: stretch;
