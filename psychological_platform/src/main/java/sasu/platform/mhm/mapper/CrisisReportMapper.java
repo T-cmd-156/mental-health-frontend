@@ -1,7 +1,7 @@
 package sasu.platform.mhm.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import sasu.platform.mhm.pojo.VO.CrisisReportVO;
+import sasu.platform.mhm.pojo.vo.CrisisReportVO;
 import sasu.platform.mhm.pojo.dto.CrisisReportCreateDTO;
 import sasu.platform.mhm.pojo.dto.CrisistLevelDTO;
 import sasu.platform.mhm.pojo.dto.CrisisApprovalQueryDTO;

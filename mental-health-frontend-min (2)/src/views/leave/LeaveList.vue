@@ -2,13 +2,9 @@
   <div class="leave-list-page">
     <div class="page-head">
       <div class="head-main">
-        <h2>请假记录</h2>
+        <h2>我的请假</h2>
         <p class="page-desc">
-          {{
-            isCounselor
-              ? '查看我的请假申请记录，支持撤销待审批申请或重新申请。'
-              : '本页用于咨询师个人请假申请；心理中心审批请前往后台「请假审批」。'
-          }}
+          数据来自 GET /api/leave/list（分页）；撤销使用 POST /api/leave/cancel?leaveId=。审批请在「请假审批」菜单操作。
         </p>
       </div>
       <div v-if="isCounselor" class="head-actions">
@@ -19,19 +15,19 @@
     <div class="stats-row">
       <div class="stat-item">
         <span class="stat-value">{{ stats.pending }}</span>
-        <span class="stat-label">待审批</span>
+        <span class="stat-label">待审批（本页）</span>
       </div>
       <div class="stat-item">
         <span class="stat-value">{{ stats.approved }}</span>
-        <span class="stat-label">已通过</span>
+        <span class="stat-label">已通过（本页）</span>
       </div>
       <div class="stat-item">
         <span class="stat-value">{{ stats.rejected }}</span>
-        <span class="stat-label">已拒绝</span>
+        <span class="stat-label">已拒绝（本页）</span>
       </div>
       <div class="stat-item">
         <span class="stat-value">{{ stats.cancelled }}</span>
-        <span class="stat-label">已撤销</span>
+        <span class="stat-label">已撤销（本页）</span>
       </div>
     </div>
 
@@ -39,7 +35,13 @@
       <div class="card-header">
         <el-form :inline="true" :model="filter" class="filter-form">
           <el-form-item label="状态">
-            <el-select v-model="filter.status" placeholder="全部" clearable style="width: 120px" @change="applyFilter">
+            <el-select
+              v-model="filter.status"
+              placeholder="全部"
+              clearable
+              style="width: 140px"
+              @change="onFilterChange"
+            >
               <el-option label="待审批" value="pending" />
               <el-option label="已通过" value="approved" />
               <el-option label="已拒绝" value="rejected" />
@@ -51,27 +53,29 @@
           </el-form-item>
         </el-form>
       </div>
-      <el-table :data="filteredList" stripe v-loading="loading">
-        <el-table-column prop="id" label="编号" width="100" />
-        <el-table-column prop="leaveDate" label="请假日期" width="120" />
-        <el-table-column prop="leaveTime" label="时间段" width="140" />
-        <el-table-column prop="reason" label="请假原因" min-width="200" show-overflow-tooltip />
-        <el-table-column prop="status" label="状态" width="100">
+      <el-table :data="rows" stripe v-loading="loading">
+        <el-table-column prop="leaveId" label="请假单号" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="leaveType" label="类型" width="100" />
+        <el-table-column prop="leaveDate" label="开始日期" width="120" />
+        <el-table-column prop="leaveTime" label="时间段" width="180" show-overflow-tooltip />
+        <el-table-column prop="reason" label="原因" min-width="160" show-overflow-tooltip />
+        <el-table-column label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="getStatusType(row.status)" size="small">
               {{ getStatusText(row.status) }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="applyTime" label="申请时间" width="160" />
-        <el-table-column label="操作" width="180" fixed="right">
+        <el-table-column prop="applyTime" label="申请时间" width="170" />
+        <el-table-column label="操作" width="160" fixed="right">
           <template #default="{ row }">
             <el-button
               v-if="isCounselor && row.status === 'pending'"
               type="warning"
               link
               size="small"
-              @click="cancel(row)"
+              :loading="cancellingId === row.leaveId"
+              @click="onCancel(row)"
             >
               撤销
             </el-button>
@@ -84,11 +88,22 @@
             >
               重新申请
             </el-button>
-            <span v-if="!isCounselor" class="muted-op">—</span>
           </template>
         </el-table-column>
       </el-table>
-      <el-empty v-if="!filteredList.length && !loading" description="暂无请假记录" />
+      <el-empty v-if="!rows.length && !loading" description="暂无请假记录" />
+
+      <div class="pagination-wrap">
+        <el-pagination
+          v-model:current-page="page"
+          v-model:page-size="pageSize"
+          :total="total"
+          :page-sizes="[10, 20, 50]"
+          layout="total, sizes, prev, pager, next"
+          @size-change="loadData"
+          @current-change="loadData"
+        />
+      </div>
     </el-card>
   </div>
 </template>
@@ -98,18 +113,36 @@ import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus } from '@element-plus/icons-vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getLeaveList, cancelLeave } from '../../api/leaveApi'
+import { getLeaveList, cancelLeave, parseLeavePage } from '../../api/leaveApi'
 
 const router = useRouter()
 const loading = ref(false)
 const leaves = ref([])
+const total = ref(0)
+const page = ref(1)
+const pageSize = ref(20)
 const filter = reactive({ status: '' })
+const cancellingId = ref('')
 
-/** 仅咨询师使用「我的请假」申请/撤销；管理员/心理中心走 /admin/leave 审批 */
 const isCounselor = computed(() => {
   const r = typeof localStorage !== 'undefined' ? localStorage.getItem('admin_role') : ''
   return r === 'counselor'
 })
+
+/** 后端 leave_request.status 大写 */
+const STATUS_API = {
+  PENDING: 'pending',
+  APPROVED: 'approved',
+  REJECTED: 'rejected',
+  CANCELLED: 'cancelled',
+}
+
+const STATUS_UI_TO_API = {
+  pending: 'PENDING',
+  approved: 'APPROVED',
+  rejected: 'REJECTED',
+  cancelled: 'CANCELLED',
+}
 
 const STATUS_MAP = {
   pending: { type: 'warning', text: '待审批' },
@@ -118,13 +151,7 @@ const STATUS_MAP = {
   cancelled: { type: 'info', text: '已撤销' },
 }
 
-const filteredList = computed(() => {
-  let list = leaves.value
-  if (filter.status) {
-    list = list.filter((l) => l.status === filter.status)
-  }
-  return list
-})
+const rows = computed(() => leaves.value)
 
 const stats = computed(() => {
   const list = leaves.value
@@ -144,82 +171,121 @@ function getStatusText(status) {
   return STATUS_MAP[status]?.text || status
 }
 
+function pad2(n) {
+  return String(n).padStart(2, '0')
+}
+
+function formatDateTime(v) {
+  if (v == null || v === '') return '—'
+  const d = new Date(v)
+  if (Number.isNaN(d.getTime())) return String(v)
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`
+}
+
+function formatDateOnly(v) {
+  if (v == null || v === '') return '—'
+  const d = new Date(v)
+  if (Number.isNaN(d.getTime())) return '—'
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
+}
+
+function formatTimeRange(start, end) {
+  if (!start && !end) return '—'
+  return `${formatDateTime(start)} ~ ${formatDateTime(end)}`
+}
+
+function mapApiStatus(s) {
+  if (!s) return 'pending'
+  const u = String(s).toUpperCase()
+  return STATUS_API[u] || String(s).toLowerCase()
+}
+
+function normalizeItem(vo) {
+  const status = mapApiStatus(vo.status)
+  return {
+    leaveId: vo.leaveId || vo.id,
+    leaveType: vo.leaveType || '—',
+    leaveDate: formatDateOnly(vo.startTime),
+    leaveTime: formatTimeRange(vo.startTime, vo.endTime),
+    reason: vo.reason || '—',
+    status,
+    applyTime: formatDateTime(vo.createdAt),
+    raw: vo,
+  }
+}
+
+function buildQueryParams() {
+  const params = {
+    page: page.value,
+    pageSize: pageSize.value,
+  }
+  if (filter.status && STATUS_UI_TO_API[filter.status]) {
+    params.statusFilter = STATUS_UI_TO_API[filter.status]
+  }
+  return params
+}
+
 async function loadData() {
   loading.value = true
   try {
-    const res = await getLeaveList()
-    if (res?.code === 200 && Array.isArray(res.data)) {
-      leaves.value = res.data.map(normalizeItem)
-    } else {
-      leaves.value = getMockList()
+    const res = await getLeaveList(buildQueryParams())
+    if (res?.code !== 200) {
+      leaves.value = []
+      total.value = 0
+      ElMessage.error(res?.msg || res?.message || '加载失败')
+      return
     }
-  } catch {
-    leaves.value = getMockList()
-  }
-  loading.value = false
-}
-
-function normalizeItem(item) {
-  return {
-    id: item.id,
-    leaveDate: item.leaveDate || item.date,
-    leaveTime: item.leaveTime || '全天',
-    reason: item.reason,
-    status: mapStatus(item.status),
-    applyTime: item.applyTime || item.createTime || '-',
+    const { records, total: t } = parseLeavePage(res)
+    total.value = Number(t) || 0
+    leaves.value = (records || []).filter(Boolean).map(normalizeItem)
+  } catch (e) {
+    leaves.value = []
+    total.value = 0
+    const msg = e?.response?.data?.msg || e?.message || '加载失败'
+    ElMessage.error(typeof msg === 'string' ? msg : '加载失败')
+  } finally {
+    loading.value = false
   }
 }
 
-function mapStatus(s) {
-  if (['pending', 'approved', 'rejected', 'cancelled'].includes(s)) return s
-  if (s === '已提交') return 'pending'
-  if (s === '已通过') return 'approved'
-  if (s === '已拒绝') return 'rejected'
-  if (s === '已撤销') return 'cancelled'
-  return s
-}
-
-function getMockList() {
-  return [
-    { id: 'l001', leaveDate: '2026-02-20', leaveTime: '09:00-12:00', reason: '身体不适', status: 'pending', applyTime: '2026-02-19 14:30' },
-    { id: 'l002', leaveDate: '2026-02-15', leaveTime: '全天', reason: '家庭原因', status: 'cancelled', applyTime: '2026-02-14 10:00' },
-    { id: 'l003', leaveDate: '2026-02-10', leaveTime: '14:00-17:00', reason: '参加学术会议', status: 'approved', applyTime: '2026-02-09 16:20' },
-  ]
-}
-
-function applyFilter() {
-  // 筛选由 computed 自动处理
+function onFilterChange() {
+  page.value = 1
+  loadData()
 }
 
 function goApply() {
   router.push('/leave/apply')
 }
 
-function cancel(row) {
-  ElMessageBox.confirm('确定撤销该请假申请？', '撤销确认', {
-    type: 'warning',
-  })
-    .then(() => {
-      cancelLeave({ id: row.id })
-        .then((res) => {
-          if (res?.code === 200) {
-            row.status = 'cancelled'
-            ElMessage.success('已撤销')
-          } else {
-            row.status = 'cancelled'
-            ElMessage.success('已撤销（演示）')
-          }
-        })
-        .catch(() => {
-          row.status = 'cancelled'
-          ElMessage.success('已撤销（演示）')
-        })
-    })
-    .catch(() => {})
+async function onCancel(row) {
+  if (!row?.leaveId) return
+  try {
+    await ElMessageBox.confirm('确定撤销该请假申请？', '撤销确认', { type: 'warning' })
+  } catch {
+    return
+  }
+  cancellingId.value = row.leaveId
+  try {
+    const res = await cancelLeave({ leaveId: row.leaveId })
+    if (res?.code === 200) {
+      ElMessage.success(res?.msg || '已撤销')
+      await loadData()
+    } else {
+      ElMessage.error(res?.msg || '撤销失败')
+    }
+  } catch (e) {
+    const msg = e?.response?.data?.msg || e?.message || '撤销失败'
+    ElMessage.error(typeof msg === 'string' ? msg : '撤销失败')
+  } finally {
+    cancellingId.value = ''
+  }
 }
 
 function reapply(row) {
-  router.push({ path: '/leave/apply', query: { fromId: row.id } })
+  router.push({
+    path: '/leave/apply',
+    query: { fromId: row.leaveId },
+  })
 }
 
 onMounted(() => {
@@ -234,12 +300,8 @@ onMounted(() => {
 
 <style scoped>
 .leave-list-page {
-  max-width: 1000px;
+  max-width: 1100px;
   padding: 20px 0;
-}
-
-.muted-op {
-  color: #cbd5e1;
 }
 
 .page-head {
@@ -307,5 +369,11 @@ onMounted(() => {
 
 .filter-form {
   margin-bottom: 0;
+}
+
+.pagination-wrap {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -1,0 +1,1445 @@
+{
+  "base": "http://localhost:8080",
+  "rows": [
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/detail?studentId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/detail?studentId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "POST",
+      "path": "/api/parent/children/bind",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 学生ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "POST",
+      "path": "/api/parent/children/bind",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 学生ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "POST",
+      "path": "/api/parent/children/unbind?childId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: 解绑失败\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "POST",
+      "path": "/api/parent/children/unbind?childId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: 解绑失败\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/counselor?studentId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/counselor?studentId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/assessments?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/assessments?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/appointments?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/appointments?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/activities?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "家长端",
+      "method": "GET",
+      "path": "/api/parent/children/activities?studentId=test&page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"activityId\":\"fea93d4f-1c63-11f1-a63a-00163e048e6e\",\"title\":\"团体活动A\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"activityId\":\"fea93d4f-1c63-11f1-a63a-00163e048e6e\",\"title\":\"团体活动A\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/detail",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: activityId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/detail",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: activityId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/join",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/join",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/signup",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/signup",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/cancel",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/cancel",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/checkin",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "POST",
+      "path": "/api/activity/checkin",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/my?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/my?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "活动",
+      "method": "GET",
+      "path": "/api/activity/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "认证",
+      "method": "POST",
+      "path": "/api/auth/send-sms",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 手机号不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "认证",
+      "method": "POST",
+      "path": "/api/auth/send-sms",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 手机号不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "认证",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 账号不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "认证",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 账号不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通用",
+      "method": "GET",
+      "path": "/api/common/getVerificationCode",
+      "status": 200,
+      "ok": true,
+      "snippet": "����\u0000\u0010JFIF\u0000\u0001\u0002\u0000\u0000\u0001\u0000\u0001\u0000\u0000��\u0000C\u0000\b\u0006\u0006\u0007\u0006\u0005\b\u0007\u0007\u0007 \b \u0014 \u0019\u0012\u0013\u000f\u0014\u001d\u001a\u001f\u001e\u001d\u001a\u001c\u001c $.' \",#\u001c\u001c(7),01444\u001f'9=82<.342��\u0000C\u0001 \u0018 \u00182!\u001c!222222222222"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通用",
+      "method": "GET",
+      "path": "/api/common/getVerificationCode",
+      "status": 200,
+      "ok": true,
+      "snippet": "����\u0000\u0010JFIF\u0000\u0001\u0002\u0000\u0000\u0001\u0000\u0001\u0000\u0000��\u0000C\u0000\b\u0006\u0006\u0007\u0006\u0005\b\u0007\u0007\u0007 \b \u0014 \u0019\u0012\u0013\u000f\u0014\u001d\u001a\u001f\u001e\u001d\u001a\u001c\u001c $.' \",#\u001c\u001c(7),01444\u001f'9=82<.342��\u0000C\u0001 \u0018 \u00182!\u001c!222222222222"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/login?username=test&password=test&verificationCode=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/login?username=test&password=test&verificationCode=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通用",
+      "method": "GET",
+      "path": "/api/common/health",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"服务器正常\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通用",
+      "method": "GET",
+      "path": "/api/common/health",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"服务器正常\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/upload",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Current request is not a multipart request\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/upload",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Current request is not a multipart request\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/upload/image",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Current request is not a multipart request\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通用",
+      "method": "POST",
+      "path": "/api/common/upload/image",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Current request is not a multipart request\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/submit",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"false\":\"所选预约时间段已被占有\"},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/submit",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"false\":\"所选预约时间段已被占有\"},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[null,null,null,null,null]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[null,null,null,null,null]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/detail?id=test",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约不存在\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/detail?id=test",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约不存在\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":\"fd0ba889-2e6c-11f1-a63a-00163e048e6e\",\"studentId\":\"4b9e0c7a-2"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "GET",
+      "path": "/api/appointment/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":\"fd0ba889-2e6c-11f1-a63a-00163e048e6e\",\"studentId\":\"4b9e0c7a-2"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/cancel",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/cancel",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/confirm",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/confirm",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/reject",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/reject",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/mark-no-show",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "预约",
+      "method": "POST",
+      "path": "/api/appointment/mark-no-show",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 预约ID不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":2,\"records\":[{\"planId\":\"scl90\",\"planName\":\"新生心理健康普测(SCL-90)\",\"templateId\":\"tpl_sc"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":2,\"records\":[{\"planId\":\"scl90\",\"planName\":\"新生心理健康普测(SCL-90)\",\"templateId\":\"tpl_sc"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/detail",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/detail",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/start",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/start",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/submit",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: recordId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/submit",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: recordId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/result",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: recordId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/result",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: recordId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/my?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/my?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/my-list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/plan/create",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planName不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/plan/create",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planName不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/export?planId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "GET",
+      "path": "/api/assessment/export?planId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/export",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "测评",
+      "method": "POST",
+      "path": "/api/assessment/export",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: planId不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "用户",
+      "method": "GET",
+      "path": "/api/user/info",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"userId\":\"mock-user\",\"username\":\"mock\",\"role_code\":null,\"realName\":\"示例用户\",\"gender\":null,\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "用户",
+      "method": "GET",
+      "path": "/api/user/info",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"userId\":\"mock-user\",\"username\":\"mock\",\"role_code\":null,\"realName\":\"示例用户\",\"gender\":null,\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "用户",
+      "method": "PUT",
+      "path": "/api/user/update",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"userId\":null,\"username\":null,\"role_code\":null,\"realName\":null,\"gender\":null,\"avatarUrl\":"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "用户",
+      "method": "PUT",
+      "path": "/api/user/update",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"userId\":null,\"username\":null,\"role_code\":null,\"realName\":null,\"gender\":null,\"avatarUrl\":"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/change-password",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 旧密码不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/change-password",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 旧密码不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/reset-password",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 用户名不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/reset-password",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 用户名不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/send-code?phone=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"发送成功\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "用户",
+      "method": "POST",
+      "path": "/api/user/send-code?phone=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"发送成功\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "咨询师",
+      "method": "GET",
+      "path": "/api/consultant/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[null,null,null,null,null]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "咨询师",
+      "method": "GET",
+      "path": "/api/consultant/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[null,null,null,null,null]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "咨询师",
+      "method": "GET",
+      "path": "/api/consultant/detail?counselorId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Cannot invoke \\\"sasu.platform.mhm.pojo.vo.CounselorDetailVO.setConsultationSchedule(sasu.pla"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "咨询师",
+      "method": "GET",
+      "path": "/api/consultant/detail?counselorId=test",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Cannot invoke \\\"sasu.platform.mhm.pojo.vo.CounselorDetailVO.setConsultationSchedule(sasu.pla"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "危机",
+      "method": "POST",
+      "path": "/api/crisis/report",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error updating database. Cause: java.sql.SQLException: Field 'counselor_id' doesn't"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "危机",
+      "method": "POST",
+      "path": "/api/crisis/report",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error updating database. Cause: java.sql.SQLException: Field 'counselor_id' doesn't"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "危机",
+      "method": "GET",
+      "path": "/api/crisis/list?page=1&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":2,\"records\":[{\"reportId\":\"0f505ece-0bcd-4262-9ea2-3d4bca95dd55\",\"studentId\":\"77b7"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "危机",
+      "method": "GET",
+      "path": "/api/crisis/list?page=1&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":2,\"records\":[{\"reportId\":\"0f505ece-0bcd-4262-9ea2-3d4bca95dd55\",\"studentId\":\"77b7"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "危机",
+      "method": "POST",
+      "path": "/api/crisis/update-level",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":500,\"msg\":\"参数不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "危机",
+      "method": "POST",
+      "path": "/api/crisis/update-level",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":500,\"msg\":\"参数不能为空\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "危机",
+      "method": "GET",
+      "path": "/api/crisis/detail?id=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "危机",
+      "method": "GET",
+      "path": "/api/crisis/detail?id=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "请假",
+      "method": "GET",
+      "path": "/api/leave/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "请假",
+      "method": "GET",
+      "path": "/api/leave/list?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/apply",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: text\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/apply",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: text\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/cancel?leaveId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/cancel?leaveId=test",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/approve",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/approve",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/reject",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "请假",
+      "method": "POST",
+      "path": "/api/leave/reject",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "绑定",
+      "method": "GET",
+      "path": "/api/bind/status/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"查询成功\",\"data\":-1,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "绑定",
+      "method": "GET",
+      "path": "/api/bind/status/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"查询成功\",\"data\":-1,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "绑定",
+      "method": "POST",
+      "path": "/api/bind/confirm/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"确认绑定成功\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "绑定",
+      "method": "POST",
+      "path": "/api/bind/confirm/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"确认绑定成功\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "绑定",
+      "method": "POST",
+      "path": "/api/bind/reject/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"拒绝绑定\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "绑定",
+      "method": "POST",
+      "path": "/api/bind/reject/00000000-0000-0000-0000-000000000001",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":\"拒绝绑定\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "CMS内容管理",
+      "method": "POST",
+      "path": "/api/cms/cms-s",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":33,\"type\":2,\"title\":\"1\",\"summary\":\"1\",\"content\":\"1\",\"coverUrl\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "CMS内容管理",
+      "method": "POST",
+      "path": "/api/cms/cms-s",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":33,\"type\":2,\"title\":\"1\",\"summary\":\"1\",\"content\":\"1\",\"coverUrl\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "消息中心",
+      "method": "GET",
+      "path": "/api/message/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 'l"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "消息中心",
+      "method": "GET",
+      "path": "/api/message/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 'l"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "排班管理",
+      "method": "GET",
+      "path": "/api/schedule/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Cannot invoke \\\"java.lang.Integer.intValue()\\\" because the return value of \\\"sasu.platform.m"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "排班管理",
+      "method": "GET",
+      "path": "/api/schedule/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Cannot invoke \\\"java.lang.Integer.intValue()\\\" because the return value of \\\"sasu.platform.m"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "个案管理",
+      "method": "GET",
+      "path": "/api/case/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":\"2a4044e6-578f-4de1-9dae-f47b686dda12\",\"studentId\":\"stu_001\",\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "个案管理",
+      "method": "GET",
+      "path": "/api/case/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":\"2a4044e6-578f-4de1-9dae-f47b686dda12\",\"studentId\":\"stu_001\",\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "咨询记录",
+      "method": "GET",
+      "path": "/api/record/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "咨询记录",
+      "method": "GET",
+      "path": "/api/record/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "心理自助",
+      "method": "GET",
+      "path": "/api/self-help/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":10,\"type\":4,\"title\":\"情绪管理入门\",\"summary\":\"认识情绪、接纳情绪、调节情绪。\",\"cont"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "心理自助",
+      "method": "GET",
+      "path": "/api/self-help/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":10,\"type\":4,\"title\":\"情绪管理入门\",\"summary\":\"认识情绪、接纳情绪、调节情绪。\",\"cont"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通知公告",
+      "method": "GET",
+      "path": "/api/notice/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":33,\"type\":2,\"title\":\"1\",\"summary\":\"1\",\"content\":\"1\",\"coverUrl\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通知公告",
+      "method": "GET",
+      "path": "/api/notice/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":33,\"type\":2,\"title\":\"1\",\"summary\":\"1\",\"content\":\"1\",\"coverUrl\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "通知公告",
+      "method": "GET",
+      "path": "/api/notice/detail?id=1",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 通知不存在\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "通知公告",
+      "method": "GET",
+      "path": "/api/notice/detail?id=1",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 通知不存在\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "咨询师管理",
+      "method": "POST",
+      "path": "/api/consulate/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Required request body is missing: public sasu.platform.mhm.pojo.common.R sasu.platform.mhm.c"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "咨询师管理",
+      "method": "POST",
+      "path": "/api/consulate/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: Required request body is missing: public sasu.platform.mhm.pojo.common.R sasu.platform.mhm.c"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "配置管理",
+      "method": "GET",
+      "path": "/api/config/visit-form",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"enabled\":null,\"fields\":null},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "配置管理",
+      "method": "GET",
+      "path": "/api/config/visit-form",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"enabled\":null,\"fields\":null},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "首页",
+      "method": "GET",
+      "path": "/api/home/data",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"stats\":{\"activityTotal\":0,\"noticeTotal\":0},\"notices\":{\"total\":0,\"records\":[{\"id\":33,\"typ"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "首页",
+      "method": "GET",
+      "path": "/api/home/data",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"stats\":{\"activityTotal\":0,\"noticeTotal\":0},\"notices\":{\"total\":0,\"records\":[{\"id\":33,\"typ"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "心理文章",
+      "method": "GET",
+      "path": "/api/psychology/article",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":13,\"type\":5,\"title\":\"与自己和解\",\"summary\":\"学会温柔地对待自己。\",\"content\":\""
+    },
+    {
+      "role": "ADMIN",
+      "tags": "心理文章",
+      "method": "GET",
+      "path": "/api/psychology/article",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[{\"id\":13,\"type\":5,\"title\":\"与自己和解\",\"summary\":\"学会温柔地对待自己。\",\"content\":\""
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "前测量表",
+      "method": "POST",
+      "path": "/api/pre-assessment/submit",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "前测量表",
+      "method": "POST",
+      "path": "/api/pre-assessment/submit",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "教师端",
+      "method": "GET",
+      "path": "/api/teacher/message/inbox",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "教师端",
+      "method": "GET",
+      "path": "/api/teacher/message/inbox",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":[],\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "管理端-统计",
+      "method": "GET",
+      "path": "/api/admin/stats/overview",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 'a"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "管理端-统计",
+      "method": "GET",
+      "path": "/api/admin/stats/overview",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 'a"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "管理端-学生管理",
+      "method": "GET",
+      "path": "/api/admin/student/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "管理端-学生管理",
+      "method": "GET",
+      "path": "/api/admin/student/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: \\r\\n### Error querying database. Cause: java.sql.SQLSyntaxErrorException: Unknown column 's"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "管理端-用户管理",
+      "method": "GET",
+      "path": "/api/admin/user/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: class java.util.ArrayList cannot be cast to class com.github.pagehelper.Page (java.util.Arra"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "管理端-用户管理",
+      "method": "GET",
+      "path": "/api/admin/user/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: class java.util.ArrayList cannot be cast to class com.github.pagehelper.Page (java.util.Arra"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "报表",
+      "method": "GET",
+      "path": "/api/report/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "报表",
+      "method": "GET",
+      "path": "/api/report/list",
+      "status": 200,
+      "ok": true,
+      "snippet": "{\"code\":200,\"msg\":null,\"data\":{\"total\":0,\"records\":[]},\"map\":{}}"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "中心审批",
+      "method": "GET",
+      "path": "/api/center/approval/consultation/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: class java.util.ArrayList cannot be cast to class com.github.pagehelper.Page (java.util.Arra"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "中心审批",
+      "method": "GET",
+      "path": "/api/center/approval/consultation/list",
+      "status": 500,
+      "ok": false,
+      "snippet": "{\"code\":500,\"msg\":\"服务器内部错误: class java.util.ArrayList cannot be cast to class com.github.pagehelper.Page (java.util.Arra"
+    },
+    {
+      "role": "COUNSELOR",
+      "tags": "内容审核",
+      "method": "GET",
+      "path": "/api/center/content-review/pending",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 无权限访问该接口\",\"data\":null,\"map\":{}}"
+    },
+    {
+      "role": "ADMIN",
+      "tags": "内容审核",
+      "method": "GET",
+      "path": "/api/center/content-review/pending",
+      "status": 400,
+      "ok": false,
+      "snippet": "{\"code\":400,\"msg\":\"参数错误: 无权限访问该接口\",\"data\":null,\"map\":{}}"
+    }
+  ]
+}

@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import sasu.platform.mhm.pojo.dto.ActivityListQueryDTO;
 import sasu.platform.mhm.pojo.entity.GroupActivityJoin;
-import sasu.platform.mhm.pojo.VO.ActivityDetailVO;
-import sasu.platform.mhm.pojo.VO.ActivityListItemVO;
-import sasu.platform.mhm.pojo.VO.MyActivityVO;
+import sasu.platform.mhm.pojo.vo.ActivityDetailVO;
+import sasu.platform.mhm.pojo.vo.ActivityListItemVO;
+import sasu.platform.mhm.pojo.vo.MyActivityVO;
 
 import java.util.Map;
 

@@ -24,6 +24,9 @@
 
     <el-card class="table-card" shadow="never">
       <el-table :data="cases" stripe v-loading="loading" style="width: 100%">
+        <template #empty>
+          <el-empty v-if="!loading" description="暂无个案" />
+        </template>
         <el-table-column prop="id" label="个案编号" width="120" />
         <el-table-column prop="student_name" label="学生姓名" width="100" />
         <el-table-column prop="status" label="状态" width="100">
@@ -40,7 +43,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-empty v-if="!cases.length && !loading" description="暂无个案" />
     </el-card>
   </div>
 </template>

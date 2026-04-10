@@ -69,8 +69,13 @@ function normalizeListPayload(data) {
   if (Array.isArray(data)) return { records: data, total: data.length }
   if (data && typeof data === 'object') {
     const records = data.records || data.list || []
-    const totalVal = data.total != null ? Number(data.total) : records.length
-    return { records: Array.isArray(records) ? records : [], total: Number.isFinite(totalVal) ? totalVal : 0 }
+    const arr = Array.isArray(records) ? records : []
+    let totalVal = data.total != null ? Number(data.total) : arr.length
+    /* 部分后端返回 total=0 但 records 有数据，分页组件依赖 total */
+    if (arr.length > 0 && (!Number.isFinite(totalVal) || totalVal < arr.length)) {
+      totalVal = arr.length
+    }
+    return { records: arr, total: Number.isFinite(totalVal) ? totalVal : 0 }
   }
   return { records: [], total: 0 }
 }

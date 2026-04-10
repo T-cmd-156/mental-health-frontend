@@ -29,5 +29,5 @@ public interface UserMapper {
     /**
      * 管理端用户分页列表查询
      */
-    List<User> selectAdminUserList(PageQueryDTO query);
+    com.github.pagehelper.Page<User> selectAdminUserList(PageQueryDTO query);
 }

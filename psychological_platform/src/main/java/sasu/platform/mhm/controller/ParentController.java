@@ -47,7 +47,10 @@ public class ParentController {
      * 绑定子女
      */
     @PostMapping("/children/bind")
-    public R<String> bindChild(@RequestBody ParentBindChildDTO dto) {
+    public R<String> bindChild(@RequestBody(required = false) ParentBindChildDTO dto) {
+        if (dto == null) {
+            return R.error("参数不能为空");
+        }
         log.info("绑定子女: {}", dto);
         parentService.bindChild(dto, null);
         return R.success("绑定成功");

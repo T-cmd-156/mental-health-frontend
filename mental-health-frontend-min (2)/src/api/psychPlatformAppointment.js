@@ -9,10 +9,18 @@ import request from './request.js'
 export function unwrapPageResult(res) {
   const d = res?.data
   if (Array.isArray(d)) {
-    return { total: d.length, records: d }
+    const records = d.filter((x) => x != null)
+    return { total: records.length, records }
   }
-  if (d && typeof d === 'object' && Array.isArray(d.records)) {
-    return { total: Number(d.total) || 0, records: d.records }
+  if (d && typeof d === 'object') {
+    const rows = Array.isArray(d.records)
+      ? d.records
+      : Array.isArray(d.list)
+        ? d.list
+        : null
+    if (rows) {
+      return { total: Number(d.total) || 0, records: rows.filter((x) => x != null) }
+    }
   }
   return { total: 0, records: [] }
 }
@@ -54,8 +62,11 @@ export function fetchConsultantList(params = {}) {
 }
 
 /**
- * 学生/咨询师维度预约列表（管理端 list + listAppointments，支持 userId / counselorId）
- * GET /api/appointment/list
+ * GET /api/appointment/list — 后端 PageQueryDTO + MyBatis listAppointments：
+ * - counselorId：AND cs.counselor_id = #{counselorId}（咨询师工作台须传，且等于登录用户 ID / 排班表 counselor_id）
+ * - userId：AND ca.student_id = #{userId}（学生维度；勿与 counselorId 同时误传，否则交集为空）
+ * - page / pageSize：分页
+ * appointment_status 若需筛选由后端字段约定；PageQueryDTO.status 为 Integer，切勿把 PENDING 等字符串塞进 status。
  */
 export function fetchAppointmentList(params = {}) {
   return request.get('/api/appointment/list', {

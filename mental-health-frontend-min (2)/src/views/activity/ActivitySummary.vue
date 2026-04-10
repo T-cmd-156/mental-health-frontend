@@ -41,22 +41,47 @@ function goBack() {
   router.push('/admin/activity-manage')
 }
 
+const STORAGE_PREFIX = 'activity_summary_draft_'
+
 function submit() {
   if (!form.value.content?.trim()) {
     ElMessage.warning('请填写总结内容')
     return
   }
+  const id = activityId.value || String(route.query.activityId || route.query.id || '').trim()
+  if (!id) {
+    ElMessage.warning('缺少活动编号')
+    return
+  }
   submitting.value = true
-  // 对接 POST /api/activity/summary 时在此调用
-  setTimeout(() => {
-    submitting.value = false
-    ElMessage.success('总结已提交')
+  try {
+    localStorage.setItem(
+      STORAGE_PREFIX + id,
+      JSON.stringify({
+        activityId: id,
+        content: form.value.content.trim(),
+        savedAt: new Date().toISOString(),
+      }),
+    )
+    ElMessage.success('已保存到本地（后端暂无活动总结接口）')
     router.push('/admin/activity-manage')
-  }, 400)
+  } finally {
+    submitting.value = false
+  }
 }
 
 onMounted(() => {
-  activityId.value = (route.query.id as string) || ''
+  activityId.value = String(route.query.activityId || route.query.id || '').trim()
+  if (!activityId.value) return
+  try {
+    const raw = localStorage.getItem(STORAGE_PREFIX + activityId.value)
+    if (raw) {
+      const o = JSON.parse(raw)
+      if (o?.content) form.value.content = o.content
+    }
+  } catch {
+    /* ignore */
+  }
 })
 </script>
 

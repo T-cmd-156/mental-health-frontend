@@ -47,12 +47,11 @@ function submit() {
     return
   }
   submitting.value = true
-  // 对接 POST /api/activity/create 时在此调用
-  setTimeout(() => {
+  try {
+    ElMessage.info('当前 psychological_platform 未提供活动创建接口，请到数据库或运营后台维护团体活动数据。')
+  } finally {
     submitting.value = false
-    ElMessage.success('活动创建成功')
-    router.push('/admin/activity-manage')
-  }, 400)
+  }
 }
 </script>
 

@@ -17,7 +17,7 @@ public interface MessageMapper {
     /**
      * 查询消息列表
      */
-    List<MessageVO> selectMessageList(@Param("query") MessageListQueryDTO query);
+    com.github.pagehelper.Page<MessageVO> selectMessageList(@Param("query") MessageListQueryDTO query);
 
     /**
      * 查询消息详情

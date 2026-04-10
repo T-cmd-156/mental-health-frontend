@@ -1,6 +1,15 @@
 import request from './request'
 
-const isDev = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV
+/** 仅当 VITE_USE_MOCK_MESSAGE=true 时使用本地 Mock，否则开发/生产均走真实后端 */
+const useMessageMock =
+  typeof import.meta !== 'undefined' && import.meta.env?.VITE_USE_MOCK_MESSAGE === 'true'
+
+function coerceMessageListType(type) {
+  if (type === undefined || type === null || type === '') return undefined
+  if (typeof type === 'number' && Number.isFinite(type)) return type
+  if (typeof type === 'string' && /^\d+$/.test(type)) return Number(type)
+  return undefined
+}
 
 // 消息类型枚举
 export const messageTypes = [
@@ -21,86 +30,77 @@ export const messageTypeColors = {
   activity: '#722ed1'
 }
 
-function currentUserId() {
-  return (
-    localStorage.getItem('user_id') ||
-    localStorage.getItem('studentId') ||
-    localStorage.getItem('User_name') ||
-    ''
-  )
-}
-
-// 获取消息列表（文档 十五）
+// 获取消息列表（MessageListQueryDTO：userId 由后端从 JWT 填充；type 为 PageQueryDTO 的整型栏目类型，勿传 crisis 等字符串）
 export function getMessageList(params = {}) {
-  if (isDev) {
+  if (useMessageMock) {
     return getMessageListMock(params)
   }
+  const type = coerceMessageListType(params.type)
   return request({
     url: '/api/message/list',
     method: 'get',
     params: {
       page: params.page || 1,
       pageSize: params.pageSize || 20,
-      userId: params.userId || currentUserId(),
-      type: params.type || undefined,
-      read: params.read
-    }
+      ...(type !== undefined ? { type } : {}),
+      read: params.read,
+      countOnly: params.countOnly === true ? true : undefined,
+    },
   })
 }
 
-// 获取未读消息数量
-export function getUnreadCount() {
-  if (isDev) {
+// 获取未读消息数量（GET /api/message/unread-count，可选 type 字符串由后端解析）
+export function getUnreadCount(type) {
+  if (useMessageMock) {
     return getUnreadCountMock()
   }
   return request({
-    url: '/api/message/list',
+    url: '/api/message/unread-count',
     method: 'get',
-    params: { read: false, page: 1, pageSize: 1, countOnly: true, userId: currentUserId() }
+    params: type != null && type !== '' ? { type: String(type) } : {},
   })
 }
 
 // 标记消息为已读
 export function markAsRead(messageIds) {
-  if (isDev) {
+  if (useMessageMock) {
     return markAsReadMock(messageIds)
   }
   const ids = Array.isArray(messageIds) ? messageIds : [messageIds]
   return request({
-    url: '/api/message/read',
+    url: '/api/message/mark-read',
     method: 'post',
-    data: { messageIds: ids }
+    data: { messageIds: ids },
   })
 }
 
 // 标记消息为未读
 export function markAsUnread(messageIds) {
-  if (isDev) {
+  if (useMessageMock) {
     return markAsUnreadMock(messageIds)
   }
   const ids = Array.isArray(messageIds) ? messageIds : [messageIds]
   return request({
-    url: '/api/message/unread',
+    url: '/api/message/mark-unread',
     method: 'post',
-    data: { messageIds: ids }
+    data: { messageIds: ids },
   })
 }
 
 // 全部标记为已读
 export function markAllAsRead() {
-  if (isDev) {
+  if (useMessageMock) {
     return markAllAsReadMock()
   }
   return request({
-    url: '/api/message/read',
+    url: '/api/message/mark-all-read',
     method: 'post',
-    data: { all: true }
   })
 }
 
-/** 站内/业务通知发送（非家长留言模块，路径与后端约定） */
+/** 站内/业务 notice 发送（POST /api/message/send） */
 export function sendSiteMessage(data) {
-  if (isDev) {
+  if (useMessageMock) {
     return Promise.resolve({ code: 200, message: 'ok' })
   }
   return request.post('/api/message/send', data)
@@ -108,7 +108,7 @@ export function sendSiteMessage(data) {
 
 // 删除消息
 export function deleteMessages(messageIds) {
-  if (isDev) {
+  if (useMessageMock) {
     return deleteMessagesMock(messageIds)
   }
   const ids = Array.isArray(messageIds) ? messageIds : [messageIds]

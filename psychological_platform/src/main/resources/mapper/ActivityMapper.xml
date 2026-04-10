@@ -3,7 +3,7 @@
 <mapper namespace="sasu.platform.mhm.mapper.ActivityMapper">
 
     <select id="listActivities"
-            resultType="sasu.platform.mhm.pojo.VO.ActivityListItemVO">
+            resultType="sasu.platform.mhm.pojo.vo.ActivityListItemVO">
         SELECT
             a.activity_id AS activityId,
             a.title,
@@ -48,7 +48,7 @@
     </select>
 
     <select id="getActivityDetail"
-            resultType="sasu.platform.mhm.pojo.VO.ActivityDetailVO">
+            resultType="sasu.platform.mhm.pojo.vo.ActivityDetailVO">
         SELECT
             a.activity_id AS activityId,
             a.title,
@@ -171,7 +171,7 @@
     </update>
 
     <select id="listMyActivities"
-            resultType="sasu.platform.mhm.pojo.VO.MyActivityVO">
+            resultType="sasu.platform.mhm.pojo.vo.MyActivityVO">
         SELECT
             a.activity_id AS activityId,
             a.title,

@@ -174,8 +174,10 @@ async function loadStats() {
     const msgRes = await getUnreadCount()
     const leaveRes = await leavePromise
 
-    if (crisisRes?.code === 200 && Array.isArray(crisisRes.data)) {
-      stats.value.crisisPending = crisisRes.data.length
+    if (crisisRes?.code === 200) {
+      const crisisList =
+        crisisRes.data?.list ?? crisisRes.data?.records ?? (Array.isArray(crisisRes.data) ? crisisRes.data : [])
+      stats.value.crisisPending = Array.isArray(crisisList) ? crisisList.length : 2
     } else {
       stats.value.crisisPending = 2
     }

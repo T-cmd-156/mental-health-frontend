@@ -10,22 +10,18 @@
         <result property="read" column="is_read"/>
         <result property="createTime" column="created_at"/>
         <result property="readAt" column="read_at"/>
-        <result property="link" column="link"/>
-        <result property="priority" column="priority"/>
     </resultMap>
 
     <!-- 查询消息列表 -->
     <select id="selectMessageList" resultMap="MessageVOResultMap">
         SELECT
-            message_id,
-            message_type,
-            title,
-            content,
-            is_read,
-            created_at,
-            read_at,
-            link,
-            COALESCE(priority, 0) as priority
+        message_id,
+        message_type,
+        title,
+        content,
+        is_read,
+        created_at,
+        read_at
         FROM system_message
         <where>
             <if test="query.userId != null and query.userId != ''">
@@ -39,7 +35,7 @@
             </if>
             AND (expires_at IS NULL OR expires_at > NOW())
         </where>
-        ORDER BY priority DESC, created_at DESC
+        ORDER BY created_at DESC
     </select>
 
     <!-- 查询消息详情 -->
@@ -51,9 +47,7 @@
             content,
             is_read,
             created_at,
-            read_at,
-            link,
-            COALESCE(priority, 0) as priority
+            read_at
         FROM system_message
         WHERE message_id = #{messageId}
     </select>
@@ -85,26 +79,22 @@
             scheduled_send_time,
             sent_at,
             expires_at,
-            priority,
-            link,
             created_at,
             updated_at
         ) VALUES (
-            #{messageId},
-            #{userId},
-            #{messageType},
-            #{title},
-            #{content},
-            #{relatedId},
-            COALESCE(#{isRead}, 0),
-            #{scheduledSendTime},
-            #{sentAt},
-            #{expiresAt},
-            COALESCE(#{priority}, 0),
-            #{link},
-            NOW(),
-            NOW()
-        )
+                     #{messageId},
+                     #{userId},
+                     #{messageType},
+                     #{title},
+                     #{content},
+                     #{relatedId},
+                     COALESCE(#{isRead}, 0),
+                     #{scheduledSendTime},
+                     #{sentAt},
+                     #{expiresAt},
+                     NOW(),
+                     NOW()
+                 )
     </insert>
 
     <!-- 批量标记已读 -->

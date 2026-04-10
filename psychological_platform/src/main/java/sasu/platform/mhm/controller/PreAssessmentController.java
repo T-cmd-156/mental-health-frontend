@@ -29,13 +29,33 @@ public class PreAssessmentController {
      * 手写版必填：handwrittenScaleFile
      */
     @PostMapping("/submit")
-    public R submit(@RequestParam String appointmentId,
-                    @RequestParam String scaleType,
-                    @RequestParam String scaleName,
-                    @RequestParam Integer totalScore,
+    public R submit(@RequestParam(required = false) String appointmentId,
+                    @RequestParam(required = false) String scaleType,
+                    @RequestParam(required = false) String scaleName,
+                    @RequestParam(required = false) Integer totalScore,
                     @RequestParam(required = false) String scoreInterpretation,
                     @RequestParam(required = false) String assessmentData,
                     @RequestParam(required = false) MultipartFile handwrittenScaleFile) {
+
+        // 参数验证
+        if (scaleType == null || scaleType.trim().isEmpty()) {
+            return R.error("量表类型(scaleType)不能为空");
+        }
+        if (scaleName == null || scaleName.trim().isEmpty()) {
+            return R.error("量表名称(scaleName)不能为空");
+        }
+        if (totalScore == null) {
+            return R.error("总分(totalScore)不能为空");
+        }
+
+        // 至少需要提供电子版数据或手写版文件之一
+        boolean hasAssessmentData = assessmentData != null && !assessmentData.trim().isEmpty();
+        boolean hasHandwrittenFile = handwrittenScaleFile != null && !handwrittenScaleFile.isEmpty();
+
+        if (!hasAssessmentData && !hasHandwrittenFile) {
+            return R.error("请提供评估数据(assessmentData)或上传手写量表文件(handwrittenScaleFile)");
+        }
+
         PreAssessmentSubmitDTO dto = new PreAssessmentSubmitDTO();
         dto.setAppointmentId(appointmentId);
         dto.setScaleType(scaleType);
@@ -48,6 +68,7 @@ public class PreAssessmentController {
         Map<String, Object> res = preAssessmentService.submit(dto);
         return R.success("提交成功", res);
     }
+
 }
 
 

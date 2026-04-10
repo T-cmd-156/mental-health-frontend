@@ -249,7 +249,8 @@ const loadData = async () => {
   try {
     const res = await getCrisisList({ status: 'pending' })
     if (res.code === 200) {
-      crisisList.value = res.data || []
+      const list = res.data?.list ?? res.data?.records ?? (Array.isArray(res.data) ? res.data : [])
+      crisisList.value = Array.isArray(list) ? list : []
     }
   } catch (e) {
     crisisList.value = [

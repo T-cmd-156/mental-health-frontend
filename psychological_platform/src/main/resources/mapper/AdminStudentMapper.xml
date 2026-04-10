@@ -6,8 +6,8 @@
     <resultMap id="AdminStudentMap" type="sasu.platform.mhm.pojo.vo.AdminStudentVO">
         <id column="student_id" property="studentId"/>
         <result column="user_id" property="userId"/>
-        <result column="student_no" property="studentNo"/>
-        <result column="name" property="name"/>
+        <result column="student_number" property="studentNo"/>
+        <result column="real_name" property="name"/>
         <result column="gender" property="gender"/>
         <result column="college_name" property="collegeName"/>
         <result column="class_name" property="className"/>
@@ -18,24 +18,25 @@
 
     <select id="pageQuery" resultMap="AdminStudentMap">
         SELECT
-            s.student_id,
-            s.user_id,
-            s.student_no,
-            s.name,
-            s.gender,
-            oc.org_name AS college_name,
-            ok.org_name AS class_name,
-            s.grade,
-            s.phone,
-            s.email
+        s.student_id,
+        s.user_id,
+        s.student_number,
+        u.real_name,
+        u.gender,
+        oc.org_name AS college_name,
+        ok.org_name AS class_name,
+        s.grade,
+        u.phone,
+        u.email
         FROM student_info s
-                 LEFT JOIN organization oc ON oc.org_id = s.college_id
-                 LEFT JOIN organization ok ON ok.org_id = s.class_id
+        LEFT JOIN user u ON u.user_id = s.user_id
+        LEFT JOIN organization oc ON oc.org_id = s.college_id
+        LEFT JOIN organization ok ON ok.org_id = s.class_id
         <where>
             <if test="keyword != null and keyword != ''">
-                AND (s.student_no LIKE CONCAT('%', #{keyword}, '%')
-                    OR s.name LIKE CONCAT('%', #{keyword}, '%')
-                    OR s.phone LIKE CONCAT('%', #{keyword}, '%'))
+                AND (s.student_number LIKE CONCAT('%', #{keyword}, '%')
+                OR u.real_name LIKE CONCAT('%', #{keyword}, '%')
+                OR u.phone LIKE CONCAT('%', #{keyword}, '%'))
             </if>
             <if test="collegeId != null and collegeId != ''">
                 AND s.college_id = #{collegeId}
@@ -47,26 +48,27 @@
                 AND s.grade = #{grade}
             </if>
         </where>
-        ORDER BY s.student_no ASC
+        ORDER BY s.student_number ASC
     </select>
 
     <select id="getByStudentId" resultMap="AdminStudentMap">
         SELECT
             s.student_id,
             s.user_id,
-            s.student_no,
-            s.name,
-            s.gender,
+            s.student_number,
+            u.real_name,
+            u.gender,
             oc.org_name AS college_name,
             ok.org_name AS class_name,
             s.grade,
-            s.phone,
-            s.email
+            u.phone,
+            u.email
         FROM student_info s
+                 LEFT JOIN user u ON u.user_id = s.user_id
                  LEFT JOIN organization oc ON oc.org_id = s.college_id
                  LEFT JOIN organization ok ON ok.org_id = s.class_id
         WHERE s.student_id = #{studentId}
-        LIMIT 1
+            LIMIT 1
     </select>
 
 </mapper>

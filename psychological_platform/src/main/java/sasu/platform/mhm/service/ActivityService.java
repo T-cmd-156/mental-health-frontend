@@ -2,7 +2,7 @@ package sasu.platform.mhm.service;
 
 import sasu.platform.mhm.pojo.common.PageResult;
 import sasu.platform.mhm.pojo.dto.ActivityListQueryDTO;
-import sasu.platform.mhm.pojo.VO.ActivityDetailVO;
+import sasu.platform.mhm.pojo.vo.ActivityDetailVO;
 
 public interface ActivityService {
     PageResult list(ActivityListQueryDTO query);

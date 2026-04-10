@@ -131,7 +131,10 @@
           <h2>欢迎进入 {{ roleName }} 工作台</h2>
         </div>
         <div class="content-body">
-          <router-view :key="viewKey" />
+          <!-- 使用插槽内的 route，与 Component 同源，避免与 useRoute() 异步边沿不一致导致 parentNode 为 null -->
+          <router-view v-slot="{ Component, route: viewRoute }">
+            <component :is="Component" :key="viewRoute.fullPath" />
+          </router-view>
         </div>
       </section>
     </div>
@@ -161,12 +164,16 @@ const route = useRoute()
 const unreadCount = ref(0)
 onMounted(async () => {
   try {
-    const res = await getNoticeList({ page: 1, pageSize: 1 })
+    const res = await getNoticeList({ page: 1, pageSize: 200 })
     const payload = res?.data
-    const total =
-      payload && typeof payload === 'object' && !Array.isArray(payload)
-        ? Number(payload.total || 0)
-        : 0
+    let total = 0
+    if (payload != null && typeof payload === 'object' && !Array.isArray(payload)) {
+      const records = payload.records || payload.list || []
+      total = Number(payload.total)
+      if (!Number.isFinite(total) || (Array.isArray(records) && records.length > total)) {
+        total = Array.isArray(records) ? records.length : 0
+      }
+    }
     unreadCount.value = Number.isFinite(total) ? total : 0
   } catch (_) {}
 })
@@ -193,7 +200,6 @@ const currentPath = computed(() => {
   if (p.startsWith('/admin/')) return p.replace('/admin/', '') || 'workbench'
   return 'workbench'
 })
-const viewKey = computed(() => route.fullPath)
 
 const menuEntries = computed(() => [
   { path: 'workbench', label: '工作台', icon: Odometer, show: true },
@@ -211,7 +217,8 @@ const menuEntries = computed(() => [
 ])
 
 function go(page) {
-  router.push('/admin/' + page)
+  const path = `/admin/${String(page).replace(/^\//, '')}`
+  router.push(path)
 }
 
 function goHome() {

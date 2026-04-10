@@ -6,8 +6,13 @@ export function setConsultationTime(data) {
 }
 
 /** OpenAPI: POST /api/consulate/list，body: PageQueryDTO → PageResult */
-export function fetchConsulateCounselorList(data) {
-  return request.post('/api/consulate/list', data)
+export function fetchConsulateCounselorList(data = {}) {
+  const body = {
+    page: data.page ?? 1,
+    pageSize: data.pageSize ?? 20,
+    ...data,
+  }
+  return request.post('/api/consulate/list', body)
 }
 
 /** GET /api/consulate/detail?counselorId= */

@@ -1,4 +1,4 @@
-package sasu.platform.mhm.pojo.VO;
+package sasu.platform.mhm.pojo.vo;
 
 import lombok.Data;
 import java.time.LocalDateTime;
