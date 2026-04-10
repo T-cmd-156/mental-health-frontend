@@ -6,11 +6,7 @@ import { isApiSuccess } from '../api/helpers.js'
 let _cachedCounselorRowId = ''
 let _cachedForJwtSub = ''
 
-/**
- * 咨询师侧「排班 / 预约列表」过滤用 ID，应对 GET /api/appointment/list 的 PageQueryDTO.counselorId。
- * 须与 psychological_platform 中 counselor_schedule.counselor_id、JWT 用户主键一致（咨询师登录后与 userId 同源）。
- * 优先读当前 Bearer 的 JWT sub，避免历史代码把账号名误存为 user_id 导致查不到记录。
- */
+
 export function getCounselorIdForScheduleFilter() {
   if (typeof localStorage === 'undefined') return ''
   const token = getStoredAccessToken()
