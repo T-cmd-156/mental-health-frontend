@@ -10,7 +10,7 @@
         </div>
       </div>
       <nav class="top-nav">
-        <router-link to="/message" class="nav-item message-link">
+        <router-link to="/admin/message" class="nav-item message-link">
           <el-icon><Bell /></el-icon>
           <span>消息</span>
           <span v-if="unreadCount > 0" class="unread-badge">{{ unreadCount }}</span>
@@ -39,7 +39,7 @@
     <div class="item" :class="{ active: currentPath === 'tutor-interview' }" @click="go('tutor-interview')">访谈管理</div>
     <div class="item" :class="{ active: currentPath === 'tutor-conversation' }" @click="go('tutor-conversation')">谈心谈话</div>
     <div class="item" :class="{ active: currentPath === 'tutor-parent-message' }" @click="go('tutor-parent-message')">家长留言</div>
-    <div class="item" :class="{ active: isExternalActive('/message') }" @click="router.push('/message')">消息中心</div>
+    <div class="item" :class="{ active: isExternalActive('/admin/message') }" @click="router.push('/admin/message')">消息中心</div>
     <div class="item" :class="{ active: currentPath === 'activity-manage' }" @click="go('activity-manage')">活动管理</div>
   </template>
 
@@ -51,7 +51,7 @@
     <div class="item" :class="{ active: currentPath === 'college-crisis' }" @click="go('college-crisis')">危机管理</div>
     <div class="item" :class="{ active: currentPath === 'college-students' }" @click="go('college-students')">学生管理</div>
     <div class="item" :class="{ active: currentPath === 'college-manage' || currentPath === 'college-tutors' }" @click="go('college-manage')">院系管理</div>
-    <div class="item" :class="{ active: isExternalActive('/message') }" @click="router.push('/message')">消息中心</div>
+    <div class="item" :class="{ active: isExternalActive('/admin/message') }" @click="router.push('/admin/message')">消息中心</div>
   </template>
 
   <!-- 校领导专属菜单 -->
@@ -61,7 +61,7 @@
     <div class="item" :class="{ active: currentPath === 'leader-report' }" @click="go('leader-report')">报表查看</div>
     <div class="item" :class="{ active: currentPath === 'leader-crisis' }" @click="go('leader-crisis')">危机管理</div>
     <div class="item" :class="{ active: currentPath === 'leader-colleges' }" @click="go('leader-colleges')">院系管理</div>
-    <div class="item" :class="{ active: isExternalActive('/message') }" @click="router.push('/message')">消息中心</div>
+    <div class="item" :class="{ active: isExternalActive('/admin/message') }" @click="router.push('/admin/message')">消息中心</div>
   </template>
 
   <!-- 系统管理员专属菜单 -->
@@ -227,7 +227,7 @@ function goHome() {
 
 function isExternalActive(path) {
   const p = route.path
-  if (path === '/message') return p === '/message' || p.startsWith('/message/')
+  if (path === '/admin/message') return p === '/admin/message' || p.startsWith('/admin/message/')
   if (path === '/case') return p === '/case' || p.startsWith('/case/')
   if (path === '/crisis') return p.startsWith('/crisis')
   if (path === '/assessment/list') return p.startsWith('/assessment/list') || p.startsWith('/assessment/detail')

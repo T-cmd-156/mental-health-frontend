@@ -241,6 +241,12 @@ const routes = [
     { path: 'self-help/music-therapy', name: 'MusicTherapy', component: () => import('../views/student/selfHelp/MusicTherapy.vue') },
     { path: 'self-help/health-course', name: 'HealthCourse', component: () => import('../views/student/selfHelp/HealthCourse.vue') },
     { path: 'self-help', name: 'SelfHelp', component: () => import('../views/student/selfHelp/SelfHelp.vue') },
+    { path: 'wiki', name: 'StudentWikiList', component: () => import('../views/wiki/WikiList.vue') },
+    { path: 'wiki/:id', name: 'StudentWikiDetail', component: () => import('../views/wiki/WikiDetail.vue') },
+    { path: 'articles', name: 'StudentArticleList', component: () => import('../views/articles/ArticleList.vue') },
+    { path: 'articles/:id', name: 'StudentArticleDetail', component: () => import('../views/articles/ArticleDetail.vue') },
+    { path: 'notices', name: 'StudentNoticeList', component: () => import('../views/notices/NoticeList.vue') },
+    { path: 'notices/:id', name: 'StudentNoticeDetail', component: () => import('../views/notices/NoticeDetail.vue') },
   ]
 },
 {
@@ -284,6 +290,12 @@ const routes = [
     { path: 'profile', name: 'ProfileView', component: () => import('../views/parent/profile/ProfileView.vue') },
     { path: 'contact', name: 'ContactCounselor', component: () => import('../views/parent/contact/ContactCounselor.vue') },
     { path: 'message', name: 'ParentMessage', component: () => import('../views/parent/message/ParentMessage.vue') },
+    { path: 'wiki', name: 'ParentWikiList', component: () => import('../views/wiki/WikiList.vue') },
+    { path: 'wiki/:id', name: 'ParentWikiDetail', component: () => import('../views/wiki/WikiDetail.vue') },
+    { path: 'articles', name: 'ParentArticleList', component: () => import('../views/articles/ArticleList.vue') },
+    { path: 'articles/:id', name: 'ParentArticleDetail', component: () => import('../views/articles/ArticleDetail.vue') },
+    { path: 'notices', name: 'ParentNoticeList', component: () => import('../views/notices/NoticeList.vue') },
+    { path: 'notices/:id', name: 'ParentNoticeDetail', component: () => import('../views/notices/NoticeDetail.vue') },
   ]
 },
 
@@ -497,6 +509,12 @@ const routes = [
       component: () => import('../views/admin/AdminSystemMonitor.vue'),
       meta: { needAuth: true, roles: ['admin'] }
     },
+    {
+      path: 'message',
+      name: 'AdminMessageCenter',
+      component: () => import('../views/message/MessageCenter.vue'),
+      meta: { needAuth: true, roles: ['admin', 'counselor', 'center', 'tutor', 'college', 'leader'] }
+    },
 
     // 辅导员端路由
     {
@@ -626,6 +644,46 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const needAuth = to.meta?.needAuth === true
+
+  // 已登录学生/家长若进入门户的百科、美文路径，重定向到对应端内页（避免顶栏变为门户、像已退出）
+  const portalUserRole = localStorage.getItem('User_role')
+  const portalUserToken =
+    localStorage.getItem('auth_token') ||
+    localStorage.getItem('User_token') ||
+    localStorage.getItem('access_token')
+  if (
+    portalUserToken &&
+    (portalUserRole === 'student' || portalUserRole === 'parent') &&
+    !to.path.startsWith('/student/') &&
+    !to.path.startsWith('/parent/') &&
+    !to.path.startsWith('/login')
+  ) {
+    const prefix = portalUserRole === 'student' ? '/student' : '/parent'
+    if (to.path === '/wiki') {
+      return next({ path: `${prefix}/wiki`, query: to.query, hash: to.hash, replace: true })
+    }
+    if (to.path === '/articles') {
+      return next({ path: `${prefix}/articles`, query: to.query, hash: to.hash, replace: true })
+    }
+    const wikiDetail = to.path.match(/^\/wiki\/(.+)$/)
+    if (wikiDetail) {
+      return next({
+        path: `${prefix}/wiki/${wikiDetail[1]}`,
+        query: to.query,
+        hash: to.hash,
+        replace: true,
+      })
+    }
+    const articleDetail = to.path.match(/^\/articles\/(.+)$/)
+    if (articleDetail) {
+      return next({
+        path: `${prefix}/articles/${articleDetail[1]}`,
+        query: to.query,
+        hash: to.hash,
+        replace: true,
+      })
+    }
+  }
 
   // 1. 管理端
 if (to.path.startsWith('/admin')) {

@@ -174,7 +174,7 @@
                 <p>专业心理咨询服务</p>
               </div>
             </router-link>
-            <router-link to="/wiki" class="action-card">
+            <router-link to="/student/wiki" class="action-card">
               <div class="action-icon" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%)">
                 <el-icon><Reading /></el-icon>
               </div>
@@ -183,7 +183,7 @@
                 <p>探索心理知识</p>
               </div>
             </router-link>
-            <router-link to="/articles" class="action-card">
+            <router-link to="/student/articles" class="action-card">
               <div class="action-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%)">
                 <el-icon><Document /></el-icon>
               </div>

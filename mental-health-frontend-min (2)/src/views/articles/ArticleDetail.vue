@@ -1,13 +1,13 @@
 <template>
   <div class="article-detail">
-    <PortalNavBar active-key="articles" />
+    <PortalNavBar v-if="!isEmbedded" active-key="articles" />
     <header class="page-header" :style="{ background: categoryGradient }">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
         <div class="deco-circle deco-circle-2"></div>
       </div>
       <div class="header-content">
-        <router-link to="/articles" class="back-btn">
+        <router-link :to="articlesListPath" class="back-btn">
           <el-icon><ArrowLeft /></el-icon>
           返回列表
         </router-link>
@@ -103,7 +103,7 @@
         </div>
 
         <div class="nav-section">
-          <router-link to="/articles" class="nav-link">
+          <router-link :to="articlesListPath" class="nav-link">
             <el-icon><ArrowLeft /></el-icon>
             <span>浏览更多心理美文</span>
           </router-link>
@@ -115,7 +115,7 @@
           <el-icon class="empty-icon"><Document /></el-icon>
         </div>
         <p class="empty-text">未找到该美文</p>
-        <router-link to="/articles" class="empty-link">
+        <router-link :to="articlesListPath" class="empty-link">
           <el-icon><ArrowLeft /></el-icon>
           返回心理美文列表
         </router-link>
@@ -139,6 +139,16 @@ import { ElMessage } from 'element-plus'
 
 const route = useRoute()
 const router = useRouter()
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+const isEmbedded = computed(() => routeBase.value !== '')
+const articlesListPath = computed(() =>
+  routeBase.value ? `${routeBase.value}/articles` : '/articles',
+)
 const loading = ref(true)
 const detail = ref(null)
 const isLiked = ref(false)
@@ -204,7 +214,8 @@ function fetchRelated(category, currentId) {
 }
 
 function goDetail(id) {
-  router.push(`/articles/${id}`)
+  const base = routeBase.value
+  router.push(base ? `${base}/articles/${id}` : `/articles/${id}`)
 }
 
 function toggleLike() {

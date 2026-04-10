@@ -227,22 +227,6 @@
               </div>
             </div>
           </div>
-
-          <!-- 常用资源 -->
-          <div class="card resources-card">
-            <div class="card-header">
-              <h3 class="card-title">
-                <span class="title-icon">📚</span>
-                家长课堂
-              </h3>
-            </div>
-            <div class="resource-list">
-              <a href="#" class="resource-item" v-for="resource in resources" :key="resource.id">
-                <span class="resource-icon">{{ resource.icon }}</span>
-                <span class="resource-name">{{ resource.name }}</span>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </main>
@@ -344,13 +328,6 @@ const todoItems = ref([
     priority: 'medium',
     action: 'appointment'
   }
-])
-
-const resources = ref([
-  { id: '1', icon: '📖', name: '如何与孩子有效沟通' },
-  { id: '2', icon: '🧠', name: '青少年心理健康指南' },
-  { id: '3', icon: '💡', name: '家庭教育小贴士' },
-  { id: '4', icon: '🎯', name: '压力管理技巧' }
 ])
 
 const healthData = ref({
@@ -1082,39 +1059,6 @@ const goToNotices = () => router.push('/notices')
 .notification-time {
   font-size: 12px;
   color: #bbb;
-}
-
-/* 资源卡片 */
-.resource-list {
-  padding: 12px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.resource-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  background: #f9fafb;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #333;
-  transition: all 0.2s;
-}
-
-.resource-item:hover {
-  background: #ecf5ff;
-  color: #409eff;
-}
-
-.resource-icon {
-  font-size: 1.2rem;
-}
-
-.resource-name {
-  font-size: 13px;
 }
 
 /* 移动端底部导航 */

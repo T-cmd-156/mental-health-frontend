@@ -42,16 +42,18 @@ export function getParentCounselor(studentId) {
 }
 
 export function sendParentMessage(data) {
+  const { fromRole, ...body } = data || {}
   return parentOrMock(
     () => parentMock.sendParentMessage(data),
-    () => request.post('/api/parent/message/send', data)
+    () => request.post('/api/parent/message/send', body)
   )
 }
 
 export function getParentMessages(params) {
+  const { fromRole, ...query } = params || {}
   return parentOrMock(
     () => parentMock.getParentMessages(params),
-    () => request.get('/api/parent/message/list', { params })
+    () => request.get('/api/parent/message/list', { params: query })
   )
 }
 

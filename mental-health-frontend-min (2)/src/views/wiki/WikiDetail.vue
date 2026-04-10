@@ -1,13 +1,13 @@
 <template>
   <div class="wiki-detail">
-    <PortalNavBar active-key="wiki" />
+    <PortalNavBar v-if="!isEmbedded" active-key="wiki" />
     <header class="page-header" :style="{ background: categoryGradient }">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
         <div class="deco-circle deco-circle-2"></div>
       </div>
       <div class="header-content">
-        <router-link to="/wiki" class="back-btn">
+        <router-link :to="wikiListPath" class="back-btn">
           <el-icon><ArrowLeft /></el-icon>
           返回列表
         </router-link>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="nav-section">
-          <router-link to="/wiki" class="nav-link" :style="{ background: categoryGradient }">
+          <router-link :to="wikiListPath" class="nav-link" :style="{ background: categoryGradient }">
             <el-icon><ArrowLeft /></el-icon>
             <span>浏览更多心理百科</span>
           </router-link>
@@ -109,7 +109,7 @@
           <el-icon class="empty-icon"><Document /></el-icon>
         </div>
         <p class="empty-text">未找到该百科内容</p>
-        <router-link to="/wiki" class="empty-link">
+        <router-link :to="wikiListPath" class="empty-link">
           <el-icon><ArrowLeft /></el-icon>
           返回心理百科列表
         </router-link>
@@ -138,6 +138,14 @@ const detail = ref(null)
 const isHelpful = ref(false)
 const readingProgress = ref(0)
 const relatedWiki = ref([])
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+const isEmbedded = computed(() => routeBase.value !== '')
+const wikiListPath = computed(() => (routeBase.value ? `${routeBase.value}/wiki` : '/wiki'))
 
 const categoryColors = {
   '基础知识': 'linear-gradient(135deg, #10b981 0%, #34d399 100%)',
@@ -196,7 +204,8 @@ function fetchRelated(category, currentId) {
 }
 
 function goDetail(id) {
-  router.push(`/wiki/${id}`)
+  const base = routeBase.value
+  router.push(base ? `${base}/wiki/${id}` : `/wiki/${id}`)
 }
 
 function markHelpful() {

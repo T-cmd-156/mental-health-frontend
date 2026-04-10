@@ -115,7 +115,7 @@
 import { ref, computed } from 'vue'
 import { ArrowLeft } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
-import { reportCrisis } from '../../../api/crisisApi'
+import { reportCrisis, buildStudentCrisisReportBody } from '../../../api/crisisApi'
 
 const form = ref({
   reportType: 'self',
@@ -180,14 +180,13 @@ const submitReport = async () => {
   }
   submitting.value = true
   try {
-    await reportCrisis({
-      reportType: form.value.reportType,
-      severity: form.value.severity,
-      description: form.value.description,
-      otherInfo: form.value.reportType === 'other' ? form.value.otherInfo : undefined,
-      contactInfo: form.value.contactInfo,
-      emergency: form.value.emergency === 'true'
-    })
+    const body = buildStudentCrisisReportBody(form.value)
+    if (!body.studentId) {
+      ElMessage.error('无法获取学号，请重新登录后再试')
+      submitting.value = false
+      return
+    }
+    await reportCrisis(body)
     ElMessage.success('上报成功！我们将尽快与您联系')
     resetForm()
   } catch (e) {

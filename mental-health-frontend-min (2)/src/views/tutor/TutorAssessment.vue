@@ -260,10 +260,15 @@ const viewResult = async (row) => {
 
 const remindStudent = async (row) => {
   try {
-    await sendSiteMessage({ studentId: row.studentId, type: 'assessment-remind' })
+    await sendSiteMessage({
+      userId: row.studentId,
+      messageType: 'SYSTEM',
+      title: '测评提醒',
+      content: `老师提醒您尽快完成心理测评（学号相关：${row.studentId || ''}）。`,
+    })
     ElMessage.success(`已向 ${row.studentName} 发送测评提醒`)
   } catch (e) {
-    ElMessage.success(`已向 ${row.studentName} 发送测评提醒`)
+    ElMessage.error(e?.response?.data?.msg || e?.message || '发送失败')
   }
 }
 

@@ -25,10 +25,11 @@ export function parseActivityPage(res) {
   return unwrapPageResult(res)
 }
 
-/** GET /api/activity/detail，参数 activityId（与后端 ActivityController 一致） */
+/** GET /api/activity/detail，同时传 activityId 与 id，兼容部分后端只绑定 id 的情况 */
 export function getActivityDetail(activityId) {
+  const id = activityId
   return request.get('/api/activity/detail', {
-    params: { activityId },
+    params: { activityId: id, id },
   })
 }
 

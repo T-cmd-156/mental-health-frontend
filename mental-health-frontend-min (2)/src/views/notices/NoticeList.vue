@@ -1,6 +1,6 @@
 <template>
   <div class="notice-list">
-    <PortalNavBar active-key="notices" />
+    <PortalNavBar v-if="!isEmbedded" active-key="notices" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-wave"></div>
@@ -155,12 +155,13 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getNotices } from '@/api/portal'
 import { Search, ArrowRight, Document, Bell, Calendar, Top, Tickets } from '@element-plus/icons-vue'
 
 const router = useRouter()
+const route = useRoute()
 const keyword = ref('')
 const filterTop = ref('')
 const list = ref([])
@@ -180,6 +181,13 @@ const displayList = computed(() => {
   }
   return list.value.filter(item => !item.isTop || topList.value.length === 0)
 })
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+const isEmbedded = computed(() => routeBase.value !== '')
 
 function setFilter(val) {
   filterTop.value = val
@@ -201,7 +209,8 @@ function onSearch() {
 }
 
 function goDetail(id) {
-  router.push(`/notices/${id}`)
+  const base = routeBase.value
+  router.push(base ? `${base}/notices/${id}` : `/notices/${id}`)
 }
 
 onMounted(() => {

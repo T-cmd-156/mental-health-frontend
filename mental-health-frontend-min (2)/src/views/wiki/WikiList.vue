@@ -1,6 +1,6 @@
 <template>
   <div class="wiki-list">
-    <PortalNavBar active-key="wiki" />
+    <PortalNavBar v-if="!isEmbedded" active-key="wiki" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-shape deco-shape-1"></div>
@@ -60,27 +60,6 @@
               <span class="cat-name">{{ c.name }}</span>
               <span class="cat-count">{{ c.count }}</span>
             </div>
-          </div>
-        </div>
-
-        <div class="sidebar-card quick-links">
-          <h3 class="sidebar-title">
-            <el-icon><Link /></el-icon>
-            快捷入口
-          </h3>
-          <div class="link-list">
-            <router-link to="/articles" class="quick-link">
-              <el-icon><Document /></el-icon>
-              <span>心理美文</span>
-            </router-link>
-            <router-link to="/student/peer-support" class="quick-link">
-              <el-icon><UserFilled /></el-icon>
-              <span>朋辈互助</span>
-            </router-link>
-            <router-link to="/appointment/select" class="quick-link">
-              <el-icon><Calendar /></el-icon>
-              <span>预约咨询</span>
-            </router-link>
           </div>
         </div>
       </aside>
@@ -154,16 +133,17 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getWiki } from '@/api/portal'
 import { 
   Search, ArrowRight, Document, Reading, Collection, 
-  Link, Setting, UserFilled, Calendar, 
+  Setting,
   Star, CircleCheck, ChatDotRound, QuestionFilled, Flag, TrendCharts
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
+const route = useRoute()
 const keyword = ref('')
 const category = ref('')
 const list = ref([])
@@ -193,6 +173,14 @@ const categoryStats = computed(() => {
   })
   return Object.entries(map).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count)
 })
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+
+const isEmbedded = computed(() => routeBase.value !== '')
 
 function getCategoryColor(cat) {
   return categoryConfig[cat]?.color || categoryConfig['default'].color
@@ -228,7 +216,8 @@ function onSearch() {
 }
 
 function goDetail(id) {
-  router.push(`/wiki/${id}`)
+  const base = routeBase.value
+  router.push(base ? `${base}/wiki/${id}` : `/wiki/${id}`)
 }
 
 function openLearningPlatform() {
@@ -492,33 +481,6 @@ onMounted(() => {
   background: #f1f5f9;
   padding: 2px 8px;
   border-radius: 10px;
-}
-
-.link-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.quick-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: #475569;
-  transition: all 0.2s;
-  background: #f8fafc;
-}
-
-.quick-link:hover {
-  background: #10b981;
-  color: white;
-}
-
-.quick-link .el-icon {
-  font-size: 18px;
 }
 
 .content-area {

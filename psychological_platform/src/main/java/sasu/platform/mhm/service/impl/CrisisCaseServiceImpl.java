@@ -4,7 +4,9 @@ import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import sasu.platform.mhm.mapper.CrisisReportMapper;
 import sasu.platform.mhm.pojo.vo.CrisisReportVO;
 import sasu.platform.mhm.pojo.vo.CrisistLevelVO;
@@ -22,14 +24,34 @@ public class CrisisCaseServiceImpl implements CrisisCaseService {
     @Autowired
     CrisisReportMapper crisisReportMapper;
 
+    /**
+     * 学生端自助上报时前端可省略咨询师：使用库中真实存在的 counselor_id（与 counselor_info 外键一致）
+     */
+    @Value("${crisis.default-counselor-id:}")
+    private String defaultCounselorId;
+
     @Override
     public boolean report(CrisisReportCreateDTO crisisReportCreateDTO) {
-        // 参数验证
-        if (crisisReportCreateDTO.getCounselorId() == null || crisisReportCreateDTO.getCounselorId().trim().isEmpty()) {
-            throw new RuntimeException("咨询师ID(counselorId)不能为空");
-        }
         if (crisisReportCreateDTO.getStudentId() == null || crisisReportCreateDTO.getStudentId().trim().isEmpty()) {
             throw new RuntimeException("学生ID(studentId)不能为空");
+        }
+        if (!StringUtils.hasText(crisisReportCreateDTO.getCounselorId())) {
+            if (StringUtils.hasText(defaultCounselorId)) {
+                crisisReportCreateDTO.setCounselorId(defaultCounselorId.trim());
+            } else {
+                throw new RuntimeException("咨询师ID(counselorId)不能为空，请在 application.yml 配置 crisis.default-counselor-id 为 counselor_info 表中存在的 counselor_id");
+            }
+        }
+
+        // 表字段 report_type / incident_description / risk_assessment 为 NOT NULL，补全默认值避免插入失败
+        if (!StringUtils.hasText(crisisReportCreateDTO.getReportType())) {
+            crisisReportCreateDTO.setReportType("OTHER");
+        }
+        if (!StringUtils.hasText(crisisReportCreateDTO.getIncidentDescription())) {
+            crisisReportCreateDTO.setIncidentDescription("（学生端未填写详情）");
+        }
+        if (!StringUtils.hasText(crisisReportCreateDTO.getRiskAssessment())) {
+            crisisReportCreateDTO.setRiskAssessment("待评估");
         }
 
         //设置唯一ID

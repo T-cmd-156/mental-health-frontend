@@ -55,6 +55,10 @@ mybatis:
 server:
   port: 8080
 
+# 学生端危机上报未选咨询师时，使用 counselor_info 表中存在的 counselor_id（UUID）
+crisis:
+  default-counselor-id: ""
+
 # 阿里云OSS配置（用于手写量表图片上传）
 aliyun:
   oss:

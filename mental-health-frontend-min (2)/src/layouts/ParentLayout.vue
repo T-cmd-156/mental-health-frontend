@@ -10,8 +10,8 @@
       </div>
       <nav class="top-links">
         <router-link to="/" class="link-pill">门户首页</router-link>
-        <router-link to="/wiki" class="link-pill">心理百科</router-link>
-        <router-link to="/notices" class="link-pill">通知公告</router-link>
+        <router-link to="/parent/wiki" class="link-pill">心理百科</router-link>
+        <router-link to="/parent/notices" class="link-pill">通知公告</router-link>
       </nav>
       <div class="top-right">
         <router-link to="/parent/message" class="msg-link">

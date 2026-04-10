@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <PortalNavBar active-key="articles" />
+    <PortalNavBar v-if="!isEmbedded" active-key="articles" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
@@ -204,7 +204,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getArticles } from '@/api/portal'
 import { 
@@ -213,7 +213,15 @@ import {
   Refresh, Menu, Tickets, ArrowDown
 } from '@element-plus/icons-vue'
 
+const route = useRoute()
 const router = useRouter()
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+const isEmbedded = computed(() => routeBase.value !== '')
 const keyword = ref('')
 const category = ref('')
 const sortBy = ref('latest')
@@ -304,7 +312,8 @@ function selectCategory(cat) {
 }
 
 function goDetail(id) {
-  router.push(`/articles/${id}`)
+  const base = routeBase.value
+  router.push(base ? `${base}/articles/${id}` : `/articles/${id}`)
 }
 
 function isLiked(id) {

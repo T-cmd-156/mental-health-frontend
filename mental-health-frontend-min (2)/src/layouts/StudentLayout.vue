@@ -10,8 +10,8 @@
       </div>
       <nav class="top-links">
         <router-link to="/" class="link-pill">门户首页</router-link>
-        <router-link to="/wiki" class="link-pill">心理百科</router-link>
-        <router-link to="/notices" class="link-pill">通知公告</router-link>
+        <router-link to="/student/wiki" class="link-pill">心理百科</router-link>
+        <router-link to="/student/notices" class="link-pill">通知公告</router-link>
       </nav>
       <div class="top-right">
         <router-link to="/message" class="msg-link">
@@ -61,7 +61,14 @@ const menuItems = [
   { label: '我的预约', path: '/my-appointment', match: (p) => p.startsWith('/my-appointment') },
   { label: '在线预约', path: '/appointment/select', match: (p) => p.startsWith('/appointment') },
   { label: '朋辈互助', path: '/student/peer-support', match: (p) => p.startsWith('/student/peer-support') },
-  { label: '心理自助', path: '/student/self-help', match: (p) => p.startsWith('/student/self-help') },
+  {
+    label: '心理自助',
+    path: '/student/self-help',
+    match: (p) =>
+      p.startsWith('/student/self-help') ||
+      p.startsWith('/student/wiki') ||
+      p.startsWith('/student/articles'),
+  },
   { label: '联系咨询师', path: '/student/contact', match: (p) => p === '/student/contact' },
   { label: '关联家长', path: '/student/parent-binding', match: (p) => p === '/student/parent-binding' },
   { label: '个人档案', path: '/student/profile', match: (p) => p.startsWith('/student/profile') || p.startsWith('/student/psych-profile') },

@@ -47,7 +47,7 @@
     <div v-if="displayTodoList.length" class="todo-section">
       <div class="section-header">
         <h3>待办事项</h3>
-        <router-link to="/message" class="link-more">查看全部</router-link>
+        <router-link to="/admin/message" class="link-more">查看全部</router-link>
       </div>
       <div class="todo-list">
         <div
@@ -119,7 +119,7 @@ const statsData = computed(() => {
     value: stats.value.unreadCount,
     color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
     icon: Bell,
-    to: '/message',
+    to: '/admin/message',
   })
   if (role.value === 'center' || role.value === 'counselor') {
     base.push({
@@ -138,7 +138,7 @@ const entriesConfig = {
     { title: '预约管理', desc: '查看与处理咨询预约', to: '/admin/appointments', color: 'linear-gradient(135deg, #1e4f9c 0%, #2563eb 100%)', icon: Calendar },
     { title: '危机审批', desc: '危机个案上报与协同审批', to: '/admin/crisis', color: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', icon: Warning },
     { title: '请假审批', desc: '咨询师请假申请审核', to: '/admin/leave', color: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', icon: CircleCheck },
-    { title: '消息中心', desc: '系统消息与待办提醒', to: '/message', color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: Bell },
+    { title: '消息中心', desc: '系统消息与待办提醒', to: '/admin/message', color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: Bell },
     { title: '系统管理', desc: '系统参数与角色权限配置', to: '/admin/system-manage', color: 'linear-gradient(135deg, #64748b 0%, #475569 100%)', icon: Setting },
     { title: '数据管理', desc: '数据备份、恢复、归档与字典', to: '/admin/data-manage', color: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', icon: FolderOpened },
     { title: '用户管理', desc: '管理各角色用户账号', to: '/admin/user-manage', color: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', icon: User },
@@ -147,7 +147,7 @@ const entriesConfig = {
     { title: '预约管理', desc: '查看与处理咨询预约', to: '/admin/appointments', color: 'linear-gradient(135deg, #1e4f9c 0%, #2563eb 100%)', icon: Calendar },
     { title: '危机审批', desc: '危机个案上报与协同审批', to: '/admin/crisis', color: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', icon: Warning },
     { title: '请假审批', desc: '咨询师请假申请审批', to: '/admin/leave', color: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', icon: CircleCheck },
-    { title: '消息中心', desc: '系统消息与待办提醒', to: '/message', color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: Bell },
+    { title: '消息中心', desc: '系统消息与待办提醒', to: '/admin/message', color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: Bell },
     { title: '咨询师管理', desc: '管理咨询师信息与排班', to: '/admin/counselor', color: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', icon: User },
     { title: '数据统计', desc: '全院数据统计与报表', to: '/admin/center-statistics', color: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)', icon: DataBoard },
   ],
@@ -156,7 +156,7 @@ const entriesConfig = {
     { title: '预约管理', desc: '查看与处理咨询预约', to: '/admin/appointments', color: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', icon: Calendar },
     { title: '个案管理', desc: '咨询记录与个案跟进', to: '/case', color: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', icon: List },
     { title: '危机管理', desc: '危机个案上报与处理', to: '/crisis', color: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', icon: Warning },
-    { title: '消息中心', desc: '系统消息与待办提醒', to: '/message', color: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', icon: Bell },
+    { title: '消息中心', desc: '系统消息与待办提醒', to: '/admin/message', color: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', icon: Bell },
   ],
 }
 
@@ -208,7 +208,7 @@ function loadTodo() {
   todoList.value = [
     { id: 1, type: 'crisis', typeText: '危机', content: '张同学危机个案待审批', time: '10分钟前', to: '/admin/crisis' },
     { id: 2, type: 'leave', typeText: '请假', content: '李老师 3月6日请假待审批', time: '30分钟前', to: '/admin/leave' },
-    { id: 3, type: 'message', typeText: '消息', content: '系统维护通知', time: '1小时前', to: '/message' },
+    { id: 3, type: 'message', typeText: '消息', content: '系统维护通知', time: '1小时前', to: '/admin/message' },
   ]
 }
 

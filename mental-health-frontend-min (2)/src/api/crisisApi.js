@@ -1,6 +1,7 @@
 import request from './request.js'
 import { unwrapPageResult } from './psychPlatformAppointment.js'
 import { isApiSuccess } from './helpers.js'
+import { getJwtSubject } from '@/utils/jwtPayload.js'
 
 /**
  * 将后端 CrisisReportVO / OpenAPI CrisisReportVO 转为危机列表页使用的行结构
@@ -106,6 +107,62 @@ export function updateCrisisLevel(data) {
     reportId: data.reportId || data.id,
     crisisLevel: data.crisisLevel || data.level,
   })
+}
+
+/**
+ * psychological_platform CrisisReportCreateDTO + 表 crisis_report 外键：
+ * student_id、counselor_id 须为库中 UUID；等级为 LOW/MODERATE/HIGH/SEVERE。
+ */
+const SEVERITY_TO_CRISIS_LEVEL = {
+  red: 'SEVERE',
+  orange: 'HIGH',
+  yellow: 'MODERATE',
+  blue: 'LOW',
+  green: 'LOW',
+}
+
+export function buildStudentCrisisReportBody(form) {
+  const token =
+    localStorage.getItem('access_token') ||
+    localStorage.getItem('User_token') ||
+    localStorage.getItem('auth_token')
+  const jwtSub = getJwtSubject(token)
+
+  const isOther = form.reportType === 'other'
+  const studentId = isOther
+    ? String(form.otherInfo?.studentId || '').trim()
+    : String(jwtSub || localStorage.getItem('studentId') || '').trim()
+
+  const lines = [
+    `【上报类型】${isOther ? '他人危机' : '本人危机'}`,
+    `【五色等级】${form.severity}`,
+    `【描述】${form.description || ''}`,
+    form.contactInfo?.name && `【联系人】${form.contactInfo.name}`,
+    form.contactInfo?.phone && `【电话】${form.contactInfo.phone}`,
+    form.contactInfo?.email && `【邮箱】${form.contactInfo.email}`,
+    isOther &&
+      form.otherInfo?.name &&
+      `【涉及学生】${form.otherInfo.name} / ${form.otherInfo.studentId || ''}`,
+    `【紧急】${form.emergency === true || form.emergency === 'true' ? '是' : '否'}`,
+  ].filter(Boolean)
+
+  const envCounselor =
+    typeof import.meta !== 'undefined' && import.meta.env?.VITE_DEFAULT_CRISIS_COUNSELOR_ID
+      ? String(import.meta.env.VITE_DEFAULT_CRISIS_COUNSELOR_ID).trim()
+      : ''
+
+  const crisisLevel = SEVERITY_TO_CRISIS_LEVEL[form.severity] || 'MODERATE'
+
+  return {
+    studentId,
+    counselorId: envCounselor || undefined,
+    reportType: 'OTHER',
+    crisisLevel,
+    incidentDescription: lines.join('\n'),
+    riskAssessment: '待评估',
+    immediateActions: '',
+    recommendedActions: '',
+  }
 }
 
 /**

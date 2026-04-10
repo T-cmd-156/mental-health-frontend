@@ -6,7 +6,7 @@
     </header>
     <div class="page-content">
       <div class="help-grid">
-        <div class="help-card" @click="goTo('/wiki')">
+        <div class="help-card" @click="goTo('/student/wiki')">
           <div class="card-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)">
             <el-icon :size="32"><Reading /></el-icon>
           </div>
@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="help-card" @click="goTo('/articles')">
+        <div class="help-card" @click="goTo('/student/articles')">
           <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)">
             <el-icon :size="32"><Document /></el-icon>
           </div>

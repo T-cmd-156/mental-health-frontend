@@ -15,14 +15,14 @@
           首页
         </router-link>
         <router-link
-          to="/wiki"
+          :to="wikiNavPath"
           class="nav-item"
           :class="{ 'active-nav': activeKey === 'wiki' }"
         >
           心理百科
         </router-link>
         <router-link
-          to="/articles"
+          :to="articlesNavPath"
           class="nav-item"
           :class="{ 'active-nav': activeKey === 'articles' }"
         >
@@ -44,9 +44,15 @@
         </router-link>
       </nav>
 
-      <div class="actions">
+      <div v-if="!endUserSession" class="actions">
         <button type="button" class="btn-login" @click="goLogin('admin')">管理登录</button>
         <button type="button" class="btn-login" @click="goLogin('user')">学生/家长登录</button>
+        <button type="button" class="btn-appoint" @click="goAppointment">在线预约</button>
+      </div>
+      <div v-else class="actions actions-enduser">
+        <span class="end-tag">{{ endTagLabel }}</span>
+        <span class="end-name">{{ endDisplayName }}</span>
+        <router-link :to="endDashboardPath" class="btn-enter-end">进入{{ endTagLabel }}</router-link>
         <button type="button" class="btn-appoint" @click="goAppointment">在线预约</button>
       </div>
     </header>
@@ -55,7 +61,8 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
   /** home | wiki | articles | peer | notices | appointment */
@@ -65,7 +72,58 @@ defineProps({
   },
 })
 
+const route = useRoute()
 const router = useRouter()
+
+/** 学生/家长已登录：门户顶栏显示身份与入口，不再显示「学生/家长登录」 */
+const endUserSession = computed(() => {
+  void route.fullPath
+  const r = localStorage.getItem('User_role')
+  const t =
+    localStorage.getItem('User_token') ||
+    localStorage.getItem('access_token') ||
+    localStorage.getItem('auth_token')
+  if (!t || (r !== 'student' && r !== 'parent')) return false
+  return true
+})
+
+const endTagLabel = computed(() => {
+  void route.fullPath
+  const r = localStorage.getItem('User_role')
+  return r === 'parent' ? '家长端' : '学生端'
+})
+
+const endDisplayName = computed(() => {
+  void route.fullPath
+  return (
+    localStorage.getItem('user_name') ||
+    localStorage.getItem('User_name') ||
+    (localStorage.getItem('User_role') === 'parent' ? '家长' : '同学')
+  )
+})
+
+const endDashboardPath = computed(() => {
+  void route.fullPath
+  return localStorage.getItem('User_role') === 'parent'
+    ? '/parent/dashboard'
+    : '/student/dashboard'
+})
+
+/** 已登录学生/家长从门户顶栏进入时，直接进入端内页，避免误进门户页 */
+const wikiNavPath = computed(() => {
+  void route.fullPath
+  const r = localStorage.getItem('User_role')
+  if (r === 'student') return '/student/wiki'
+  if (r === 'parent') return '/parent/wiki'
+  return '/wiki'
+})
+const articlesNavPath = computed(() => {
+  void route.fullPath
+  const r = localStorage.getItem('User_role')
+  if (r === 'student') return '/student/articles'
+  if (r === 'parent') return '/parent/articles'
+  return '/articles'
+})
 
 function goLogin(type) {
   if (type === 'admin') router.push('/login/admin')
@@ -181,6 +239,44 @@ function goAppointment() {
   transform: translateY(-2px);
   background: #b8921f;
   box-shadow: 0 6px 20px rgba(201, 162, 39, 0.5);
+}
+
+.actions-enduser {
+  align-items: center;
+}
+
+.end-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
+}
+
+.end-name {
+  font-size: 14px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-enter-end {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #a51c30;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-enter-end:hover {
+  background: white;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 960px) {

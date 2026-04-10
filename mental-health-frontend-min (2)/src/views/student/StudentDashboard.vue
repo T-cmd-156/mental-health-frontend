@@ -241,58 +241,8 @@
           </div>
           <el-empty v-else description="暂无待完成的测评" :image-size="80" />
         </section>
-
-        <!-- 推荐内容 -->
-        <section class="recommend-section">
-          <div class="section-header">
-            <h2 class="section-title">
-              <el-icon><Star /></el-icon>
-              <span>推荐内容</span>
-            </h2>
-            <el-button link type="primary" @click="go('/student/self-help')">
-              更多
-              <el-icon><ArrowRight /></el-icon>
-            </el-button>
-          </div>
-          <div class="recommend-list">
-            <div
-              v-for="item in recommendContent"
-              :key="item.id"
-              class="recommend-item"
-              @click="go(item.path)"
-            >
-              <div class="recommend-cover" :style="{ backgroundColor: item.bgColor }">
-                <el-icon :size="24"><component :is="item.icon" /></el-icon>
-              </div>
-              <div class="recommend-info">
-                <h4>{{ item.title }}</h4>
-                <p>{{ item.desc }}</p>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
-
-    <!-- 底部快捷操作 -->
-    <footer class="quick-actions">
-      <div class="action-item" @click="go('/appointment/select')">
-        <el-icon :size="20"><Plus /></el-icon>
-        <span>预约咨询</span>
-      </div>
-      <div class="action-item" @click="go('/student/self-help/music-therapy')">
-        <el-icon :size="20"><Headset /></el-icon>
-        <span>音乐放松</span>
-      </div>
-      <div class="action-item" @click="go('/wiki')">
-        <el-icon :size="20"><Collection /></el-icon>
-        <span>心理百科</span>
-      </div>
-      <div class="action-item" @click="go('/student/profile')">
-        <el-icon :size="20"><User /></el-icon>
-        <span>我的档案</span>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -314,9 +264,6 @@ import {
   Grid,
   Location,
   Document,
-  Star,
-  Headset,
-  Collection,
   TrendCharts,
   ChatDotRound,
   Phone,
@@ -475,33 +422,6 @@ const menuItems = [
     path: '/student/profile',
     color: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
     icon: User,
-  },
-]
-
-const recommendContent = [
-  {
-    id: 1,
-    title: '情绪管理技巧',
-    desc: '学习有效调节情绪的方法',
-    path: '/student/self-help/course',
-    bgColor: '#e0f2fe',
-    icon: Reading,
-  },
-  {
-    id: 2,
-    title: '放松音乐',
-    desc: '舒缓压力，放松身心',
-    path: '/student/self-help/music-therapy',
-    bgColor: '#fce7f3',
-    icon: Headset,
-  },
-  {
-    id: 3,
-    title: '心理小知识',
-    desc: '了解更多心理健康知识',
-    path: '/wiki',
-    bgColor: '#d1fae5',
-    icon: Collection,
   },
 ]
 
@@ -1109,87 +1029,6 @@ onUnmounted(() => {
   color: #94a3b8;
 }
 
-.recommend-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.recommend-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.recommend-item:hover {
-  background: #f8fafc;
-}
-
-.recommend-cover {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #3b82f6;
-}
-
-.recommend-info h4 {
-  margin: 0 0 4px 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.recommend-info p {
-  margin: 0;
-  font-size: 12px;
-  color: #94a3b8;
-}
-
-.quick-actions {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 50px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  z-index: 100;
-}
-
-.action-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: #64748b;
-}
-
-.action-item:hover {
-  background: #f1f5f9;
-  color: #3b82f6;
-}
-
-.action-item span {
-  font-size: 12px;
-  font-weight: 500;
-}
-
 @media (max-width: 1200px) {
   .main-content {
     grid-template-columns: 1fr;
@@ -1223,7 +1062,6 @@ onUnmounted(() => {
 @media (max-width: 640px) {
   .student-dashboard {
     padding: 16px;
-    padding-bottom: 120px;
   }
 
   .dashboard-header {
@@ -1243,16 +1081,6 @@ onUnmounted(() => {
 
   .stats-section {
     grid-template-columns: 1fr;
-  }
-
-  .quick-actions {
-    width: calc(100% - 32px);
-    justify-content: space-around;
-    padding: 8px 12px;
-  }
-
-  .action-item {
-    padding: 8px 12px;
   }
 }
 </style>

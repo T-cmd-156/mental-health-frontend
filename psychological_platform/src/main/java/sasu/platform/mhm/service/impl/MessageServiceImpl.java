@@ -33,7 +33,11 @@ public class MessageServiceImpl implements MessageService {
      * 获取当前用户ID
      */
     private String currentUserId() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
         if (principal instanceof UserDetailsImpl userDetails) {
             return userDetails.getUser().getUserId();
         }
@@ -58,9 +62,10 @@ public class MessageServiceImpl implements MessageService {
         }
         query.setUserId(userId);
 
-        // 如果只查询数量
+        // 如果只查询数量（type 为空时不要传字符串 "null"，避免 SQL 匹配 message_type='null'）
         if (Boolean.TRUE.equals(query.getCountOnly())) {
-            Long count = messageMapper.countUnreadMessages(userId, String.valueOf(query.getType()));
+            String typeStr = query.getType() != null ? String.valueOf(query.getType()) : null;
+            Long count = messageMapper.countUnreadMessages(userId, typeStr);
             return new PageResult(count, List.of());
         }
 

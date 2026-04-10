@@ -1,13 +1,13 @@
 <template>
   <div class="notice-detail">
-    <PortalNavBar active-key="notices" />
+    <PortalNavBar v-if="!isEmbedded" active-key="notices" />
     <header class="page-header">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
         <div class="deco-circle deco-circle-2"></div>
       </div>
       <div class="header-content">
-        <router-link to="/notices" class="back-btn">
+        <router-link :to="noticeListPath" class="back-btn">
           <el-icon><ArrowLeft /></el-icon>
           返回列表
         </router-link>
@@ -83,7 +83,7 @@
         </article>
 
         <div class="nav-section">
-          <router-link to="/notices" class="nav-link">
+          <router-link :to="noticeListPath" class="nav-link">
             <el-icon><ArrowLeft /></el-icon>
             <span>查看更多通知公告</span>
           </router-link>
@@ -95,7 +95,7 @@
           <el-icon class="empty-icon"><Bell /></el-icon>
         </div>
         <p class="empty-text">未找到该公告</p>
-        <router-link to="/notices" class="empty-link">
+        <router-link :to="noticeListPath" class="empty-link">
           <el-icon><ArrowLeft /></el-icon>
           返回通知公告列表
         </router-link>
@@ -108,6 +108,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getNoticeDetail } from '@/api/portal'
@@ -117,6 +118,14 @@ const route = useRoute()
 const loading = ref(true)
 const detail = ref(null)
 const readingProgress = ref(0)
+
+const routeBase = computed(() => {
+  if (route.path.startsWith('/student/')) return '/student'
+  if (route.path.startsWith('/parent/')) return '/parent'
+  return ''
+})
+const isEmbedded = computed(() => routeBase.value !== '')
+const noticeListPath = computed(() => (routeBase.value ? `${routeBase.value}/notices` : '/notices'))
 
 function fetchDetail() {
   const id = route.params.id
