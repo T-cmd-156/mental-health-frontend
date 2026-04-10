@@ -2,6 +2,7 @@ package sasu.platform.mhm.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,9 @@ public class LeaveServiceImpl implements LeaveService {
         }
 
         PageHelper.startPage(query.getPage(), query.getPageSize());
-        Page<LeaveVO> page = (Page<LeaveVO>) leaveMapper.selectList(query);
-        return new PageResult(page.getTotal(), page.getResult());
+        List<LeaveVO> leaveList = leaveMapper.selectList(query);
+        PageInfo<LeaveVO> pageInfo = new PageInfo<>(leaveList);
+        return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override
@@ -60,9 +62,21 @@ public class LeaveServiceImpl implements LeaveService {
         request.setCreatedAt(now);
         request.setUpdatedAt(now);
 
-        // 这里简单解析时间字符串，建议前端统一传 ISO_LOCAL_DATE_TIME
-        request.setStartTime(LocalDateTime.parse(dto.getStartTime()));
-        request.setEndTime(LocalDateTime.parse(dto.getEndTime()));
+        // 参数验证
+        if (dto.getStartTime() == null || dto.getStartTime().trim().isEmpty()) {
+            throw new RuntimeException("开始时间(startTime)不能为空");
+        }
+        if (dto.getEndTime() == null || dto.getEndTime().trim().isEmpty()) {
+            throw new RuntimeException("结束时间(endTime)不能为空");
+        }
+
+        try {
+            // 解析时间字符串，建议前端统一传 ISO_LOCAL_DATE_TIME 格式
+            request.setStartTime(LocalDateTime.parse(dto.getStartTime()));
+            request.setEndTime(LocalDateTime.parse(dto.getEndTime()));
+        } catch (Exception e) {
+            throw new RuntimeException("时间格式错误，请使用 ISO 格式（如：2026-04-09T10:00:00）");
+        }
 
         leaveMapper.insert(request);
     }

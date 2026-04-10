@@ -2,7 +2,7 @@
   <div class="page">
     <header class="page-head">
       <h1>关联家长</h1>
-      <p class="sub">家长发起绑定后，请在本页或登录后的提示框中确认或拒绝。状态：0 待确认 · 1 已绑定 · 2 已拒绝。</p>
+      <p class="sub">家长发起绑定后，请在本页或登录后的提示框中确认或拒绝。状态：-1 未绑定 · 0 待确认 · 1 已绑定 · 2 已拒绝。</p>
     </header>
 
     <el-card v-loading="loading" shadow="never" class="mb">
@@ -72,6 +72,7 @@ function statusText(v) {
   if (v === null || v === undefined) return '未查询'
   const n = Number(v)
   if (Number.isNaN(n)) return '未知'
+  if (n === -1) return '未绑定'
   if (n === 0) return '待确认'
   if (n === 1) return '已绑定'
   if (n === 2) return '已拒绝'
@@ -85,6 +86,7 @@ function statusTagType(v) {
   if (n === 1) return 'success'
   if (n === 0) return 'warning'
   if (n === 2) return 'info'
+  if (n === -1) return 'info'
   return 'info'
 }
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import sasu.platform.mhm.pojo.common.PageResult;
 import sasu.platform.mhm.pojo.common.R;
 import sasu.platform.mhm.pojo.dto.ActivityListQueryDTO;
-import sasu.platform.mhm.pojo.VO.ActivityDetailVO;
+import sasu.platform.mhm.pojo.vo.ActivityDetailVO;
 import sasu.platform.mhm.service.ActivityService;
 
 @Slf4j

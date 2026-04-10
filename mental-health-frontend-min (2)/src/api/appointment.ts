@@ -4,6 +4,7 @@ import { isApiSuccess } from './helpers.js'
 import * as studentMock from '../mock/student.ts'
 import { getCounselors, getPeriods } from './mock.ts'
 import { padTimeFragment, unwrapPageResult } from './psychPlatformAppointment.js'
+import { getCounselorIdForScheduleFilter } from '../utils/counselorSession.js'
 import { useAppointmentMock } from './appointmentEnv'
 
 import type { Appointment, AppointmentStatus } from '../types/appointment'
@@ -13,22 +14,31 @@ import { createAppointmentForStudent, getAppointmentById } from '../mock/appoint
 const appointmentMock = useAppointmentMock()
 const MOCK_SCHEDULE_KEY = 'MOCK_SCHEDULE'
 
-/** 将 /api/appointment/detail 的 VO 转成页面常用的 date / create_time / status */
+/** 将 /api/appointment/list|detail 的 AppointmentDetailVO 转成页面用状态（与 consultation_appointment.appointment_status 一致） */
 export function normalizeAppointmentFromApi(d: any) {
   if (!d || typeof d !== 'object') return d
   const s = d.status
   const sv = String(s ?? '').toUpperCase()
-  let status = s
-  if (sv === 'PENDING' || s === '待处理' || s === '待确认') status = 'draft'
+  let status = typeof s === 'string' ? s.toLowerCase() : s
+  if (sv === 'PENDING' || s === '待处理' || s === '待确认') status = 'submitted'
   else if (sv === 'CONFIRMED' || s === '已确认') status = 'confirmed'
   else if (sv === 'CANCELLED' || s === '已取消') status = 'cancelled'
-  else if (sv === 'REJECTED' || s === '已拒绝') status = 'closed'
+  else if (sv === 'REJECTED' || s === '已拒绝') status = 'rejected'
   else if (sv === 'COMPLETED' || s === '已完成') status = 'completed'
   else if (sv === 'NO_SHOW' || s === '爽约') status = 'no_show'
 
+  const appointmentDateRaw = d.appointmentDate ?? d.date
+  const dateStr =
+    appointmentDateRaw != null
+      ? String(appointmentDateRaw).includes('T')
+        ? String(appointmentDateRaw).slice(0, 10)
+        : String(appointmentDateRaw).slice(0, 10)
+      : ''
+
   return {
     ...d,
-    date: d.appointmentDate ?? d.date,
+    date: dateStr || appointmentDateRaw,
+    appointmentDate: dateStr || appointmentDateRaw,
     create_time: d.appointmentTime ?? d.create_time,
     end_time: d.end_time ?? d.appointmentTime,
     status,
@@ -293,26 +303,45 @@ export async function getMyAppointmentsAsync(studentId: string) {
   return { ...res, data: records.map((r: any) => normalizeAppointmentFromApi(r)) }
 }
 
-// 咨询师：查询全部预约
-export async function getCounselorAppointmentsAsync(counselorId: string) {
+/**
+ * 咨询师：GET /api/appointment/list
+ * 仅传 PageQueryDTO 中与 listAppointments 一致的过滤字段：page、pageSize、counselorId（= 登录用户 ID，与 cs.counselor_id 一致）。
+ * 不传 userId，避免与学生条件 AND 导致空列表。
+ */
+export async function getCounselorAppointmentsAsync(
+  counselorId: string,
+  opts?: { page?: number; pageSize?: number },
+) {
+  const effectiveId = (
+    (counselorId != null && String(counselorId).trim()) ||
+    getCounselorIdForScheduleFilter()
+  ).trim()
+
   if (appointmentMock) {
     const dbStr = localStorage.getItem('MOCK_DB') || '{}'
     const db = JSON.parse(dbStr)
     const appointments = db.appointments || []
-
-    // 用新的字段名筛选
-    const filtered = appointments.filter(a => a.counselorId === counselorId)
-
-        console.log('MOCK_DB', db)
-    console.log('counselorId', counselorId)
-    console.log('filtered appointments', filtered)
-    return Promise.resolve({ code: 200, data: filtered })
+    const filtered = appointments.filter((a: any) => a.counselorId === effectiveId)
+    return Promise.resolve({ code: 200, data: filtered, total: filtered.length })
   }
-  const res = await request.get('/api/appointment/list', {
-    params: { page: 1, pageSize: 200, counselorId },
-  })
-  const { records } = unwrapPageResult(res)
-  return { ...res, data: records.map((r: any) => normalizeAppointmentFromApi(r)) }
+
+  const page = Number(opts?.page ?? 1) || 1
+  const pageSize = Number(opts?.pageSize ?? 20) || 20
+
+  const params: Record<string, string | number> = {
+    page,
+    pageSize,
+  }
+  if (effectiveId) params.counselorId = effectiveId
+
+  const res: any = await request.get('/api/appointment/list', { params })
+  const { records, total } = unwrapPageResult(res)
+  const list = (records || []).filter(Boolean).map((r: any) => normalizeAppointmentFromApi(r))
+  return {
+    ...res,
+    data: list,
+    total: Number(total) || list.length,
+  }
 }
 
 // 获取可预约时间
@@ -320,7 +349,9 @@ export function getAvailableSlots(date: string) {
   if (appointmentMock) {
     return studentMock.getAvailableSlots(date)
   }
-  return request.get('/api/schedule/list', { params: { date } })
+  return request.get('/api/schedule/list', {
+    params: { page: 1, pageSize: 200, date },
+  })
 }
 
 // 获取可预约日期
@@ -328,7 +359,9 @@ export function getAvailableDates(start: string, days = 10) {
   if (appointmentMock) {
     return studentMock.getAvailableDates(start, days)
   }
-  return request.get('/api/schedule/list', { params: { start, days } })
+  return request.get('/api/schedule/list', {
+    params: { page: 1, pageSize: 500, start, days },
+  })
 }
 
 // 通用：通过 id 获取单条预约

@@ -14,7 +14,7 @@ public class PageQueryDTO {
     private String id; //内容的id
 
     @JsonProperty ("type")
-    private int type; //栏目类型：1-活动风采 2-通知公告 3-朋辈互助 4-心理百科 5-心理美文
+    private Integer type; //栏目类型：1-活动风采 2-通知公告 3-朋辈互助 4-心理百科 5-心理美文（可空）
 
     @JsonProperty("page")
     private Integer page;    //页码
@@ -41,7 +41,7 @@ public class PageQueryDTO {
     private String org_id;//组织id
 
     @JsonProperty("sortType")
-    private int sortType; //排序方式 0-时间降序 1-时间升序
+    private Integer sortType; //排序方式 0-时间降序 1-时间升序（可空）
 
     @JsonProperty("startTime")
     private String startTime; //开始时间

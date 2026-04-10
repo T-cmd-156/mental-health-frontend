@@ -12,10 +12,8 @@
             <if test="appointmentId != null and appointmentId != ''">
                 appointment_id,
             </if>
-            <!-- 咨询师ID -->
-            <if test="counselorId != null and counselorId != ''">
-                counselor_id,
-            </if>
+            <!-- 咨询师ID（必填） -->
+            counselor_id,
             <!-- 学生ID -->
             <if test="studentId != null and studentId != ''">
                 student_id,
@@ -54,9 +52,7 @@
             <if test="appointmentId != null and appointmentId != ''">
                 #{appointmentId,jdbcType=VARCHAR},
             </if>
-            <if test="counselorId != null and counselorId != ''">
-                #{counselorId,jdbcType=VARCHAR},
-            </if>
+            #{counselorId,jdbcType=VARCHAR},
             <if test="studentId != null and studentId != ''">
                 #{studentId,jdbcType=VARCHAR},
             </if>
@@ -83,10 +79,11 @@
             </if>
         </trim>
     </insert>
+
     <update id="setLevel" >
         update crisis_report set crisis_level = #{crisisLevel} where report_id = #{reportId}
     </update>
-    <select id="getCrisisList" resultType="sasu.platform.mhm.pojo.VO.CrisisReportVO">
+    <select id="getCrisisList" resultType="sasu.platform.mhm.pojo.vo.CrisisReportVO">
         SELECT * from crisis_report c  left join student_info s on c.student_id = s.student_id
         <where>
             <if test="crisisLevel != null and crisisLevel != ''">

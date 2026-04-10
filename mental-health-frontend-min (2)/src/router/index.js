@@ -10,7 +10,7 @@ const routes = [
 {
   path: '/case',
   name: 'CaseList',
-  component: () => import('../views/case/CaseList.vue'),
+  redirect: '/admin/case-list',
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 {
@@ -36,7 +36,7 @@ const routes = [
 {
   path: '/crisis',
   name: 'CrisisList',
-  component: () => import('../views/crisis/CrisisList.vue'),
+  redirect: '/admin/crisis-list',
   meta: { needAuth: true, roles: ['counselor','center','admin','tutor','college','leader'] }
 },
 {
@@ -104,7 +104,7 @@ const routes = [
 {
   path: '/leave/list',
   name: 'LeaveList',
-  component: () => import('../views/leave/LeaveList.vue'),
+  redirect: '/admin/leave-list',
   meta: { needAuth: true, roles: ['counselor'] }
 },
 
@@ -112,13 +112,13 @@ const routes = [
 {
   path: '/assessment/list',
   name: 'AssessmentList',
-  component: () => import('../views/assessment/AssessmentList.vue'),
+  redirect: '/admin/assessment-list',
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 {
   path: '/assessment/detail/:planId',
   name: 'AssessmentPlanDetail',
-  component: () => import('../views/assessment/AssessmentPlanDetail.vue'),
+  redirect: (to) => ({ path: `/admin/assessment-detail/${to.params.planId}` }),
   meta: { needAuth: true, roles: ['counselor','center','admin'] }
 },
 
@@ -212,196 +212,79 @@ const routes = [
   name: 'NoticeDetail',
   component: () => import('../views/notices/NoticeDetail.vue')
 },
+// 学生端：侧栏布局（与后台类似的顶栏 + 左侧菜单）
+{
+  path: '/student',
+  component: () => import('../layouts/StudentLayout.vue'),
+  meta: { needAuth: true },
+  children: [
+    { path: '', redirect: 'dashboard' },
+    { path: 'dashboard', name: 'StudentDashboard', component: () => import('../views/student/StudentDashboard.vue') },
+    { path: 'peer-support/:id', name: 'StudentPeerSupportDetail', component: () => import('../views/peer/PeerSupportDetail.vue') },
+    { path: 'peer-support', name: 'StudentPeerSupport', component: () => import('../views/peer/PeerSupport.vue') },
+    { path: 'assessment/:id/result', name: 'AssessmentResult', component: () => import('../views/student/assessment/AssessmentResult.vue') },
+    { path: 'assessment/:id', name: 'Assessment', component: () => import('../views/student/assessment/Assessment.vue') },
+    { path: 'assessment', name: 'StudentAssessmentList', component: () => import('../views/student/assessment/AssessmentList.vue') },
+    { path: 'activity/join', name: 'ActivityJoinLanding', component: () => import('../views/student/activity/ActivityJoinLanding.vue') },
+    { path: 'activity/cancel', name: 'ActivityCancelLanding', component: () => import('../views/student/activity/ActivityCancelLanding.vue') },
+    { path: 'activity/checkin', name: 'ActivityCheckinLanding', component: () => import('../views/student/activity/ActivityCheckinLanding.vue') },
+    { path: 'activity/my', name: 'MyActivities', component: () => import('../views/student/activity/MyActivities.vue') },
+    { path: 'activity/:id', name: 'ActivityDetail', component: () => import('../views/student/activity/ActivityDetail.vue') },
+    { path: 'activity', name: 'ActivityList', component: () => import('../views/student/activity/ActivityList.vue') },
+    { path: 'crisis', name: 'CrisisReport', component: () => import('../views/student/crisis/CrisisReport.vue') },
+    { path: 'contact', name: 'StudentContactCounselor', component: () => import('../views/student/contact/ContactCounselor.vue') },
+    { path: 'parent-binding', name: 'StudentParentBinding', component: () => import('../views/student/family/StudentParentBinding.vue') },
+    { path: 'profile', name: 'Profile', component: () => import('../views/student/profile/Profile.vue') },
+    { path: 'psych-profile/:id', name: 'StudentPsychProfileDetail', component: () => import('../views/student/profile/StudentPsychProfile.vue') },
+    { path: 'psych-profile', name: 'StudentPsychProfile', component: () => import('../views/student/profile/StudentPsychProfile.vue') },
+    { path: 'self-help/micro-course', name: 'MicroCourse', component: () => import('../views/student/selfHelp/MicroCourse.vue') },
+    { path: 'self-help/music-therapy', name: 'MusicTherapy', component: () => import('../views/student/selfHelp/MusicTherapy.vue') },
+    { path: 'self-help/health-course', name: 'HealthCourse', component: () => import('../views/student/selfHelp/HealthCourse.vue') },
+    { path: 'self-help', name: 'SelfHelp', component: () => import('../views/student/selfHelp/SelfHelp.vue') },
+  ]
+},
 {
   path: '/message',
-  name: 'MessageCenter',
-  component: () => import('../views/message/MessageCenter.vue')
-},
-{
-  path: '/student/dashboard',
-  name: 'StudentDashboard',
-  component: () => import('../views/student/StudentDashboard.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/peer-support',
-  name: 'StudentPeerSupport',
-  component: () => import('../views/peer/PeerSupport.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/peer-support/:id',
-  name: 'StudentPeerSupportDetail',
-  component: () => import('../views/peer/PeerSupportDetail.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/assessment',
-  name: 'StudentAssessmentList',
-  component: () => import('../views/student/assessment/AssessmentList.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/assessment/:id',
-  name: 'Assessment',
-  component: () => import('../views/student/assessment/Assessment.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/assessment/:id/result',
-  name: 'AssessmentResult',
-  component: () => import('../views/student/assessment/AssessmentResult.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity',
-  name: 'ActivityList',
-  component: () => import('../views/student/activity/ActivityList.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity/join',
-  name: 'ActivityJoinLanding',
-  component: () => import('../views/student/activity/ActivityJoinLanding.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity/cancel',
-  name: 'ActivityCancelLanding',
-  component: () => import('../views/student/activity/ActivityCancelLanding.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity/checkin',
-  name: 'ActivityCheckinLanding',
-  component: () => import('../views/student/activity/ActivityCheckinLanding.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity/my',
-  name: 'MyActivities',
-  component: () => import('../views/student/activity/MyActivities.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/activity/:id',
-  name: 'ActivityDetail',
-  component: () => import('../views/student/activity/ActivityDetail.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/crisis',
-  name: 'CrisisReport',
-  component: () => import('../views/student/crisis/CrisisReport.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/contact',
-  name: 'StudentContactCounselor',
-  component: () => import('../views/student/contact/ContactCounselor.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/parent-binding',
-  name: 'StudentParentBinding',
-  component: () => import('../views/student/family/StudentParentBinding.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/profile',
-  name: 'Profile',
-  component: () => import('../views/student/profile/Profile.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/psych-profile',
-  name: 'StudentPsychProfile',
-  component: () => import('../views/student/profile/StudentPsychProfile.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/psych-profile/:id',
-  name: 'StudentPsychProfileDetail',
-  component: () => import('../views/student/profile/StudentPsychProfile.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/self-help',
-  name: 'SelfHelp',
-  component: () => import('../views/student/selfHelp/SelfHelp.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/self-help/micro-course',
-  name: 'MicroCourse',
-  component: () => import('../views/student/selfHelp/MicroCourse.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/self-help/music-therapy',
-  name: 'MusicTherapy',
-  component: () => import('../views/student/selfHelp/MusicTherapy.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/student/self-help/health-course',
-  name: 'HealthCourse',
-  component: () => import('../views/student/selfHelp/HealthCourse.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/dashboard',
-  name: 'ParentDashboard',
-  component: () => import('../views/parent/ParentDashboard.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/children',
-  name: 'ChildManagement',
-  component: () => import('../views/parent/children/ChildManagement.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/assessment',
-  name: 'AssessmentView',
-  component: () => import('../views/parent/assessment/AssessmentView.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/appointment',
-  name: 'AppointmentView',
-  component: () => import('../views/parent/appointment/AppointmentView.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/activity',
-  name: 'ActivityView',
-  component: () => import('../views/parent/activity/ActivityView.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/profile',
-  name: 'ProfileView',
-  component: () => import('../views/parent/profile/ProfileView.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/contact',
-  name: 'ContactCounselor',
-  component: () => import('../views/parent/contact/ContactCounselor.vue'),
-  meta: { needAuth: true }
-},
-{
-  path: '/parent/message',
-  name: 'ParentMessage',
-  component: () => import('../views/parent/message/ParentMessage.vue'),
-  meta: { needAuth: true }
+  component: () => import('../layouts/StudentLayout.vue'),
+  meta: { needAuth: true },
+  children: [
+    { path: '', name: 'MessageCenter', component: () => import('../views/message/MessageCenter.vue') }
+  ]
 },
 {
   path: '/my-appointment',
-  name: 'MyAppointment',
-  component: () => import('../views/appointment/MyAppointments.vue'),
-  meta: { needAuth: true }
+  component: () => import('../layouts/StudentLayout.vue'),
+  meta: { needAuth: true },
+  children: [
+    { path: '', name: 'MyAppointment', component: () => import('../views/appointment/MyAppointments.vue') }
+  ]
+},
+{
+  path: '/appointment',
+  component: () => import('../layouts/StudentLayout.vue'),
+  meta: { needAuth: true },
+  children: [
+    { path: 'select', component: () => import('../views/appointment/SelectSlot.vue'), meta: { needAuth: true } },
+    { path: ':id/detail', component: () => import('../views/appointment/AppointmentDetail.vue'), meta: { needAuth: true } },
+    { path: ':id', component: () => import('../views/appointment/Appointment.vue'), meta: { needAuth: true } },
+  ]
+},
+// 家长端：侧栏布局
+{
+  path: '/parent',
+  component: () => import('../layouts/ParentLayout.vue'),
+  meta: { needAuth: true },
+  children: [
+    { path: '', redirect: 'dashboard' },
+    { path: 'dashboard', name: 'ParentDashboard', component: () => import('../views/parent/ParentDashboard.vue') },
+    { path: 'children', name: 'ChildManagement', component: () => import('../views/parent/children/ChildManagement.vue') },
+    { path: 'assessment', name: 'AssessmentView', component: () => import('../views/parent/assessment/AssessmentView.vue') },
+    { path: 'appointment', name: 'AppointmentView', component: () => import('../views/parent/appointment/AppointmentView.vue') },
+    { path: 'activity', name: 'ActivityView', component: () => import('../views/parent/activity/ActivityView.vue') },
+    { path: 'profile', name: 'ProfileView', component: () => import('../views/parent/profile/ProfileView.vue') },
+    { path: 'contact', name: 'ContactCounselor', component: () => import('../views/parent/contact/ContactCounselor.vue') },
+    { path: 'message', name: 'ParentMessage', component: () => import('../views/parent/message/ParentMessage.vue') },
+  ]
 },
 
 // 咨询记录模块
@@ -422,24 +305,6 @@ const routes = [
   name: 'RecordEdit',
   component: () => import('../views/record/RecordForm.vue'),
   meta: { needAuth: true, roles: ['counselor'] }
-},
-
-{
-  path: '/appointment/select',
-  component: () => import('../views/appointment/SelectSlot.vue'),
-   meta: { needAuth: true } 
-},
-
-{
-  path: '/appointment/:id',
-  component: () => import('../views/appointment/Appointment.vue'),
-  meta: { needAuth: true }
-},
-
-{
-  path: '/appointment/:id/detail',
-  component: () => import('../views/appointment/AppointmentDetail.vue'),
-  meta: { needAuth: true }
 },
 
 // 记录列表页
@@ -526,6 +391,36 @@ const routes = [
       name: 'AdminActivitySummary',
       component: () => import('../views/activity/ActivitySummary.vue'),
       meta: { needAuth: true, roles: ['counselor', 'center', 'admin', 'tutor'] }
+    },
+    {
+      path: 'assessment-list',
+      name: 'AdminAssessmentList',
+      component: () => import('../views/assessment/AssessmentList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
+    },
+    {
+      path: 'case-list',
+      name: 'AdminCaseList',
+      component: () => import('../views/case/CaseList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
+    },
+    {
+      path: 'crisis-list',
+      name: 'AdminCrisisList',
+      component: () => import('../views/crisis/CrisisList.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin', 'tutor', 'college', 'leader'] }
+    },
+    {
+      path: 'leave-list',
+      name: 'AdminLeaveList',
+      component: () => import('../views/leave/LeaveList.vue'),
+      meta: { needAuth: true, roles: ['counselor'] }
+    },
+    {
+      path: 'assessment-detail/:planId',
+      name: 'AdminAssessmentPlanDetail',
+      component: () => import('../views/assessment/AssessmentPlanDetail.vue'),
+      meta: { needAuth: true, roles: ['counselor', 'center', 'admin'] }
     },
     {
       path: 'students',
@@ -772,7 +667,7 @@ if (to.path.startsWith('/admin')) {
 
   
   // 2. 学生/家长端（凡是需要登录的非 admin 页面）
-  if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment') || to.path.startsWith('/student') || to.path.startsWith('/parent')) {
+  if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment') || to.path.startsWith('/student') || to.path.startsWith('/parent') || to.path === '/message' || to.path.startsWith('/message/')) {
     const token =
       localStorage.getItem('auth_token') ||
       localStorage.getItem('User_token') ||

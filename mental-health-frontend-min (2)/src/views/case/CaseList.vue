@@ -24,23 +24,27 @@
 
     <el-card class="table-card" shadow="never">
       <el-table :data="cases" stripe v-loading="loading" style="width: 100%">
-        <el-table-column prop="id" label="个案编号" width="120" />
-        <el-table-column prop="student_name" label="学生姓名" width="100" />
+        <template #empty>
+          <el-empty v-if="!loading" description="暂无个案" />
+        </template>
+        <el-table-column prop="case_title" label="标题" min-width="140" show-overflow-tooltip />
+        <el-table-column prop="id" label="个案ID" width="110" show-overflow-tooltip />
+        <el-table-column prop="student_name" label="学生" width="100" />
+        <el-table-column prop="problem_type" label="问题类型" width="110" show-overflow-tooltip />
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="getStatusType(row.status)" size="small">
-              {{ row.status }}
+              {{ row.status_label || row.status }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="created_at" label="创建时间" width="160" />
+        <el-table-column prop="created_at" label="创建时间" width="170" />
         <el-table-column label="操作" width="100" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" link size="small" @click="viewDetail(row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-empty v-if="!cases.length && !loading" description="暂无个案" />
     </el-card>
   </div>
 </template>
@@ -49,21 +53,28 @@
 import { ref, computed, onMounted } from 'vue'
 import { fetchCases } from '../../api/case'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 
 const cases = ref<any[]>([])
 const loading = ref(false)
 const router = useRouter()
 
 const openCount = computed(() =>
-  cases.value.filter((c) => c.status && c.status !== '已结案' && c.status !== 'closed').length
+  cases.value.filter((c) => {
+    const s = String(c.status ?? '').toUpperCase()
+    return s === 'ONGOING' || s === 'SUSPENDED'
+  }).length
 )
 const closedCount = computed(() =>
-  cases.value.filter((c) => c.status === '已结案' || c.status === 'closed').length
+  cases.value.filter((c) => String(c.status ?? '').toUpperCase() === 'CLOSED').length
 )
 
 function getStatusType(status: string) {
-  if (!status) return 'info'
-  if (status === '已结案' || status === 'closed') return 'info'
+  const s = String(status ?? '').toUpperCase()
+  if (!s) return 'info'
+  if (s === 'CLOSED') return 'info'
+  if (s === 'SUSPENDED') return 'warning'
+  if (s === 'ONGOING') return 'success'
   return 'primary'
 }
 
@@ -75,8 +86,9 @@ onMounted(async () => {
   loading.value = true
   try {
     cases.value = await fetchCases()
-  } catch {
+  } catch (e: any) {
     cases.value = []
+    ElMessage.error(e?.message || '加载个案列表失败')
   }
   loading.value = false
 })

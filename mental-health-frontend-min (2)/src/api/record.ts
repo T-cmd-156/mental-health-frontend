@@ -1,6 +1,7 @@
 import request from './request.js'
 import { unwrapPageResult } from './psychPlatformAppointment.js'
 import { isApiSuccess } from './helpers.js'
+import { getCounselorIdForScheduleFilter } from '../utils/counselorSession.js'
 import type { AppointmentRecord, RecordStatus } from '../types/record'
 
 function toYmd(d: string | Date | undefined) {
@@ -53,10 +54,13 @@ function mapLegacyStatusToRecordStatus(status?: RecordStatus, payload?: any): st
 }
 
 /** GET /api/record/list（OpenAPI + RecordListQueryDTO） */
-export async function getRecordsByConsultantAsync(counselorId: string) {
+export async function getRecordsByConsultantAsync(counselorId?: string) {
+  const id =
+    (counselorId != null && String(counselorId).trim()) ||
+    getCounselorIdForScheduleFilter()
   const res: any = await request.get('/api/record/list', {
     params: {
-      counselorId,
+      counselorId: id,
       page: 1,
       pageSize: 200,
     },

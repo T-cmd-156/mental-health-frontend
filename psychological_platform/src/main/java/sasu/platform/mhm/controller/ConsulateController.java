@@ -63,13 +63,14 @@ public class ConsulateController {
         return R.success(result);
     }
     /**
-     * 获取咨询师列表
-     *
      * @param pageQueryDTO 分页查询参数
      * @return 返回咨询师列表的分页结果
      */
     @PostMapping("/list")
-    public R list(@RequestBody PageQueryDTO pageQueryDTO){
+    public R list(@RequestBody(required = false) PageQueryDTO pageQueryDTO){
+        if (pageQueryDTO == null) {
+            pageQueryDTO = new PageQueryDTO();
+        }
         PageResult counselorList = consulateService.counselorList(pageQueryDTO);
         return R.success(counselorList);
     }
@@ -79,8 +80,12 @@ public class ConsulateController {
         return R.success(detailVO);
     }
     @GetMapping("/schedule")
-    public R<PageResult> getScheduleByParams(@RequestBody PageQueryDTO pageQueryDTO){
+    public R<PageResult> getScheduleByParams(@RequestBody(required = false) PageQueryDTO pageQueryDTO){
+        if (pageQueryDTO == null) {
+            pageQueryDTO = new PageQueryDTO();
+        }
         PageResult scheduleByParams = consulateService.getScheduleByParams(pageQueryDTO);
         return R.success(scheduleByParams);
     }
+
 }

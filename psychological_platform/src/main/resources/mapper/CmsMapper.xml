@@ -13,7 +13,7 @@
         FROM cms_content
         <where>
             <!-- 栏目类型 -->
-            <if test="type != 0">
+            <if test="type != null and type != 0">
                 AND type = #{type}
             </if>
 

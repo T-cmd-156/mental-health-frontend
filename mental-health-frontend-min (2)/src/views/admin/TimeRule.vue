@@ -13,8 +13,8 @@
         <el-form-item label="咨询师">
           <el-select v-model="filters.counselorId" placeholder="全部咨询师" clearable style="width: 180px">
             <el-option
-              v-for="item in consultantOptions"
-              :key="item.id"
+              v-for="(item, idx) in consultantOptions"
+              :key="item.id + '-' + idx"
               :label="item.name"
               :value="item.id"
             />
@@ -42,12 +42,12 @@
         <el-table-column prop="date" label="日期" width="140" />
         <el-table-column prop="time" label="时间段" width="180" />
         <el-table-column prop="maxAppointments" label="可预约人数" width="120">
-          <template #default="{ row }">{{ row.maxAppointments || 1 }}</template>
+          <template #default="{ row }">{{ row?.maxAppointments ?? 1 }}</template>
         </el-table-column>
         <el-table-column prop="status" label="状态" width="120">
           <template #default="{ row }">
-            <el-tag :type="row.status === 'enabled' ? 'success' : 'info'" size="small">
-              {{ row.status === 'enabled' ? '启用' : '停用' }}
+            <el-tag :type="row?.status === 'enabled' ? 'success' : 'info'" size="small">
+              {{ row?.status === 'enabled' ? '启用' : '停用' }}
             </el-tag>
           </template>
         </el-table-column>
@@ -74,7 +74,12 @@
       <el-form ref="formRef" :model="form" :rules="formRules" label-width="100px">
         <el-form-item label="咨询师" prop="counselorId" v-if="!isEdit">
           <el-select v-model="form.counselorId" placeholder="请选择咨询师" style="width: 100%">
-            <el-option v-for="item in consultantOptions" :key="item.id" :label="item.name" :value="item.id" />
+            <el-option
+              v-for="(item, idx) in consultantOptions"
+              :key="item.id + '-' + idx"
+              :label="item.name"
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="咨询师" v-else>
@@ -176,8 +181,78 @@ const formRules: FormRules = {
   time: [{ required: true, message: '请选择时间段', trigger: 'change' }],
 }
 
+function pickStr(...vals: unknown[]): string {
+  for (const v of vals) {
+    if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim()
+  }
+  return ''
+}
+
+/** 对齐 /api/consultant/list：可能是 CounselorVO 或带 userVO 的嵌套结构 */
+function normalizeConsultants(raw: unknown): Consultant[] {
+  if (!Array.isArray(raw)) return []
+  const out: Consultant[] = []
+  for (const item of raw) {
+    if (item == null || typeof item !== 'object') continue
+    const o = item as Record<string, unknown>
+    const u = (o.userVO ?? o.userVo) as Record<string, unknown> | undefined
+    const id = pickStr(o.id, o.counselorId, o.userId, u?.userId)
+    const name = pickStr(o.name, o.realName, u?.realName, o.username, u?.username, id)
+    if (!id) continue
+    out.push({ id, name: name || id })
+  }
+  return out
+}
+
+function padTimePart(t: unknown): string {
+  if (t == null) return ''
+  const s = typeof t === 'string' ? t : String(t)
+  return s.length >= 5 ? s.slice(0, 5) : s
+}
+
+/** 对齐 /api/schedule/list：counselor_schedule 扁平字段 */
+function normalizeSchedules(raw: unknown): ScheduleItem[] {
+  if (!Array.isArray(raw)) return []
+  const out: ScheduleItem[] = []
+  raw.forEach((item, idx) => {
+    if (item == null || typeof item !== 'object') return
+    const r = item as Record<string, unknown>
+    const id = pickStr(r.schedule_id, r.scheduleId, r.id, `row-${idx}`)
+    const counselorId = pickStr(r.counselor_id, r.counselorId, r.userId)
+    let date = pickStr(r.schedule_date, r.scheduleDate, r.date)
+    if (date && date.includes('T')) date = date.slice(0, 10)
+    const st = padTimePart(r.start_time ?? r.startTime)
+    const et = padTimePart(r.end_time ?? r.endTime)
+    const time = st && et ? `${st}-${et}` : pickStr(r.time, r.timeSlot)
+    const maxRaw = r.available_slots ?? r.availableSlots ?? r.maxAppointments
+    const maxAppointments = Math.max(1, Number(maxRaw) || 1)
+    const stt = r.status
+    let status: string = 'enabled'
+    if (stt === 0 || stt === '0' || stt === 'disabled') status = 'disabled'
+    if (stt === 2 || stt === '2') status = 'disabled'
+    out.push({
+      id,
+      counselorId,
+      counselorName: pickStr(r.counselorName, r.counselor_name),
+      date,
+      time,
+      status,
+      maxAppointments,
+    })
+  })
+  return out
+}
+
+function enrichScheduleCounselorNames() {
+  const m = new Map(consultantOptions.value.map((c) => [c.id, c.name]))
+  allSchedules.value = allSchedules.value.map((s) => ({
+    ...s,
+    counselorName: s.counselorName || m.get(s.counselorId) || s.counselorId || '—',
+  }))
+}
+
 const filteredList = computed(() => {
-  let list = allSchedules.value
+  let list = allSchedules.value.filter((item) => item != null)
   if (filters.counselorId) {
     list = list.filter((item) => item.counselorId === filters.counselorId)
   }
@@ -199,7 +274,7 @@ watch([() => filters.counselorId, () => filters.date], () => {
 async function loadConsultants() {
   try {
     const res = await getConsultantListAsync()
-    consultantOptions.value = Array.isArray(res?.data) ? res.data : []
+    consultantOptions.value = normalizeConsultants(res?.data)
   } catch (error) {
     consultantOptions.value = []
     ElMessage.error('获取咨询师列表失败')
@@ -211,7 +286,7 @@ async function loadSchedules() {
   try {
     const week = filters.date || new Date().toISOString().slice(0, 10)
     const res = await getScheduleListAsync({ week })
-    allSchedules.value = Array.isArray(res?.data) ? res.data : []
+    allSchedules.value = normalizeSchedules(res?.data)
   } catch (error) {
     allSchedules.value = []
     ElMessage.error('获取排班列表失败')
@@ -264,7 +339,7 @@ function openCreateDialog() {
 }
 
 async function openEditDialog(row: ScheduleItem) {
-  if (!guard()) return
+  if (!guard() || row == null) return
   isEdit.value = true
   form.id = row.id
   form.counselorId = row.counselorId
@@ -367,7 +442,12 @@ function handleDelete(row: ScheduleItem) {
 }
 
 onMounted(async () => {
-  await Promise.all([loadConsultants(), loadSchedules()])
+  try {
+    await Promise.all([loadConsultants(), loadSchedules()])
+    enrichScheduleCounselorNames()
+  } catch {
+    /* 单项加载内部已提示 */
+  }
 })
 </script>
 

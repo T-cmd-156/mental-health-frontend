@@ -10,7 +10,7 @@ function bindPathSegment(studentId) {
   return encodeURIComponent(id)
 }
 
-/** GET /api/bind/status/{studentId} → 0 待确认 1 已验证 2 已拒绝 */
+/** GET /api/bind/status/{studentId} → -1 未绑定 0 待确认 1 已验证 2 已拒绝 */
 export function getBindStatus(studentId) {
   const seg = bindPathSegment(studentId)
   return request.get(`/api/bind/status/${seg}`)

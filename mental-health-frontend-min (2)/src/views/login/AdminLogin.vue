@@ -45,9 +45,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { adminLogin } from '../../api/mock'
 import { login as apiLogin, fetchVerificationCode } from '../../api/auth'
 import { setAuthToken } from '../../api/request'
+import { persistUserIdFromAccessToken } from '../../utils/authSession.js'
 import { ArrowLeft } from '@element-plus/icons-vue'
 
 const router = useRouter()
@@ -139,14 +141,16 @@ const login = async () => {
         localStorage.setItem('access_token', token)
         localStorage.setItem('admin_token', token)
 
+        // userId/user_id 必须与 JWT sub（后端用户主键 UUID）一致，勿用登录账号。
+        persistUserIdFromAccessToken(token)
+
         // 后端 common/login 这里没有返回完整 userInfo，所以用页面选择的 role 补齐。
         const role = String(form.value.role || '').toLowerCase()
         localStorage.setItem('user_role', role)
         localStorage.setItem('admin_role', role)
         localStorage.setItem('user_name', form.value.username)
-        localStorage.setItem('user_id', form.value.username)
 
-        alert('登录成功')
+        ElMessage.success('登录成功')
         router.push('/admin')
         return
       }
@@ -160,7 +164,7 @@ const login = async () => {
     const user = res.data
     console.log('res.data = ', user)
     if (!user) {
-      alert('账号或密码错误')
+      ElMessage.warning('账号或密码错误')
       return
     }
 
@@ -175,11 +179,11 @@ const login = async () => {
     localStorage.setItem('admin_token', user.role + Date.now())
     localStorage.setItem('admin_role', user.role)
 
-    alert('登录成功')
+    ElMessage.success('登录成功')
     router.push('/admin')
 
   } catch (err) {
-    alert(err.message || '登录失败')
+    ElMessage.error(err.message || '登录失败')
   }
 }
 

@@ -30,7 +30,10 @@ public class CmsController {
      * 分页分类、多条件获取内容列表
      */
     @PostMapping("/cms-s")
-    public R<PageResult> getCms_s(@RequestBody PageQueryDTO pageQueryDTO) {
+    public R<PageResult> getCms_s(@RequestBody(required = false) PageQueryDTO pageQueryDTO) {
+        if (pageQueryDTO == null) {
+            pageQueryDTO = new PageQueryDTO();
+        }
 
         log.info("查询内容列表接口:{}",pageQueryDTO);
         int status = 1;

@@ -132,14 +132,30 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (!StringUtils.hasText(dto.getId())) {
             throw new IllegalArgumentException("预约ID不能为空");
         }
+
+        // 先查询预约是否存在
+        AppointmentDetailVO appointment = consulateMapper.getAppointmentById(dto.getId());
+        if (appointment == null) {
+            throw new RuntimeException("预约不存在");
+        }
+
+        // 检查当前状态是否允许标记为爽约
+        String currentStatus = appointment.getStatus();
+        if ("NO_SHOW".equals(currentStatus)) {
+            throw new RuntimeException("该预约已经是爽约状态");
+        }
+        if ("CANCELLED".equals(currentStatus)) {
+            throw new RuntimeException("已取消的预约不能标记为爽约");
+        }
+
         int result = consulateMapper.updateAppointmentStatus(
-            dto.getId(),
-            "NO_SHOW",
-            null,
-            "COUNSELOR"
+                dto.getId(),
+                "NO_SHOW",
+                null,
+                "COUNSELOR"
         );
         if (result <= 0) {
-            throw new RuntimeException("标记爽约失败");
+            throw new RuntimeException("标记爽约失败，请重试");
         }
     }
 

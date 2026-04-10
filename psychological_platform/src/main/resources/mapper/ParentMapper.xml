@@ -20,16 +20,18 @@
             u.real_name,
             si.student_number,
             o1.org_name as college_name,
-            si.major_name,
+            o2.org_name as major_name,
             si.grade,
-            si.class_name,
+            o3.org_name as class_name,
             u.avatar_url
         FROM parent_student_relation psr
-        JOIN user u ON psr.student_id = u.user_id
-        LEFT JOIN student_info si ON u.user_id = si.student_id
-        LEFT JOIN organization o1 ON si.college_id = o1.org_id
+                 JOIN user u ON psr.student_id = u.user_id
+                 LEFT JOIN student_info si ON u.user_id = si.student_id
+                 LEFT JOIN organization o1 ON si.college_id = o1.org_id
+                 LEFT JOIN organization o2 ON si.major_id = o2.org_id
+                 LEFT JOIN organization o3 ON si.class_id = o3.org_id
         WHERE psr.parent_id = #{parentId}
-        AND psr.verification_status = 1
+          AND psr.verification_status = 1
     </select>
 
     <!-- 查询子女详情 -->
@@ -39,13 +41,15 @@
             u.real_name,
             si.student_number,
             o1.org_name as college_name,
-            si.major_name,
+            o2.org_name as major_name,
             si.grade,
-            si.class_name,
+            o3.org_name as class_name,
             u.avatar_url
         FROM user u
-        LEFT JOIN student_info si ON u.user_id = si.student_id
-        LEFT JOIN organization o1 ON si.college_id = o1.org_id
+                 LEFT JOIN student_info si ON u.user_id = si.student_id
+                 LEFT JOIN organization o1 ON si.college_id = o1.org_id
+                 LEFT JOIN organization o2 ON si.major_id = o2.org_id
+                 LEFT JOIN organization o3 ON si.class_id = o3.org_id
         WHERE u.user_id = #{studentId}
     </select>
 

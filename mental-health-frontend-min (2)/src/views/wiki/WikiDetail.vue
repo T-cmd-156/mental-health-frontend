@@ -1,5 +1,6 @@
 <template>
   <div class="wiki-detail">
+    <PortalNavBar active-key="wiki" />
     <header class="page-header" :style="{ background: categoryGradient }">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
@@ -122,6 +123,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getWikiDetail, getWiki } from '@/api/portal'
 import { 
   ArrowLeft, Loading, Calendar, View, Clock, 

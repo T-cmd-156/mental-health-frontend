@@ -1,5 +1,6 @@
 package sasu.platform.mhm.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class ComminServiceImpl implements CommonService {
     @Autowired
@@ -61,6 +63,11 @@ public class ComminServiceImpl implements CommonService {
     public Map<String, String> login(String username, String password, String verificationCode, String key) {
         // 1. 验证验证码
         String code = (String) redisTemplate.opsForValue().get(key);
+        // 将验证码code和verificationCode转换为小写
+        code = code.toLowerCase();
+        verificationCode = verificationCode.toLowerCase();
+//        log.info("验证码: {}", code);
+//        log.info("验证码: {}", verificationCode);
         if (!verificationCode.equals(code)) {
             return Map.of("false", "验证码错误");
         }

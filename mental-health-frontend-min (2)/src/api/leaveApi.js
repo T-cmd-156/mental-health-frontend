@@ -1,12 +1,24 @@
 import request from './request.js'
+import { unwrapPageResult } from './psychPlatformAppointment.js'
 
-/** 咨询师提交请假申请（待管理员/心理中心审批） */
+/** 咨询师提交请假申请（LeaveApplyDTO：leaveType, reason, startTime, endTime 为 ISO_LOCAL_DATE_TIME） */
 export function submitLeave(data) {
   return request.post('/api/leave/apply', data)
 }
 
-export function getLeaveList(params) {
-  return request.get('/api/leave/list', { params })
+export function getLeaveList(params = {}) {
+  return request.get('/api/leave/list', {
+    params: {
+      page: params.page ?? 1,
+      pageSize: params.pageSize ?? 20,
+      ...params,
+    },
+  })
+}
+
+/** 解析 R.data 为 PageResult：{ total, records } */
+export function parseLeavePage(res) {
+  return unwrapPageResult(res)
 }
 
 export function getLeaveApprovalList(params) {
@@ -22,5 +34,12 @@ export function rejectLeave(data) {
 }
 
 export function cancelLeave(data) {
-  return request.post('/api/leave/cancel', data)
+  const leaveId = data?.leaveId ?? data?.id
+  const reason = data?.reason
+  return request.post('/api/leave/cancel', null, {
+    params: {
+      leaveId,
+      ...(reason != null && reason !== '' ? { reason } : {}),
+    },
+  })
 }

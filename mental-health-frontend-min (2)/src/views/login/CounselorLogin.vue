@@ -29,6 +29,7 @@ import { adminLogin } from '../../api/mock'
 import { login as apiLogin, fetchVerificationCode } from '../../api/auth'
 import { setAuthToken } from '../../api/request'
 import { isApiSuccess } from '../../api/helpers.js'
+import { persistUserIdFromAccessToken } from '../../utils/authSession.js'
 import { ArrowLeft } from '@element-plus/icons-vue'
 
 const router = useRouter()
@@ -104,16 +105,11 @@ const login = async () => {
           localStorage.setItem('access_token', token)
           localStorage.setItem('admin_token', token)
         }
-        let uid = user.id || ''
-        try {
-          const { getJwtSubject } = await import('../../utils/jwtPayload.js')
-          const sub = getJwtSubject(token)
-          if (sub) uid = sub
-        } catch (_) {
-          /* ignore */
+        if (!persistUserIdFromAccessToken(token)) {
+          const uid = user.id || ''
+          localStorage.setItem('userId', uid)
+          localStorage.setItem('user_id', uid)
         }
-        localStorage.setItem('userId', uid)
-        localStorage.setItem('user_id', uid)
         localStorage.setItem('user_token', user.username || form.value.username)
         localStorage.setItem(
           'user_role',

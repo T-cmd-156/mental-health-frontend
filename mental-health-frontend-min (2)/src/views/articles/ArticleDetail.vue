@@ -1,5 +1,6 @@
 <template>
   <div class="article-detail">
+    <PortalNavBar active-key="articles" />
     <header class="page-header" :style="{ background: categoryGradient }">
       <div class="header-decoration">
         <div class="deco-circle deco-circle-1"></div>
@@ -128,6 +129,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import PortalNavBar from '@/components/portal/PortalNavBar.vue'
 import { getArticleDetail, getArticles } from '@/api/portal'
 import { 
   ArrowLeft, Loading, Calendar, View, Clock, 

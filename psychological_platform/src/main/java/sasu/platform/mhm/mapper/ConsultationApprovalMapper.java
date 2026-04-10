@@ -14,7 +14,7 @@ public interface ConsultationApprovalMapper {
     /**
      * 长程咨询申请审批列表
      */
-    List<ConsultationApprovalVO> selectConsultationApprovalList(ConsultationApprovalQueryDTO query);
+    com.github.pagehelper.Page<ConsultationApprovalVO> selectConsultationApprovalList(ConsultationApprovalQueryDTO query);
 
     /**
      * 审批通过

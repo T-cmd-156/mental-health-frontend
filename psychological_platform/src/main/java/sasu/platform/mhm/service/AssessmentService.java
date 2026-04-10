@@ -1,8 +1,8 @@
 package sasu.platform.mhm.service;
 
-import sasu.platform.mhm.pojo.VO.AssessmentDetailVO;
-import sasu.platform.mhm.pojo.VO.AssessmentResultVO;
-import sasu.platform.mhm.pojo.VO.AssessmentStartVO;
+import sasu.platform.mhm.pojo.vo.AssessmentDetailVO;
+import sasu.platform.mhm.pojo.vo.AssessmentResultVO;
+import sasu.platform.mhm.pojo.vo.AssessmentStartVO;
 import sasu.platform.mhm.pojo.common.PageResult;
 import sasu.platform.mhm.pojo.dto.AssessmentListQueryDTO;
 import sasu.platform.mhm.pojo.dto.AssessmentPlanCreateDTO;
