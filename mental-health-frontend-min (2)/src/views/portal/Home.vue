@@ -189,10 +189,7 @@ onMounted(async () => {
 })
 
 const goAppointment = () => {
-  const token =
-    localStorage.getItem('auth_token') ||
-    localStorage.getItem('User_token') ||
-    localStorage.getItem('access_token')
+  const token = localStorage.getItem('User_token')
   const role = localStorage.getItem('User_role')
   if (!token || !role) {
     router.push({ path: '/login/user', query: { redirect: '/appointment/select' } })

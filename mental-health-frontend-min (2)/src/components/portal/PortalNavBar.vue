@@ -75,14 +75,11 @@ defineProps({
 const route = useRoute()
 const router = useRouter()
 
-/** 学生/家长已登录：门户顶栏显示身份与入口，不再显示「学生/家长登录」 */
+/** 学生/家长已登录：仅认 UserLogin 写入的 User_token，避免 access_token/auth_token/anon 残留被当成已登录 */
 const endUserSession = computed(() => {
   void route.fullPath
   const r = localStorage.getItem('User_role')
-  const t =
-    localStorage.getItem('User_token') ||
-    localStorage.getItem('access_token') ||
-    localStorage.getItem('auth_token')
+  const t = localStorage.getItem('User_token')
   if (!t || (r !== 'student' && r !== 'parent')) return false
   return true
 })
@@ -112,6 +109,7 @@ const endDashboardPath = computed(() => {
 /** 已登录学生/家长从门户顶栏进入时，直接进入端内页，避免误进门户页 */
 const wikiNavPath = computed(() => {
   void route.fullPath
+  if (!localStorage.getItem('User_token')) return '/wiki'
   const r = localStorage.getItem('User_role')
   if (r === 'student') return '/student/wiki'
   if (r === 'parent') return '/parent/wiki'
@@ -119,6 +117,7 @@ const wikiNavPath = computed(() => {
 })
 const articlesNavPath = computed(() => {
   void route.fullPath
+  if (!localStorage.getItem('User_token')) return '/articles'
   const r = localStorage.getItem('User_role')
   if (r === 'student') return '/student/articles'
   if (r === 'parent') return '/parent/articles'

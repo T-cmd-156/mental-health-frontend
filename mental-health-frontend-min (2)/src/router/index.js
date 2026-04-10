@@ -647,10 +647,7 @@ router.beforeEach((to, from, next) => {
 
   // 已登录学生/家长若进入门户的百科、美文路径，重定向到对应端内页（避免顶栏变为门户、像已退出）
   const portalUserRole = localStorage.getItem('User_role')
-  const portalUserToken =
-    localStorage.getItem('auth_token') ||
-    localStorage.getItem('User_token') ||
-    localStorage.getItem('access_token')
+  const portalUserToken = localStorage.getItem('User_token')
   if (
     portalUserToken &&
     (portalUserRole === 'student' || portalUserRole === 'parent') &&
@@ -726,10 +723,7 @@ if (to.path.startsWith('/admin')) {
   
   // 2. 学生/家长端（凡是需要登录的非 admin 页面）
   if (to.path.startsWith('/appointment') || to.path.startsWith('/my-appointment') || to.path.startsWith('/student') || to.path.startsWith('/parent') || to.path === '/message' || to.path.startsWith('/message/')) {
-    const token =
-      localStorage.getItem('auth_token') ||
-      localStorage.getItem('User_token') ||
-      localStorage.getItem('access_token')
+    const token = localStorage.getItem('User_token')
     const role = localStorage.getItem('User_role')
 
     if (needAuth && (!token || !role)) {
