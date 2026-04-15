@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sasu.platform.mhm.mapper.ContentReviewMapper">
+
+    <resultMap id="ContentReviewTaskVOMap" type="sasu.platform.mhm.pojo.vo.ContentReviewTaskVO">
+        <id property="id" column="review_id"/>
+        <result property="sourceType" column="source_type"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+        <result property="submitterId" column="submitter_id"/>
+        <result property="submitterName" column="submitter_name"/>
+        <result property="reviewerId" column="reviewer_id"/>
+        <result property="reviewerName" column="reviewer_name"/>
+        <result property="reason" column="reason"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="reviewedAt" column="reviewed_at"/>
+    </resultMap>
+
+    <resultMap id="ContentReviewFileVOMap" type="sasu.platform.mhm.pojo.vo.ContentReviewFileVO">
+        <id property="fileId" column="file_id"/>
+        <result property="reviewId" column="review_id"/>
+        <result property="objectKey" column="object_key"/>
+        <result property="fileName" column="file_name"/>
+        <result property="fileSize" column="file_size"/>
+        <result property="mimeType" column="mime_type"/>
+        <result property="previewUrl" column="preview_url"/>
+        <result property="finalUrl" column="final_url"/>
+        <result property="sortIndex" column="sort_index"/>
+    </resultMap>
+
+    <insert id="insertTask">
+        INSERT INTO content_review_task
+        (review_id, source_type, title, description, status, submitter_id, client_batch_id, created_at, updated_at)
+        VALUES
+            (#{id}, #{sourceType}, #{title}, #{description}, #{status}, #{submitterId}, #{clientBatchId}, NOW(), NOW())
+    </insert>
+
+    <insert id="insertFile">
+        INSERT INTO content_review_file
+        (file_id, review_id, object_key, file_name, file_size, mime_type, preview_url, sort_index, created_at, updated_at)
+        VALUES
+            (#{fileId}, #{reviewId}, #{objectKey}, #{fileName}, #{fileSize}, #{mimeType}, #{previewUrl}, #{sortIndex}, NOW(), NOW())
+    </insert>
+
+    <select id="selectTaskById" resultMap="ContentReviewTaskVOMap">
+        SELECT
+            t.review_id,
+            t.source_type,
+            t.title,
+            t.description,
+            t.status,
+            t.submitter_id,
+            su.real_name AS submitter_name,
+            t.reviewer_id,
+            ru.real_name AS reviewer_name,
+            t.reason,
+            t.created_at,
+            t.reviewed_at
+        FROM content_review_task t
+                 LEFT JOIN user su ON su.user_id = t.submitter_id
+                 LEFT JOIN user ru ON ru.user_id = t.reviewer_id
+        WHERE t.review_id = #{id}
+    </select>
+
+    <select id="selectFilesByReviewId" resultMap="ContentReviewFileVOMap">
+        SELECT
+            file_id,
+            review_id,
+            object_key,
+            file_name,
+            file_size,
+            mime_type,
+            preview_url,
+            final_url,
+            sort_index
+        FROM content_review_file
+        WHERE review_id = #{reviewId}
+        ORDER BY sort_index ASC, created_at ASC
+    </select>
+
+    <select id="selectTaskList" resultMap="ContentReviewTaskVOMap">
+        SELECT
+            t.review_id,
+            t.source_type,
+            t.title,
+            t.description,
+            t.status,
+            t.submitter_id,
+            su.real_name AS submitter_name,
+            t.reviewer_id,
+            ru.real_name AS reviewer_name,
+            t.reason,
+            t.created_at,
+            t.reviewed_at
+        FROM content_review_task t
+                 LEFT JOIN user su ON su.user_id = t.submitter_id
+                 LEFT JOIN user ru ON ru.user_id = t.reviewer_id
+        <where>
+            <if test="query.sourceType != null and query.sourceType != ''">
+                AND t.source_type = #{query.sourceType}
+            </if>
+            <if test="query.status != null and query.status != ''">
+                AND t.status = #{query.status}
+            </if>
+            <if test="query.keyword != null and query.keyword != ''">
+                AND (
+                    t.title LIKE CONCAT('%', #{query.keyword}, '%')
+                    OR su.real_name LIKE CONCAT('%', #{query.keyword}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY t.created_at DESC
+    </select>
+
+    <update id="updateApproved">
+        UPDATE content_review_task
+        SET status = 'approved',
+            reviewer_id = #{reviewerId},
+            reviewed_at = NOW(),
+            reason = NULL,
+            updated_at = NOW()
+        WHERE review_id = #{id}
+          AND status = 'pending'
+    </update>
+
+    <update id="updateRejected">
+        UPDATE content_review_task
+        SET status = 'rejected',
+            reason = #{reason},
+            reviewer_id = #{reviewerId},
+            reviewed_at = NOW(),
+            updated_at = NOW()
+        WHERE review_id = #{id}
+          AND status = 'pending'
+    </update>
+
+    <update id="updateFileFinalUrl">
+        UPDATE content_review_file
+        SET final_url = #{finalUrl},
+            updated_at = NOW()
+        WHERE review_id = #{reviewId}
+          AND file_id = #{fileId}
+    </update>
+
+</mapper>
