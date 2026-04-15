@@ -1,0 +1,564 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "个案管理控制器"
+    }
+  ],
+  "paths": {
+    "/case/create": {
+      "post": {
+        "summary": "创建个案",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "个案管理控制器"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc",
+            "schema": {
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseCreateDTO",
+                "description": ""
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RCaseVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "caseTitle": "",
+                        "status": "",
+                        "problemType": "",
+                        "description": "",
+                        "startDate": "",
+                        "closeDate": "",
+                        "totalSessions": 0,
+                        "createTime": "",
+                        "updateTime": "",
+                        "progress": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "caseTitle": "",
+                        "status": "",
+                        "problemType": "",
+                        "description": "",
+                        "startDate": "",
+                        "closeDate": "",
+                        "totalSessions": 0,
+                        "createTime": "",
+                        "updateTime": "",
+                        "progress": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {},
+            "x-apifox-ordering": 0
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "个案管理控制器",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/7753008/apis/api-427968977-run"
+      }
+    },
+    "/api/case/update": {
+      "put": {
+        "summary": "更新个案",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "个案管理控制器"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc",
+            "schema": {
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaseUpdateDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RCaseVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "caseTitle": "",
+                        "status": "",
+                        "problemType": "",
+                        "description": "",
+                        "startDate": "",
+                        "closeDate": "",
+                        "totalSessions": 0,
+                        "createTime": "",
+                        "updateTime": "",
+                        "progress": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "id": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "counselorId": "",
+                        "counselorName": "",
+                        "caseTitle": "",
+                        "status": "",
+                        "problemType": "",
+                        "description": "",
+                        "startDate": "",
+                        "closeDate": "",
+                        "totalSessions": 0,
+                        "createTime": "",
+                        "updateTime": "",
+                        "progress": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "x-apifox-ordering": 0
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "个案管理控制器",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/7753008/apis/api-427968978-run"
+      }
+    },
+    "/api/case/stats": {
+      "get": {
+        "summary": "个案统计",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "个案管理控制器"
+        ],
+        "parameters": [
+          {
+            "name": "counselorId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc",
+            "schema": {
+              "type": "string",
+              "default": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNjE5NjM1ZmM4YzE0N2EwYTFkNDU4ZmM0ZWExMmZmNiIsInN1YiI6ImY3ZDYxYWMzLTllNjctNGE4Yy1iZjZmLTBhZTc0MGZkYzM2MCIsInJvbGVfY29kZSI6IklOU1RSVUNUT1IiLCJpc3MiOiJzZyIsImlhdCI6MTc3NTE4MTkyMiwiZXhwIjoxNzc2MzkxNTIyfQ.9alOqeU3Yj4VK70BKV-kpQXRry8XpX1FLdB2vErYHBc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RListMapObject"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": [
+                        {
+                          "": {}
+                        }
+                      ],
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": [
+                        {
+                          "": {}
+                        }
+                      ],
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "x-apifox-ordering": 0
+          }
+        },
+        "security": [],
+        "x-apifox-folder": "个案管理控制器",
+        "x-apifox-status": "released",
+        "x-run-in-apifox": "https://app.apifox.com/web/project/7753008/apis/api-427968979-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "key": {
+        "type": "object",
+        "properties": {},
+        "x-apifox-orders": [],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "MapObject": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/key"
+          }
+        },
+        "x-apifox-orders": [
+          "key"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "CaseVO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "个案ID"
+          },
+          "studentId": {
+            "type": "string",
+            "description": "学生ID"
+          },
+          "studentName": {
+            "type": "string",
+            "description": "学生姓名"
+          },
+          "counselorId": {
+            "type": "string",
+            "description": "咨询师ID"
+          },
+          "counselorName": {
+            "type": "string",
+            "description": "咨询师姓名"
+          },
+          "caseTitle": {
+            "type": "string",
+            "description": "个案标题"
+          },
+          "status": {
+            "type": "string",
+            "description": "个案状态"
+          },
+          "problemType": {
+            "type": "string",
+            "description": "问题类型"
+          },
+          "description": {
+            "type": "string",
+            "description": "个案描述"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "开始日期",
+            "x-apifox-mock": "@date"
+          },
+          "closeDate": {
+            "type": "string",
+            "description": "结案日期",
+            "x-apifox-mock": "@date"
+          },
+          "totalSessions": {
+            "type": "integer",
+            "description": "总咨询次数"
+          },
+          "createTime": {
+            "type": "string",
+            "description": "创建时间",
+            "x-apifox-mock": "@datetime"
+          },
+          "updateTime": {
+            "type": "string",
+            "description": "更新时间",
+            "x-apifox-mock": "@datetime"
+          },
+          "progress": {
+            "type": "string",
+            "description": "进度描述"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "studentId",
+          "studentName",
+          "counselorId",
+          "counselorName",
+          "caseTitle",
+          "status",
+          "problemType",
+          "description",
+          "startDate",
+          "closeDate",
+          "totalSessions",
+          "createTime",
+          "updateTime",
+          "progress"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "RCaseVO": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：200成功，其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CaseVO",
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        },
+        "x-apifox-orders": [
+          "code",
+          "msg",
+          "data",
+          "map"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "CaseCreateDTO": {
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "string",
+            "description": "学生ID"
+          },
+          "counselorId": {
+            "type": "string",
+            "description": "咨询师ID"
+          },
+          "caseTitle": {
+            "type": "string",
+            "description": "个案标题"
+          },
+          "problemType": {
+            "type": "string",
+            "description": "问题类型"
+          },
+          "caseDescription": {
+            "type": "string",
+            "description": "个案描述"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "开始日期"
+          }
+        },
+        "x-apifox-orders": [
+          "studentId",
+          "counselorId",
+          "caseTitle",
+          "problemType",
+          "caseDescription",
+          "startDate"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "CaseUpdateDTO": {
+        "type": "object",
+        "properties": {
+          "caseId": {
+            "type": "string",
+            "description": "个案ID"
+          },
+          "caseTitle": {
+            "type": "string",
+            "description": "个案标题"
+          },
+          "caseStatus": {
+            "type": "string",
+            "description": "个案状态"
+          },
+          "problemType": {
+            "type": "string",
+            "description": "问题类型"
+          },
+          "caseDescription": {
+            "type": "string",
+            "description": "个案描述"
+          },
+          "closeDate": {
+            "type": "string",
+            "description": "结案日期"
+          }
+        },
+        "x-apifox-orders": [
+          "caseId",
+          "caseTitle",
+          "caseStatus",
+          "problemType",
+          "caseDescription",
+          "closeDate"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "RListMapObject": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：200成功，其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MapObject"
+            },
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        },
+        "x-apifox-orders": [
+          "code",
+          "msg",
+          "data",
+          "map"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

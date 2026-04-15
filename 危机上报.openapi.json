@@ -1,0 +1,721 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "CrisisCaseController"
+    }
+  ],
+  "paths": {
+    "/crisis/report": {
+      "post": {
+        "summary": "危机上报",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrisisReportCreateDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": ""
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/report": {
+      "post": {
+        "summary": "危机上报",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrisisReportCreateDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": ""
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/crisis/list": {
+      "get": {
+        "summary": "getCrisisList",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "college",
+            "in": "query",
+            "description": "学院（模糊查询）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crisis_level",
+            "in": "query",
+            "description": "危机等级（red/orange/yellow/blue/green）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "report_status",
+            "in": "query",
+            "description": "处理状态（processing/closed）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "通用返回结果类，服务端响应的数据最终都会封装成此对象"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/list": {
+      "get": {
+        "summary": "getCrisisList",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "college",
+            "in": "query",
+            "description": "学院（模糊查询）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "crisis_level",
+            "in": "query",
+            "description": "危机等级（red/orange/yellow/blue/green）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "report_status",
+            "in": "query",
+            "description": "处理状态（processing/closed）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "通用返回结果类，服务端响应的数据最终都会封装成此对象"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/crisis/update-level": {
+      "post": {
+        "summary": "setLevel",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrisistLevelDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "通用返回结果类，服务端响应的数据最终都会封装成此对象"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/update-level": {
+      "post": {
+        "summary": "setLevel",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrisistLevelDTO",
+                "description": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/R",
+                  "description": "通用返回结果类，服务端响应的数据最终都会封装成此对象"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {},
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/crisis/detail": {
+      "get": {
+        "summary": "危机详情占位接口",
+        "deprecated": false,
+        "description": "前端期望：GET /api/crisis/detail?id=...\n当前暂未实现完整 VO，这里先返回空数据结构，避免前端 404。",
+        "tags": [
+          "CrisisCaseController"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RCrisisReportVO"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "reportId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "college": "",
+                        "crisisLevel": "",
+                        "reportType": "",
+                        "reportStatus": "",
+                        "incidentDescription": "",
+                        "reporter": "",
+                        "createdAt": "",
+                        "updatedAt": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "msg": "",
+                      "data": {
+                        "reportId": "",
+                        "studentId": "",
+                        "studentName": "",
+                        "college": "",
+                        "crisisLevel": "",
+                        "reportType": "",
+                        "reportStatus": "",
+                        "incidentDescription": "",
+                        "reporter": "",
+                        "createdAt": "",
+                        "updatedAt": ""
+                      },
+                      "map": {
+                        "": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "key": {
+        "type": "object",
+        "properties": {}
+      },
+      "MapObject": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/key"
+          }
+        }
+      },
+      "R": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：1成功，0和其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "type": "object",
+            "properties": {},
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      },
+      "CrisisReportCreateDTO": {
+        "type": "object",
+        "properties": {
+          "reportId": {
+            "type": "string",
+            "description": "上报ID"
+          },
+          "appointmentId": {
+            "type": "string",
+            "description": "预约ID"
+          },
+          "counselorId": {
+            "type": "string",
+            "description": "咨询师ID"
+          },
+          "studentId": {
+            "type": "string",
+            "description": "学生ID"
+          },
+          "reportType": {
+            "type": "string",
+            "description": "上报类型: SUICIDAL-自杀风险, VIOLENT-暴力倾向, SELF_HARM-自伤行为, OTHER-其他"
+          },
+          "crisisLevel": {
+            "type": "string",
+            "description": "危机等级: LOW-低, MODERATE-中, HIGH-高, SEVERE-严重"
+          },
+          "incidentDescription": {
+            "type": "string",
+            "description": "事件描述"
+          },
+          "riskAssessment": {
+            "type": "string",
+            "description": "风险评估"
+          },
+          "immediateActions": {
+            "type": "string",
+            "description": "已采取的紧急措施"
+          },
+          "recommendedActions": {
+            "type": "string",
+            "description": "建议措施"
+          },
+          "handwrittenReportUrl": {
+            "type": "string",
+            "description": "手写危机上报表图片URL"
+          }
+        }
+      },
+      "CrisistLevelDTO": {
+        "type": "object",
+        "properties": {
+          "crisisLevel": {
+            "type": "string",
+            "description": ""
+          },
+          "reportId": {
+            "type": "string",
+            "description": ""
+          }
+        }
+      },
+      "CrisisReportVO": {
+        "type": "object",
+        "properties": {
+          "reportId": {
+            "type": "string",
+            "description": "上报ID"
+          },
+          "studentId": {
+            "type": "string",
+            "description": "学生ID"
+          },
+          "studentName": {
+            "type": "string",
+            "description": "学生姓名"
+          },
+          "college": {
+            "type": "string",
+            "description": "学院"
+          },
+          "crisisLevel": {
+            "type": "string",
+            "description": "危机等级（red/orange/yellow/blue/green）"
+          },
+          "reportType": {
+            "type": "string",
+            "description": "危机等级描述"
+          },
+          "reportStatus": {
+            "type": "string",
+            "description": "处理状态（processing/closed）"
+          },
+          "incidentDescription": {
+            "type": "string",
+            "description": "处理状态描述"
+          },
+          "reporter": {
+            "type": "string",
+            "description": "上报人"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "上报时间"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "最后处理时间"
+          }
+        }
+      },
+      "RCrisisReportVO": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "编码：200成功，其它数字为失败"
+          },
+          "msg": {
+            "type": "string",
+            "description": "错误信息"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CrisisReportVO",
+            "description": "数据"
+          },
+          "map": {
+            "$ref": "#/components/schemas/MapObject",
+            "description": "动态数据",
+            "default": "new HashMap<>()"
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
